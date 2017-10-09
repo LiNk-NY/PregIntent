@@ -1,0 +1,14 @@
+# Backup Files
+*~
+*.bak
+*.swp
+*.Rhistory
+*.vim
+*.swo
+
+# RStudio Files
+.Rproj.user
+
+# Data files
+*.xlsx
+
