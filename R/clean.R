@@ -1,3 +1,4 @@
+## Cleaning script for pregnancy intentions dataset
 library(readxl)
 
 vars <- read_excel("data/surveyresults_2099.xlsx", n_max = 1)
@@ -10,9 +11,11 @@ names(namesVect)[vIdx] <- namesVect[vIdx]
 # Varnames and questions
 codebook <- cbind(varname = names(namesVect), question = namesVect)
 
+# Read actual dataset with cleaned column names
 pregint <- read_excel("data/surveyresults_2099.xlsx", skip = 2,
     col_names = names(namesVect))
 
+# Create vector of variables to remove
 varsToRM <- c("ResponseSet", "Name", "ExternalDataReference", "EmailAddress",
     "IPAddress", "Status", "opp", "RISN", "V")
 
