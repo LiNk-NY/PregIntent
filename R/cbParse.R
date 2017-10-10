@@ -27,3 +27,16 @@ cleanChunks <- lapply(readChunks, function(x) {
     goodLines <- grep("^Q[0-9]|\\([0-9]{1,2}\\)", x, value = TRUE)
     grep("^Skip", goodLines, invert = TRUE, value = TRUE)
     })
+
+QNums <- vapply(cleanChunks, function(x)
+    vapply(strsplit(x[[1L]], " "), `[`, character(1L), 1L), character(1L))
+names(cleanChunks) <- QNums
+
+lapply(cleanChunks, function(x) {
+    x <- x[!grepl("I would say I", x, fixed = TRUE)]
+    x <- gsub("\\(([A-Za-z ]*)\\)", "\\1", x)
+    lapply(strsplit(x[-1], " \\("), function(y) {
+        res <- trimws(gsub("\\)|_|⊗", "", y))
+        res[!grepl("specify", res, fixed = TRUE)]
+    })
+})
