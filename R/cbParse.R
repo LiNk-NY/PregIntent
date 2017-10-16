@@ -49,12 +49,23 @@ codingFrames <- lapply(cleanChunks, function(x) {
         res <- trimws(gsub("\\)|:|_|⊗", "", y))
         res[!grepl("specify", res, fixed = TRUE)]
     })
-    codeScheme <- do.call(rbind.data.frame, codeFormats)
-    names(codeScheme) <- c("response", "value")
-    codeScheme
+    codeScheme <- do.call(rbind, codeFormats)
+    colnames(codeScheme) <- c("response", "value")
+    data.frame(codeScheme, stringsAsFactors = FALSE)
 })
 
 codingFrames <- suppressMessages(melt(codingFrames))
 codingFrames <- codingFrames[, c("L1", "value", "response")]
 names(codingFrames) <- c("variable", "value", "response")
+codingFrames[, "value"] <- as.integer(codingFrames[["value"]])
 
+splitFrames <- split(codingFrames, codingFrames[["variable"]])
+
+## Make adjustments to odd variables
+valSeq <- splitFrames$Q1.7$value
+splitFrames$Q1.7$variable <- paste0(splitFrames$Q1.7$variable, "_", valSeq)
+splitFrames$Q1.7$value <- rep(1L, length(valSeq))
+
+valSeq <- splitFrames$Q1.8$value
+splitFrames$Q1.8$variable <- paste0(splitFrames$Q1.8$variable, "_", valSeq)
+splitFrames$Q1.8$value <- rep(1L, length(valSeq))
