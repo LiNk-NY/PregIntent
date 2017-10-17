@@ -1,3 +1,6 @@
+## Dependencies
+library(plyr)
+
 # Set factors from recoding data frames
 .recodeFactors <- function(dataset, recodeFrame) {
     dataset <- as.data.frame(dataset, stringsAsFactors = FALSE)
