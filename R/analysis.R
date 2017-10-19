@@ -37,23 +37,94 @@ pregFeel <- vector("character", 2099)
 pregFeel[females] <- .recodeFactors(pregint, splitFrames$Q3.34)[females]
 pregFeel[males] <- .recodeFactors(pregint, splitFrames$Q121)[males]
 table(pregFeel)
+data.frame(AnsPreg = sum(table(pregFeel)), N = 2099,
+    Perc = round((sum(table(pregFeel))/2099)*100, 2))
 
-## State of residence
-residence <- .recodeFactors(pregint, splitFrames$Q110)
-table(residence)
-sum(table(residence))
+## Number of children
+childnum <- gsub("NO", "0", pregint$Q1.9, ignore.case = TRUE)
+childnum[childnum %in% c("mm", "na")] <- NA
+childnum %>% table
 
-## Check if any values are code 53 (do not reside in US)
-any(pregint$Q110 == 53L)
+regionMap <- state.fips[!duplicated(state.fips$fips), c("fips", "region", "polyname")]
+names(regionMap) <- c("fips", "region", "state")
+regionMap$state <- gsub("\\:.*$", "", regionMap$state)
+regionMap$region <- factor(regionMap$region, levels = 1:4,
+    labels = c("North East", "MidWest", "South", "West"))
+regionMap <- rbind(regionMap, data.frame(fips = c(2, 15), region = "West",
+    state = c("alaska", "hawaii")))
 
+
+
+## Region of residence
+regionOrg <-
+    regionMap$region[match(tolower(as.character(stateOrg[[1L]])), regionMap$state)]
+## check proper merge
+head(cbind(stateOrg, regionorg))
+## KEEP regionorg
+
+## Race (select all that apply)
+raceDF <- .recodeFactors(pregint, splitFrames$Q1.8)
+
+## Hispanic
+hispanic <- .recodeFactors(pregint, splitFrames$Q1.6)
+table(hispanic)
+## Hispanic origin
+hispOrg <- .recodeFactors(pregint, splitFrames$Q1.7)
+
+## Check to see if all who said "Yes" Hispanic answered origin question
+## equal number of responses in both variables after subsetting by "yes"
+## responses
+sum(!apply(hispOrg[hispanic[[1L]] == "yes",], 1L,
+    function(row) all(is.na(row))))
+
+## Age
 age <- pregint$Q112
 summary(age)
 
-sexpref <- .recodeFactors(pregint, splitFrames$Q114)
-table(sexpref)
-sum(table(sexpref))
+## ageGroup
+ageGroup <- Hmisc::cut2(age, cuts = c(25, 30, 35, 40))
+levels(ageGroup) <- c("21-24", "25-29", "30-34", "35-39", "40-44")
 
-## Check raw table for values other than 1 & 3
-table(pregint$Q114)
 
+## Education
+splitFrames$Q1.10
+## Modify labels to recode using function
+newEduLabs <- c("LT/some HS", "LT/some HS", "HS diploma/GED", "Some college",
+    "College degree/Some Grad", "College degree/Some Grad", "Grad degree")
+splitFrames$Q1.10$response <- newEduLabs
+educ <- .recodeFactors(pregint, splitFrames$Q1.10)
+table(educ)
+
+## Relationship
+##  single
+##  married or living together or committed rel
+##  divorced/sep/wid
+##  other
+splitFrames$Q1.11
+## Modify labels to recode using function
+newRelLabs <- c("single", rep("married/living/commit", 3), "div/sep/wid", "other")
+splitFrames$Q1.11$response <- newRelLabs
+relationship <- .recodeFactors(pregint, splitFrames$Q1.11)
+
+
+## Derived variable for income – based on Poverty Threshold for 2016
+## https://www.census.gov/data/tables/time-series/demo/income-poverty/historical-poverty-thresholds.html
+## Q1.12, Q1,13, Q1.14; above or below pov threshold
+povThresh <- readxl::read_excel("data/thresh16.xls", sheet = 2)
+
+povFrame <- do.call(rbind, lapply(as.character(0:8), function(x)
+    data.frame(
+        HHunder65 = c("yes", "yes", "no", "yes", "no", rep(NA, 7)),
+        famUnit = c(1, 1, 1, 2, 2, 3:9),
+        childUnder18 = as.numeric(x),
+        povThresh = unlist(povThresh[, x])
+    ))
+)
+povFrame$incGroup <- Hmisc::cut2(povFrame$povThresh,
+    cuts = c(20000, 40000, 60000, 80000, 100000))
+levels(povFrame$incGroup) <- c(levels(povFrame$incGroup), "100000 or more")
+levels(povFrame$incGroup) <- splitFrames$Q1.14$response
+
+actualFrame <- cbind(famUn = pregint$Q1.12, childUn18 = pregint$Q1.13,
+    .recodeFactors(pregint, splitFrames$Q1.14))
 
