@@ -1,10 +1,29 @@
 ## Descriptives
+library(dplyr)
+library(maps)
+data("state.fips")
+library(Hmisc)
+
+## Initial checks
+# Sexual preference
+sexpref <- .recodeFactors(pregint, splitFrames$Q114)
+table(sexpref)
+all.equal(sum(table(sexpref)), 2099)
 
 # Gender
 gender <- .recodeFactors(pregint, splitFrames$Q1.2)
 table(gender)
 all.equal(sum(table(gender)), 2099)
 
+## State of residence (all should reside in US)
+stateOrg <- .recodeFactors(pregint, splitFrames$Q110)
+table(stateOrg)
+sum(table(stateOrg))
+
+## Check if any values are code 53 (do not reside in US) or 40 (Puerto Rico)
+any(pregint$Q110 %in% c(53, 40))
+
+## Coding for Main Outcome
 ## Logical vectors for each gender
 females <- gender == "female"
 males <- gender == "male"
