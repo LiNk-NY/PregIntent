@@ -1,0 +1,823 @@
+﻿Final Pregnancy Intentions Survey
+
+Default Question Block
+
+Q1.1a Thank you for your interest in this study. We would like to learn more about men’s and women’s experiences and thoughts about pregnancy. There are no right or wrong answers. We’d just like to learn more about your feelings and experiences.
+
+
+ The first few questions are about you and your background.
+
+
+
+Page Break
+
+
+Q1.1b 
+Below are more details about the study. Click on the forward arrow at the bottom if you consent to participate.       Purpose: You are being asked to participate in this research study because you are between the ages of 21 and 44, live in United States, identify as female or male, identify as heterosexual or bisexual and read English. The purpose of this research study is to understand more about your thoughts and experiences regarding pregnancy and to help inform the development of a tool to be used to measure pregnancy intentions.     Procedures: If you agree to participate, we will ask you complete a questionnaire that will take about 15-20 minutes.     Potential risks or discomforts: Your participation in this study is completely voluntary. If sharing certain information about yourself or your personal health makes you uncomfortable, you may cease participation at any point during the process.     Confidentiality: We will ask questions about your background, but no information will be collected that could identify you. All data will be stored on a locked computer on an encrypted hard drive. The research team, authorized CUNY staff, and government agencies that oversee this type of research may have access to research data and records in order to monitor the research. Research records provided to authorized, non-CUNY individuals will not contain identifiable information about you. Publications and/or presentations that result from this study will not identify you by name (name will not be collected).        Participants’ Rights:    	Your participation in this research study is entirely voluntary. If you decide not to participate, there will be no penalty to you, and you will not lose any benefits to which you are otherwise entitled. 	You can decide to withdraw your consent and stop participating in the research at any time, without any penalty.   
+
+   Questions, Comments or Concerns: If you have any questions, you can contact Meredith Manze at Meredith.manze@sph.cuny.edu. If you have any questions about your rights as a research participant or if you would like to talk to someone other than the researchers, you can contact CUNY Research Compliance Administrator at 646-664-8918.         Pressing the forward arrow button below indicates your consent to participant in the research.   
+
+
+Page Break
+
+
+Q1.2 Which biological sex do you identify with?
+male (1) 
+female (2) 
+other (specify): (3) ________________________________________________
+
+Skip To: Q125 If Q1.2 = other (specify): (3)
+
+Page Break
+
+Q110 In which state do you currently reside?
+Alabama (1) 
+Alaska (2) 
+Arizona (3) 
+Arkansas (4) 
+California (5) 
+Colorado (6) 
+Connecticut (7) 
+Delaware (8) 
+District of Columbia (9) 
+Florida (10) 
+Georgia (11) 
+Hawaii (12) 
+Idaho (13) 
+Illinois (14) 
+Indiana (15) 
+Iowa (16) 
+Kansas (17) 
+Kentucky (18) 
+Louisiana (19) 
+Maine (20) 
+Maryland (21) 
+Massachusetts (22) 
+Michigan (23) 
+Minnesota (24) 
+Mississippi (25) 
+Missouri (26) 
+Montana (27) 
+Nebraska (28) 
+Nevada (29) 
+New Hampshire (30) 
+New Jersey (31) 
+New Mexico (32) 
+New York (33) 
+North Carolina (34) 
+North Dakota (35) 
+Ohio (36) 
+Oklahoma (37) 
+Oregon (38) 
+Pennsylvania (39) 
+Puerto Rico (40) 
+Rhode Island (41) 
+South Carolina (42) 
+South Dakota (43) 
+Tennessee (44) 
+Texas (45) 
+Utah (46) 
+Vermont (47) 
+Virginia (48) 
+Washington (49) 
+West Virginia (50) 
+Wisconsin (51) 
+Wyoming (52) 
+I do not reside in the United States (53) 
+
+Skip To: Q125 If Q110 = I do not reside in the United States (53)
+
+Page Break
+
+
+
+Q112 What is   your age?
+________________________________________________________________
+
+Skip To: Q125 If
+Skip To: Q125 If
+
+Page Break
+
+
+Q114 Do you consider yourself to be…
+heterosexual or straight (1) 
+gay or lesbian (2) 
+bisexual (3) 
+other (specify): (4) ________________________________________________
+
+Skip To: Q125 If Q114 = gay or lesbian (2)
+Skip To: Q125 If Q114 = other (specify): (4)
+
+Page Break
+
+
+Q1.6 Are you of Hispanic, Latino or Spanish origin?
+yes (1) 
+no (2) 
+
+Skip To: Q1.8 If Q1.6 = no (2)
+
+Page Break
+
+
+Q1.7 What is your Hispanic, Latino or Spanish origin? (Select all that apply)
+Mexican, Mexican American (1) 
+Puerto Rican (2) 
+Cuban (3) 
+other (specify): (4) ________________________________________________
+
+
+Page Break
+
+
+Q1.8 What is your race? (Select all that apply)
+American Indian or Alaska Native (1) 
+Asian (2) 
+Black or African American (3) 
+Native Hawaiian or Other Pacific Islander (4) 
+White (5) 
+other (specify): (6) ________________________________________________
+
+
+Page Break
+
+
+
+Q1.9 How many biological children do you have?
+________________________________________________________________
+
+
+Page Break
+
+Display This Question:
+If Which biological sex do you identify with? = male
+
+Q1.9a Some men are not physically able to father children. As far as you know, is it physically possible for you, yourself to biologically father a child in the future?
+yes (1) 
+no (2) 
+
+
+Page Break
+
+Display This Question:
+If Which biological sex do you identify with? = male
+
+Q1.9b If you have a partner, as far as you know, is it physically possible for her to have a baby in the future?
+yes (1) 
+no (2) 
+don't have partner (3) 
+
+
+Page Break
+
+Display This Question:
+If Which biological sex do you identify with? = female
+
+Q1.9c Some women are not physically able to have children. As far as you know, is it physically possible for you, yourself to have a baby in the future?
+yes (1) 
+no (2) 
+
+
+Page Break
+
+Display This Question:
+If Which biological sex do you identify with? = female
+
+Q1.9d If you have a partner, as far as you know, is it physically possible for him to father a baby in the future?
+yes (1) 
+no (2) 
+don't have partner (4) 
+
+
+Page Break
+
+
+Q1.10 What is the highest level of education you’ve completed?
+less than high school (1) 
+some high school (2) 
+high school diploma/GED (3) 
+some college or 2-year diploma (4) 
+college degree (Bachelors) (5) 
+some graduate school (6) 
+graduate school degree (Masters or higher) (7) 
+
+
+Page Break
+
+
+Q1.11 What is your current relationship status? 
+single (1) 
+married (2) 
+living together (but not married) (3) 
+committed relationship (but not married or living together) (4) 
+divorced/separated/widowed (5) 
+other (specify): (6) ________________________________________________
+
+
+Page Break
+
+
+
+Q1.12 How many individuals (including yourself) are currently living in your household?
+________________________________________________________________
+
+
+Page Break
+
+
+
+Q1.13 Of those living in your household, how many are 17 years old or younger?
+________________________________________________________________
+
+
+Page Break
+
+
+Q1.14 What is the total income for you and all other individuals living in your household (over the age of 15) in the last year? (Include income from all sources such as wages, salaries, and Social Security or retirement benefits)
+less than $20,000 (1) 
+$20,000-$39,999 (2) 
+$40,000-$59,999 (3) 
+$60,000-$79,999 (4) 
+$80,000-$99,999 (5) 
+$100,000 or more (6) 
+
+
+Display This Question:
+If Which biological sex do you identify with? = other (specify):
+Or Which biological sex do you identify with? Is Not Empty
+Or 50 States, D.C. and Puerto Rico = I do not reside in the United States
+Or What is your age? >
+Or What is your age? <
+Or Do you consider yourself to be… = gay or lesbian
+Or Do you consider yourself to be… = other (specify):
+Or Do you consider yourself to be… Is Not Empty
+
+Q125 Thank you so much for your interest in this study. Unfortunately, you are not eligible to participate.
+
+
+Page Break
+
+End of Block
+Block 1
+
+Q2.1 The next questions ask about your thoughts and experiences around trying to avoid a pregnancy.
+
+
+Page Break
+
+Display This Question:
+If Which biological sex do you identify with? = male
+
+Q2.2 When thinking about trying to avoid a partner* becoming pregnant, would you say that pregnancy… (Select all that apply)   *The term “partner” in this survey refers to anyone you have sex with
+can be avoided (1) 
+sometimes ‘just happens’ anyway (2) 
+is something determined by fate or a higher power like God (3) 
+is a natural process that happens when it's meant to (5) 
+other (specify): (4) ________________________________________________
+
+
+Page Break
+
+Display This Question:
+If When thinking about trying to avoid a partner* becoming pregnant, would you say that pregnancy… (... >
+Carry Forward Selected Choices - Entered Text from "When thinking about trying to avoid a partner* becoming pregnant, would you say that pregnancy… (Select all that apply)   *The term “partner” in this survey refers to anyone you have sex with"
+
+
+Q2.5 Since you selected more than one response, please select from the list below the one you feel most strongly about. 
+  When thinking about trying to avoid a partner* becoming pregnant, would you say that pregnancy… 
+
+*The term “partner” in this survey refers to someone you have sex with
+
+can be avoided (1) 
+sometimes ‘just happens’ anyway (2) 
+is something determined by fate or a higher power like God (3) 
+is a natural process that happens when it's meant to (4) 
+other (specify): (5) 
+
+
+Page Break
+
+Display This Question:
+If Which biological sex do you identify with? = female
+
+Q2.7 When thinking about trying to avoid becoming pregnant, would you say that pregnancy… (Select all that apply)
+can be avoided (1) 
+sometimes ‘just happens’ anyway (2) 
+is something determined by fate or a higher power like God (3) 
+is a natural process that happens when it's meant to (5) 
+other (specify): (4) ________________________________________________
+
+
+Page Break
+
+Display This Question:
+If When thinking about trying to avoid becoming pregnant, would you say that pregnancy… (Select all... >
+Carry Forward Selected Choices - Entered Text from "When thinking about trying to avoid becoming pregnant, would you say that pregnancy… (Select all that apply)"
+
+
+Q2.10 Since you selected more than one response, please select from the list below the one you feel most strongly about.     When thinking about trying to avoid becoming pregnant, would you say that pregnancy…
+can be avoided (1) 
+sometimes ‘just happens’ anyway (2) 
+is something determined by fate or a higher power like God (3) 
+is a natural process that happens when it's meant to (4) 
+other (specify): (5) 
+
+
+Page Break
+
+Display This Question:
+If Which biological sex do you identify with? = male
+
+Q2.12 How much control would you say you have over avoiding a partner’s pregnancy?
+
+no control (1)
+a little control (2)
+a lot of control (3)
+complete control (4)
+I have... (1) 
+
+
+
+
+
+
+
+Page Break
+
+Display This Question:
+If Which biological sex do you identify with? = female
+
+Q2.13 How much control would you say you have over avoiding a pregnancy?
+
+no control (1)
+a little control (2)
+a lot of control (3)
+complete control (4)
+I have... (1) 
+
+
+
+
+
+
+
+Page Break
+
+End of Block
+Block 2
+
+Q3.1 The last set of questions ask about your thoughts and experiences around becoming pregnant.
+
+
+Page Break
+
+Display This Question:
+If Which biological sex do you identify with? = male
+
+Q3.2 Before a partner becomes pregnant, do you think there are ideal criteria that should be fulfilled first (things like finishing school, etc.)?
+yes (1) 
+no (2) 
+don't know (4) 
+don't ever want a partner to become pregnant (5) 
+
+Skip To: Q3.5 If Q3.2 = no (2)
+Skip To: Q3.5 If Q3.2 = don't ever want a partner to become pregnant (5)
+
+Page Break
+
+Display This Question:
+If Which biological sex do you identify with? = female
+
+Q3.3 Before becoming pregnant, do you think there are ideal criteria that should be fulfilled first (things like finishing school, etc.)?
+yes (1) 
+no (2) 
+don't know (6) 
+I don't ever want to become pregnant (7) 
+
+Skip To: Q3.5 If Q3.3 = no (2)
+Skip To: Q3.5 If Q3.3 = I don't ever want to become pregnant (7)
+
+Page Break
+
+
+Q3.4 Looking at this list, please check which of these you think should be fulfilled before becoming pregnant. (Select all that apply)
+finish high school (1) 
+finish college (2) 
+start a career (3) 
+gain financial stability (4) 
+have a place of one’s own to live (5) 
+buy a house (10) 
+be in a relationship (6) 
+be married (7) 
+be emotionally ready (15) 
+other (specify): (8) ________________________________________________
+⊗none (9) 
+
+
+Page Break
+
+
+Q3.5 When thinking about pregnancy, would you say that it… (Select all that apply)     Note: Please respond Yes or No below to each question A-G. If you’d like to add a response under “other,” please enter it and select Yes; if you do not have a response to add under "other", leave it blank and select No.
+
+Yes (1)
+No (2)
+A. can be planned in advance (1) 
+
+
+B. can be planned to happen after one's ideal criteria are fulfilled (2) 
+
+
+C. can be planned in discussion with your partner (3) 
+
+
+D. can be left to 'fate' or a higher power like God (5) 
+
+
+E. 'just happens' (6) 
+
+
+F. is a natural process that happens when it’s meant to be (8) 
+
+
+G. other (specify): (7) 
+
+
+
+
+
+Page Break
+
+Display This Question:
+If When thinking about pregnancy, would you say that it… (Select all that apply)   Note: Please resp... > A. can be planned in advance
+Carry Forward Selected Choices from "When thinking about pregnancy, would you say that it… (Select all that apply)     Note: Please respond Yes or No below to each question A-G. If you’d like to add a response under “other,” please enter it and select Yes; if you do not have a response to add under "other", leave it blank and select No."
+
+
+Q122 Since you selected more than one response, please select from the list below the one you feel most strongly about.  When thinking about pregnancy, would you say that it…
+A. can be planned in advance (1) 
+B. can be planned to happen after one's ideal criteria are fulfilled (2) 
+C. can be planned in discussion with your partner (3) 
+D. can be left to 'fate' or a higher power like God (4) 
+E. 'just happens' (5) 
+F. is a natural process that happens when it’s meant to be (6) 
+G. other (specify): (7) ________________________________________________
+
+
+Page Break
+
+Display This Question:
+If Which biological sex do you identify with? = male
+
+Q3.12 If you wanted a partner to become pregnant, how much control would you say you have over her becoming pregnant?
+
+no control (1)
+a little control (2)
+a lot of control (3)
+complete control (4)
+I would say I have... (1) 
+
+
+
+
+
+
+
+Page Break
+
+Display This Question:
+If Which biological sex do you identify with? = female
+
+Q3.13 If you wanted to become pregnant, how much control would you say you have over becoming pregnant?
+
+no control (1)
+a little control (2)
+a lot of control (3)
+complete control (4)
+I would say I have... (1) 
+
+
+
+
+
+
+
+Page Break
+
+Display This Question:
+If Which biological sex do you identify with? = male
+
+Q3.15 As far as you know, have you ever gotten someone pregnant?
+yes (1) 
+no (2) 
+don't know (7) 
+
+Skip To: Q3.25 If Q3.15 = no (2)
+Skip To: Q3.25 If Q3.15 = don't know (7)
+
+Page Break
+
+Display This Question:
+If Which biological sex do you identify with? = female
+
+Q3.16 Have you ever been pregnant?
+yes (1) 
+no (2) 
+don't know (7) 
+
+Skip To: Q3.26 If Q3.16 = no (2)
+Skip To: Q3.26 If Q3.16 = don't know (7)
+
+Page Break
+
+Display This Question:
+If As far as you know, have you ever gotten someone pregnant? = yes
+
+Q3.17 Thinking back to the first time a partner of yours became pregnant, would you say that the pregnancy …(Select all that apply)
+was planned in advance (1) 
+was planned to happen after my ideal criteria were fulfilled (2) 
+was planned in discussion with my partner (3) 
+was not planned (4) 
+was left to 'fate' or a higher power like God (5) 
+'just happened' (6) 
+happened naturally because it was meant to be (8) 
+other (specify): (7) ________________________________________________
+
+
+Display This Question:
+If As far as you know, have you ever gotten someone pregnant? = yes
+
+Q3.17a How much control would you say you had over your partner's pregnancy?
+
+No control (1)
+A little control (2)
+A lot of control (3)
+Complete control (4)
+I would say I had... (1) 
+
+
+
+
+
+
+
+Page Break
+
+Display This Question:
+If Have you ever been pregnant? = yes
+
+Q3.18 Thinking back to the first time you became pregnant, would you say that the pregnancy …(Select all that apply)
+was planned in advance (1) 
+was planned to happen after my ideal criteria were fulfilled (2) 
+was planned in discussion with my partner (3) 
+was not planned (4) 
+was left to 'fate' or a higher power like God (5) 
+'just happened' (6) 
+happened naturally because it was meant to be (8) 
+other (specify): (7) ________________________________________________
+
+
+Display This Question:
+If Have you ever been pregnant? = yes
+
+Q3.18a How much control would you say you had over that pregnancy?
+
+No control (1)
+A little control (2)
+A lot of control (3)
+Complete control (4)
+I would say I had... (1) 
+
+
+
+
+
+
+
+Page Break
+
+Display This Question:
+If Which biological sex do you identify with? = male
+
+Q3.19 Had you fulfilled some or all of your ideal criteria before your partner became pregnant for the first time?
+yes (4) 
+no (5) 
+didn’t have ideal criteria (6) 
+don’t know (7) 
+
+Skip To: Q3.24 If Q3.19 = no (5)
+Skip To: Q3.23 If Q3.19 = yes (4)
+Skip To: Q3.25 If Q3.19 = didn’t have ideal criteria (6)
+Skip To: Q3.23 If Q3.19 = don’t know (7)
+
+Page Break
+
+Display This Question:
+If Which biological sex do you identify with? = female
+
+Q3.20 Had you fulfilled some or all of your ideal criteria before you became pregnant for the first time?
+yes (4) 
+no (5) 
+didn't have ideal criteria (7) 
+don't know (6) 
+
+Skip To: Q3.24 If Q3.20 = no (5)
+Skip To: Q3.23 If Q3.20 = yes (4)
+Skip To: Q3.26 If Q3.20 = didn't have ideal criteria (7)
+Skip To: Q3.23 If Q3.20 = don't know (6)
+
+Page Break
+
+Display This Question:
+If Looking at this list, please check which of these you think should be fulfilled before becoming p... != none
+Carry Forward Selected Choices - Entered Text from "Looking at this list, please check which of these you think should be fulfilled before becoming pregnant. (Select all that apply)"
+
+
+Q3.23 What were your ideal criteria that you fulfilled? (select all that apply)
+finish high school (1) 
+finish college (2) 
+start a career (3) 
+gain financial stability (4) 
+have a place of one’s own to live (5) 
+buy a house (6) 
+be in a relationship (7) 
+be married (8) 
+be emotionally ready (9) 
+other (specify): (10) 
+⊗none (11) 
+
+
+Display This Question:
+If Looking at this list, please check which of these you think should be fulfilled before becoming p... != none
+
+Q3.24 What kinds of things prevented you from fulfilling all of your ideal criteria before becoming pregnant?
+not applicable - I didn't have any ideal criteria (2) 
+not applicable- I fulfilled all of my ideal criteria (5) 
+I was not able to fulfill all of my ideal criteria because... (4) ________________________________________________
+
+
+Page Break
+
+Display This Question:
+If Which biological sex do you identify with? = male
+
+Q3.25 When thinking about your current situation, would you say that… (select all that apply)
+your partner is pregnant (1) 
+you would like your partner, or anyone you have sex with, to become pregnant soon (2) 
+you don't want your partner, or anyone you have sex with, to become pregnant soon (3) 
+you aren't trying to become pregnant, but you would feel okay about it if your partner, or anyone you have sex with, became pregnant soon (5) 
+you (or your partner) can't get pregnant (7) 
+other (specify): (4) ________________________________________________
+
+Skip To: Q3.27 If Q3.25 = you aren't trying to become pregnant, but you would feel okay about it if your partner, or anyone you have sex with, became pregnant soon (5)
+Skip To: Q3.38 If Q3.25 = your partner is pregnant (1)
+Skip To: Q3.32 If Q3.25 = you don't want your partner, or anyone you have sex with, to become pregnant soon (3)
+Skip To: Q3.38 If Q3.25 = you (or your partner) can't get pregnant (7)
+
+Page Break
+
+Display This Question:
+If Which biological sex do you identify with? = female
+
+Q3.26 When thinking about your current situation, would you say that you... (select all that apply)
+are pregnant (1) 
+would like to become pregnant soon (2) 
+don't want to become pregnant soon (3) 
+aren't trying to become pregnant, but would feel okay about it if you became pregnant soon (5) 
+you (or your partner) can't get pregnant (7) 
+other (specify): (4) ________________________________________________
+
+Skip To: Q3.28 If Q3.26 = would like to become pregnant soon (2)
+Skip To: Q3.38 If Q3.26 = are pregnant (1)
+Skip To: Q3.33 If Q3.26 = don't want to become pregnant soon (3)
+Skip To: Q3.33 If Q3.26-other (specify): (4) Is Not Empty
+Skip To: Q3.38 If Q3.26 = you (or your partner) can't get pregnant (7)
+
+Page Break
+
+Display This Question:
+If When thinking about your current situation, would you say that… (select all that apply) = you would like your partner, or anyone you have sex with, to become pregnant soon
+
+Q3.27 You said that you would like your partner, or anyone you have sex with, to become pregnant soon. Are you... (select all that apply)
+tracking ovulation and/or timing of sexual activity to try to become pregnant (4) 
+just letting it happen (5) 
+leaving it up to fate or a higher power like God (3) 
+leaving it up to nature (9) 
+in the process of using assisted reproductive technology such as in vitro fertilization (2) 
+other (specify): (8) ________________________________________________
+
+Skip To: Q3.32 If Selected Choices >= 1
+
+Page Break
+
+Display This Question:
+If When thinking about your current situation, would you say that you... (select all that apply) = would like to become pregnant soon
+
+Q3.28 You said that you would like to become pregnant soon. Are you... (select all that apply)
+tracking ovulation and/or timing of sexual activity to try to become pregnant (4) 
+just letting it happen (5) 
+leaving it up to fate or a higher power like God (3) 
+leaving it up to nature (9) 
+in the process of using assisted reproductive technology such as in vitro fertilization (2) 
+other (specify): (8) ________________________________________________
+
+Skip To: Q3.33 If Selected Choices >= 1
+
+Page Break
+
+Display This Question:
+If When thinking about your current situation, would you say that… (select all that apply) = you aren't trying to become pregnant, but you would feel okay about it if your partner, or anyone you have sex with, became pregnant soon
+
+Q3.29 You said you aren’t trying to become pregnant, but would feel okay if your partner, or anyone you have sex with, became pregnant. Are you… (select all that apply)
+just letting it happen (5) 
+leaving it up to fate or a higher power like God (3) 
+leaving it up to nature (9) 
+using some form of birth control or contraception every time you have sex (2) 
+using some form of birth control or contraception some of the time when you have sex (4) 
+other (specify): (8) ________________________________________________
+
+
+Page Break
+
+Display This Question:
+If When thinking about your current situation, would you say that you... (select all that apply) = aren't trying to become pregnant, but would feel okay about it if you became pregnant soon
+
+Q3.30 You said you aren’t trying to become pregnant, but would feel okay if you became pregnant. Are you… (select all that apply)
+just letting it happen (5) 
+leaving it up to fate or a higher power like God (3) 
+leaving it up to nature (9) 
+using some form of birth control or contraception every time you have sex (2) 
+using some form of birth control or contraception some of the time when you have sex (4) 
+other (specify): (8) ________________________________________________
+
+
+Page Break
+
+Display This Question:
+If Which biological sex do you identify with? = male
+
+Q3.32 If you found out your partner, or someone you had sex with, was pregnant right now, how would you feel? Select all that apply.
+Anxious (1) 
+Excited (2) 
+Frustrated (3) 
+Happy (4) 
+Scared (5) 
+Ambivalent (11) 
+Surprised (6) 
+Thankful (7) 
+Unhappy (8) 
+Worried (9) 
+Angry (17) 
+Other (specify) (10) ________________________________________________
+
+
+Page Break
+
+Display This Question:
+If Which biological sex do you identify with? = female
+
+Q3.33 If you found out you were pregnant right now, how would you feel? Select all that apply.
+Anxious (1) 
+Excited (2) 
+Frustrated (3) 
+Happy (4) 
+Scared (5) 
+Ambivalent (11) 
+Surprised (6) 
+Thankful (7) 
+Unhappy (8) 
+Worried (9) 
+Angry (17) 
+Other (specify) (10) ________________________________________________
+
+
+Page Break
+
+Display This Question:
+If Which biological sex do you identify with? = female
+
+Q3.34 Ultimately, how would you feel about being pregnant right now?
+Positive (1) 
+Negative (2) 
+
+
+Display This Question:
+If Which biological sex do you identify with? = male
+
+Q121 Ultimately, how would you feel about a partner, or anyone you had sex with, being pregnant right now?
+Positive (1) 
+Negative (2) 
+
+
+Page Break
+
+
+Q3.38 Thank you so much for your time in completing this questionnaire!
+
+End of Block
+
+Key: (other columns in data spreadsheet)
+column R - gc - currently filtered for 1 as good completes.  2's are terms, and 4's are failed speed checks
+column U - region - I used numerical values as follow:  1- midwest, 2 - northeast, 3 - south, 4 - west.
+column X - Q1.2gender - 1 for males, 2 for females
+column AA - Q1112age - numerical values for age
+
