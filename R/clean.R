@@ -24,3 +24,6 @@ pregint <- pregint[, -which(names(pregint) %in% varsToRM)]
 
 # Take only GC = 1 responses
 pregint <- pregint[pregint$gc == 1L, ]
+
+## Keep only desired variable
+rm(list = ls()[-which(ls() == "pregint")])

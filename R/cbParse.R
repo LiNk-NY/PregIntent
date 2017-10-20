@@ -69,3 +69,6 @@ splitFrames$Q1.7$value <- rep(1L, length(valSeq))
 valSeq <- splitFrames$Q1.8$value
 splitFrames$Q1.8$variable <- paste0(splitFrames$Q1.8$variable, "_", valSeq)
 splitFrames$Q1.8$value <- rep(1L, length(valSeq))
+
+## Clean variables except the needed one
+rm(list = ls()[-which(ls() == "codingFrames")])
