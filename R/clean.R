@@ -28,4 +28,4 @@ pregint <- pregint[, -which(names(pregint) %in% varsToRM)]
 pregint <- pregint[pregint$gc == 1L, ]
 
 ## Keep only desired variable
-rm(list = ls()[-which(ls() %in% c("pregint", "codebook"))])
+rm(list = ls()[-which(ls() %in% c("pregint", "codebook", "recodeFactors"))])

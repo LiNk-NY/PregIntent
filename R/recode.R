@@ -156,4 +156,5 @@ underPovLevel <-
     factor(povertyComp[["povFromData"]] <= povertyComp[["povFromTable"]],
         levels = c(TRUE, FALSE), labels = c("Yes", "No"))
 
-# rm(povFrame, simppov, simpPov, povertyComp, incCat)
+rm(povFrame, simppov, simpPov, povertyComp, incCat, povData, povThresh,
+    newEduLabs, newRelLabs, state.fips, females, males)
