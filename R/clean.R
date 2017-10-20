@@ -12,8 +12,10 @@ names(namesVect)[vIdx] <- namesVect[vIdx]
 codebook <- cbind(varname = names(namesVect), question = namesVect)
 
 # Read actual dataset with cleaned column names
-pregint <- read_excel("data/surveyresults_2099.xlsx", skip = 2,
+pregint <- suppressWarnings(
+    read_excel("data/surveyresults_2099.xlsx", skip = 2,
     col_names = names(namesVect))
+)
 
 # Create vector of variables to remove
 varsToRM <- c("ResponseSet", "Name", "ExternalDataReference", "EmailAddress",
@@ -26,4 +28,4 @@ pregint <- pregint[, -which(names(pregint) %in% varsToRM)]
 pregint <- pregint[pregint$gc == 1L, ]
 
 ## Keep only desired variable
-rm(list = ls()[-which(ls() == "pregint")])
+rm(list = ls()[-which(ls() %in% c("pregint", "codebook"))])

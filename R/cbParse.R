@@ -71,4 +71,4 @@ splitFrames$Q1.8$variable <- paste0(splitFrames$Q1.8$variable, "_", valSeq)
 splitFrames$Q1.8$value <- rep(1L, length(valSeq))
 
 ## Clean variables except the needed one
-rm(list = ls()[-which(ls() == "codingFrames")])
+rm(list = ls()[-which(ls() %in% c("splitFrames", "pregint", "codebook"))])
