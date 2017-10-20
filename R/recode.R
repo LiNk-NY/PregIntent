@@ -157,4 +157,4 @@ underPovLevel <-
         levels = c(TRUE, FALSE), labels = c("Yes", "No"))
 
 rm(povFrame, simppov, simpPov, povertyComp, incCat, povData, povThresh,
-    newEduLabs, newRelLabs, state.fips, females, males)
+    newEduLabs, newRelLabs, state.fips, females, males, regionMap)
