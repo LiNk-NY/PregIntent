@@ -1,5 +1,6 @@
 ## Descriptives
 library(dplyr)
+library(tidyr)
 library(maps)
 data("state.fips")
 library(Hmisc)
@@ -40,6 +41,14 @@ table(pregFeel)
 data.frame(AnsPreg = sum(table(pregFeel)), N = 2099,
     Perc = round((sum(table(pregFeel))/2099)*100, 2))
 
+## Ideal criteria
+idealCrit <- vector("character", 2099)
+splitFrames$Q3.2[4, "response"] <- "don't want me/partner pregnant"
+splitFrames$Q3.3[4, "response"] <- "don't want me/partner pregnant"
+idealCrit[females] <- .recodeFactors(pregint, splitFrames$Q3.3)[females]
+idealCrit[males] <- .recodeFactors(pregint, splitFrames$Q3.2)[males]
+table(idealCrit)
+
 ## Number of children
 childnum <- gsub("NO", "0", pregint$Q1.9, ignore.case = TRUE)
 childnum[childnum %in% c("mm", "na")] <- NA
@@ -59,7 +68,7 @@ regionMap <- rbind(regionMap, data.frame(fips = c(2, 15), region = "West",
 regionOrg <-
     regionMap$region[match(tolower(as.character(stateOrg[[1L]])), regionMap$state)]
 ## check proper merge
-head(cbind(stateOrg, regionorg))
+head(cbind(stateOrg, regionOrg))
 ## KEEP regionorg
 
 ## Race (select all that apply)
@@ -120,11 +129,30 @@ povFrame <- do.call(rbind, lapply(as.character(0:8), function(x)
         povThresh = unlist(povThresh[, x])
     ))
 )
-povFrame$incGroup <- Hmisc::cut2(povFrame$povThresh,
+povFrame <- povFrame[!is.na(povFrame$povThresh), ]
+simpPov <- povFrame %>% dplyr::group_by(famUnit, childUnder18) %>%
+    summarise(mPovThresh = mean(povThresh))
+simpPov <- as.data.frame(simpPov)
+
+simpPov$incGroup <- Hmisc::cut2(simpPov$mPovThresh,
     cuts = c(20000, 40000, 60000, 80000, 100000))
-levels(povFrame$incGroup) <- c(levels(povFrame$incGroup), "100000 or more")
-levels(povFrame$incGroup) <- splitFrames$Q1.14$response
+simpPov$incGroup <- factor(simpPov$incGroup, ordered = TRUE,
+    levels = c(levels(simpPov$incGroup), "100000 or more"))
+levels(simpPov$incGroup) <- splitFrames$Q1.14$response
+simppov <- simpPov %>% unite(famch, famUnit, childUnder18)
 
-actualFrame <- cbind(famUn = pregint$Q1.12, childUn18 = pregint$Q1.13,
-    .recodeFactors(pregint, splitFrames$Q1.14))
 
+## Get factor and order it
+incCat <- .recodeFactors(pregint, splitFrames$Q1.14)[[1L]]
+levels(incCat) <- levels(simppov$incGroup)
+incCat <- factor(incCat, ordered = TRUE)
+povData <- cbind.data.frame(famUn = pregint$Q1.12,
+    childUn18 = pregint$Q1.13, incCat)
+povData <- povData %>% unite(famch, famUn, childUn18)
+
+povertyComp <- cbind.data.frame(povFromTable =
+    simppov[match(povData$famch, simppov$famch), "incGroup"],
+    povFromData = povData$incCat)
+underPovLevel <-
+    factor(povertyComp[["povFromData"]] <= povertyComp[["povFromTable"]],
+        levels = c(TRUE, FALSE), labels = c("Yes", "No"))
