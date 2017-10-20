@@ -7,17 +7,17 @@ library(Hmisc)
 
 ## Initial checks
 # Sexual preference
-sexpref <- .recodeFactors(pregint, splitFrames$Q114)
+sexpref <- recodeFactors(pregint, splitFrames$Q114)
 table(sexpref)
 all.equal(sum(table(sexpref)), 2099)
 
 # Gender
-gender <- .recodeFactors(pregint, splitFrames$Q1.2)
+gender <- recodeFactors(pregint, splitFrames$Q1.2)
 table(gender)
 all.equal(sum(table(gender)), 2099)
 
 ## State of residence (all should reside in US)
-stateOrg <- .recodeFactors(pregint, splitFrames$Q110)
+stateOrg <- recodeFactors(pregint, splitFrames$Q110)
 table(stateOrg)
 sum(table(stateOrg))
 
@@ -35,8 +35,8 @@ codebook[rownames(codebook) == "Q121", ]
 
 pregFeel <- vector("character", 2099)
 ## "Ultimately, how would you feel about being pregnant right now?"
-pregFeel[females] <- .recodeFactors(pregint, splitFrames$Q3.34)[females]
-pregFeel[males] <- .recodeFactors(pregint, splitFrames$Q121)[males]
+pregFeel[females] <- recodeFactors(pregint, splitFrames$Q3.34)[females]
+pregFeel[males] <- recodeFactors(pregint, splitFrames$Q121)[males]
 table(pregFeel)
 data.frame(AnsPreg = sum(table(pregFeel)), N = 2099,
     Perc = round((sum(table(pregFeel))/2099)*100, 2))
@@ -45,8 +45,8 @@ data.frame(AnsPreg = sum(table(pregFeel)), N = 2099,
 idealCrit <- vector("character", 2099)
 splitFrames$Q3.2[4, "response"] <- "don't want me/partner pregnant"
 splitFrames$Q3.3[4, "response"] <- "don't want me/partner pregnant"
-idealCrit[females] <- .recodeFactors(pregint, splitFrames$Q3.3)[females]
-idealCrit[males] <- .recodeFactors(pregint, splitFrames$Q3.2)[males]
+idealCrit[females] <- recodeFactors(pregint, splitFrames$Q3.3)[females]
+idealCrit[males] <- recodeFactors(pregint, splitFrames$Q3.2)[males]
 table(idealCrit)
 
 ## Number of children
@@ -54,6 +54,7 @@ childnum <- gsub("NO", "0", pregint$Q1.9, ignore.case = TRUE)
 childnum[childnum %in% c("mm", "na")] <- NA
 childnum %>% table
 
+## Reference dataset for regions
 regionMap <- state.fips[!duplicated(state.fips$fips), c("fips", "region", "polyname")]
 names(regionMap) <- c("fips", "region", "state")
 regionMap$state <- gsub("\\:.*$", "", regionMap$state)
@@ -61,8 +62,6 @@ regionMap$region <- factor(regionMap$region, levels = 1:4,
     labels = c("North East", "MidWest", "South", "West"))
 regionMap <- rbind(regionMap, data.frame(fips = c(2, 15), region = "West",
     state = c("alaska", "hawaii")))
-
-
 
 ## Region of residence
 regionOrg <-
@@ -72,13 +71,13 @@ head(cbind(stateOrg, regionOrg))
 ## KEEP regionorg
 
 ## Race (select all that apply)
-raceDF <- .recodeFactors(pregint, splitFrames$Q1.8)
+raceDF <- recodeFactors(pregint, splitFrames$Q1.8)
 
 ## Hispanic
-hispanic <- .recodeFactors(pregint, splitFrames$Q1.6)
+hispanic <- recodeFactors(pregint, splitFrames$Q1.6)
 table(hispanic)
 ## Hispanic origin
-hispOrg <- .recodeFactors(pregint, splitFrames$Q1.7)
+hispOrg <- recodeFactors(pregint, splitFrames$Q1.7)
 
 ## Check to see if all who said "Yes" Hispanic answered origin question
 ## equal number of responses in both variables after subsetting by "yes"
@@ -101,7 +100,7 @@ splitFrames$Q1.10
 newEduLabs <- c("LT/some HS", "LT/some HS", "HS diploma/GED", "Some college",
     "College degree/Some Grad", "College degree/Some Grad", "Grad degree")
 splitFrames$Q1.10$response <- newEduLabs
-educ <- .recodeFactors(pregint, splitFrames$Q1.10)
+educ <- recodeFactors(pregint, splitFrames$Q1.10)
 table(educ)
 
 ## Relationship
@@ -113,7 +112,7 @@ splitFrames$Q1.11
 ## Modify labels to recode using function
 newRelLabs <- c("single", rep("married/living/commit", 3), "div/sep/wid", "other")
 splitFrames$Q1.11$response <- newRelLabs
-relationship <- .recodeFactors(pregint, splitFrames$Q1.11)
+relationship <- recodeFactors(pregint, splitFrames$Q1.11)
 
 
 ## Derived variable for income – based on Poverty Threshold for 2016
@@ -143,7 +142,7 @@ simppov <- simpPov %>% unite(famch, famUnit, childUnder18)
 
 
 ## Get factor and order it
-incCat <- .recodeFactors(pregint, splitFrames$Q1.14)[[1L]]
+incCat <- recodeFactors(pregint, splitFrames$Q1.14)[[1L]]
 levels(incCat) <- levels(simppov$incGroup)
 incCat <- factor(incCat, ordered = TRUE)
 povData <- cbind.data.frame(famUn = pregint$Q1.12,
@@ -156,3 +155,5 @@ povertyComp <- cbind.data.frame(povFromTable =
 underPovLevel <-
     factor(povertyComp[["povFromData"]] <= povertyComp[["povFromTable"]],
         levels = c(TRUE, FALSE), labels = c("Yes", "No"))
+
+# rm(povFrame, simppov, simpPov, povertyComp, incCat)

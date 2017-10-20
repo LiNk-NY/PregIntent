@@ -2,7 +2,7 @@
 library(plyr)
 
 # Set factors from recoding data frames
-.recodeFactors <- function(dataset, recodeFrame) {
+recodeFactors <- function(dataset, recodeFrame) {
     dataset <- as.data.frame(dataset, stringsAsFactors = FALSE)
     indicVar <- unique(recodeFrame[["variable"]])
     target <- dataset[, indicVar, drop = FALSE]
