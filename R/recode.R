@@ -156,5 +156,36 @@ underPovLevel <-
     factor(povertyComp[["povFromData"]] <= povertyComp[["povFromTable"]],
         levels = c(TRUE, FALSE), labels = c("Yes", "No"))
 
+# Pregnancy can be avoided
+avoidPreg <- vector("character", 2099)
+
+mavoid <- vector("character", 2099)[males]
+
+avoidFrame <- recodeFactors(pregint, splitFrames$Q2.2)[males, ]
+skip <- rowSums(!is.na(avoidFrame)) > 1
+nonSkips <- sapply(avoidFrame[!skip, ], as.character)[!is.na(avoidFrame[!skip, ])]
+finalSkips <- recodeFactors(pregint, splitFrames$Q2.5)[males, ][skip]
+mavoid[skip] <- as.character(finalSkips)
+mavoid[!skip] <- nonSkips
+
+favoid <- vector("character", 2099)[females]
+
+avoidFrame <- recodeFactors(pregint, splitFrames$Q2.7)[females, ]
+skip <- rowSums(!is.na(avoidFrame)) > 1L
+nonSkips <- sapply(avoidFrame[!skip, ], as.character)[!is.na(avoidFrame[!skip, ])]
+finalSkips <- recodeFactors(pregint, splitFrames$Q2.10)[females, ][skip]
+favoid[skip] <- as.character(finalSkips)
+favoid[!skip] <- nonSkips
+
+avoidPreg[males] <- mavoid
+avoidPreg[females] <- favoid
+
+avoidPreg <- factor(avoidPreg == "can be avoided",
+    levels = c(TRUE, FALSE), labels = c("Yes", "No"))
+
+pregControl <- pregint[paste0("Q3.5_", c(1:3, 5:8))]
+pregCtrl <- recodeFactors(pregint, splitFrames$Q122)
+
 rm(povFrame, simppov, simpPov, povertyComp, incCat, povData, povThresh,
-    newEduLabs, newRelLabs, state.fips, females, males, regionMap)
+    newEduLabs, newRelLabs, state.fips, females, males, regionMap, avoidFrame,
+    skip, nonSkips, finalSkips, mavoid, favoid)
