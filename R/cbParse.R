@@ -40,36 +40,22 @@ multipleCoded <- vapply(cleanChunks, function(x)
 YesNoResponse <- cleanChunks[multipleCoded]
 cleanChunks <- cleanChunks[!multipleCoded]
 
-codingFrames <- lapply(cleanChunks, function(x) {
+splitFrames <- lapply(cleanChunks, function(x) {
     x <- x[!(grepl("I would say I", x, fixed = TRUE) |
         grepl("I have...", x, fixed = TRUE))]
-    x <- gsub("\\(([A-Za-z ]*)\\)", "\\1", x)
-    x <- gsub("specify", "", x, ignore.case = TRUE)
-    codeFormats <- lapply(strsplit(x[-1], " \\("), function(y) {
-        res <- trimws(gsub("\\)|:|_|⊗", "", y))
-        res[!grepl("specify", res, fixed = TRUE)]
-    })
-    codeScheme <- do.call(rbind, codeFormats)
-    colnames(codeScheme) <- c("response", "value")
-    data.frame(codeScheme, stringsAsFactors = FALSE)
+    cleanBlock(x)
 })
 
-codingFrames <- suppressMessages(melt(codingFrames))
-codingFrames <- codingFrames[, c("L1", "value", "response")]
-names(codingFrames) <- c("variable", "value", "response")
-codingFrames[, "value"] <- as.integer(codingFrames[["value"]])
-
-splitFrames <- split(codingFrames, codingFrames[["variable"]])
+Q122 <- lapply(YesNoResponse[2L], function(x) {
+    x <- gsub("[A-Z]\\. ", "", x)
+    cleanBlock(x)
+})
 
 ## Make adjustments to odd variables
-valSeq <- splitFrames$Q1.7$value
-splitFrames$Q1.7$variable <- paste0(splitFrames$Q1.7$variable, "_", valSeq)
-splitFrames$Q1.7$value <- rep(1L, length(valSeq))
+splitFrames <- adjustVarVal(splitFrames, c("Q1.7", "Q1.8", "Q2.2", "Q2.7"))
 
-valSeq <- splitFrames$Q1.8$value
-splitFrames$Q1.8$variable <- paste0(splitFrames$Q1.8$variable, "_", valSeq)
-splitFrames$Q1.8$value <- rep(1L, length(valSeq))
+splitFrames <- c(splitFrames, Q122)
 
 ## Clean variables except the needed one
 rm(list = ls()[!ls() %in% c("splitFrames", "pregint", "codebook",
-    "recodeFactors")])
+    "recodeFactors", "adjustVarVal")])
