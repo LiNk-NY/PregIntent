@@ -161,18 +161,18 @@ avoidPreg <- vector("character", 2099)
 
 mavoid <- vector("character", 2099)[males]
 
-avoidFrame <- recodeFactors(pregint, splitFrames$Q2.2)[males, ]
-skip <- rowSums(!is.na(avoidFrame)) > 1
-nonSkips <- sapply(avoidFrame[!skip, ], as.character)[!is.na(avoidFrame[!skip, ])]
+newFrame <- recodeFactors(pregint, splitFrames$Q2.2)[males, ]
+skip <- rowSums(!is.na(newFrame)) > 1
+nonSkips <- sapply(newFrame[!skip, ], as.character)[!is.na(newFrame[!skip, ])]
 finalSkips <- recodeFactors(pregint, splitFrames$Q2.5)[males, ][skip]
 mavoid[skip] <- as.character(finalSkips)
 mavoid[!skip] <- nonSkips
 
 favoid <- vector("character", 2099)[females]
 
-avoidFrame <- recodeFactors(pregint, splitFrames$Q2.7)[females, ]
-skip <- rowSums(!is.na(avoidFrame)) > 1L
-nonSkips <- sapply(avoidFrame[!skip, ], as.character)[!is.na(avoidFrame[!skip, ])]
+newFrame <- recodeFactors(pregint, splitFrames$Q2.7)[females, ]
+skip <- rowSums(!is.na(newFrame)) > 1L
+nonSkips <- sapply(newFrame[!skip, ], as.character)[!is.na(newFrame[!skip, ])]
 finalSkips <- recodeFactors(pregint, splitFrames$Q2.10)[females, ][skip]
 favoid[skip] <- as.character(finalSkips)
 favoid[!skip] <- nonSkips
@@ -183,9 +183,30 @@ avoidPreg[females] <- favoid
 avoidPreg <- factor(avoidPreg == "can be avoided",
     levels = c(TRUE, FALSE), labels = c("Yes", "No"))
 
-pregControl <- pregint[paste0("Q3.5_", c(1:3, 5:8))]
-pregCtrl <- recodeFactors(pregint, splitFrames$Q122)
+pregCtrl <- vector("character", 2099)
+newFrame <- recodeFactors(pregint, splitFrames$Q3.5)
+newFrame[newFrame == 2L] <- NA
+nonSkips <- rowSums(!is.na(newFrame))  == 1L
+finalSkips <- recodeFactors(pregint, splitFrames$Q122)[!nonSkips, ]
+pregCtrl[!nonSkips] <- as.character(finalSkips)
+pregCtrl[nonSkips] <- sapply(newFrame[nonSkips, ],
+    as.character)[!is.na(newFrame[nonSkips, ])]
+pregCtrl[pregCtrl %in% c("can be planned in advance",
+    "can be planned in discussion with your partner",
+    "can be planned to happen after one's ideal criteria are fulfilled")] <- "Yes"
+pregCtrl[pregCtrl %in% c("'just happens'",
+  "can be left to 'fate' or a higher power like God",
+  "is a natural process that happens when it’s meant to be")] <- "No"
+pregCtrl[pregCtrl %in% "other"] <- NA_character_
+
+pregControl <- vector("character", 2099)
+splitFrames$Q3.13$variable <- "Q3.13_1"
+splitFrames$Q3.12$variable <- "Q3.12_1"
+pregControl[females] <- as.character(recodeFactors(pregint,
+    splitFrames$Q3.13)[females, ])
+pregControl[males] <- as.character(recodeFactors(pregint,
+    splitFrames$Q3.12)[males, ])
 
 rm(povFrame, simppov, simpPov, povertyComp, incCat, povData, povThresh,
-    newEduLabs, newRelLabs, state.fips, females, males, regionMap, avoidFrame,
-    skip, nonSkips, finalSkips, mavoid, favoid)
+    newEduLabs, newRelLabs, state.fips, females, males, regionMap,
+    newFrame, skip, nonSkips, finalSkips, mavoid, favoid)
