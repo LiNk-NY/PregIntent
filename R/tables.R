@@ -1,8 +1,10 @@
 .meansd <- function(var, na.rm = TRUE) {
+    objName <- as.character(substitute(var))
     var <- as.numeric(var)
-    round(c(n = sum(!is.na(var)),
+    vec <- round(c(n = sum(!is.na(var)),
     mean = mean(var, na.rm = na.rm),
     stddev = sd(var, na.rm = na.rm)), 2)
+    matrix(vec, nrow = 1, dimnames = list(as.character(substitute(var)), names(vec)))
 }
 
 .prop <- function(var) {
@@ -15,16 +17,14 @@
     cbind.data.frame(counts, props)
 }
 ## Bivariable Table 1
-sum(table(gender[[1]]))
-table(gender[[1]])
-
+rbind(.meansd(age),
 .meansd(childnum)
+)
 
-.prop(regionOrg)
-
-.meansd(age)
-
-.prop(hispanic)
-.prop(educ)
-.prop(idealCrit)
+rbind(.prop(gender),
+.prop(regionOrg),
+.prop(hispanic),
+.prop(educ),
+.prop(idealCrit),
 .prop(avoidPreg)
+)
