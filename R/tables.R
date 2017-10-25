@@ -27,6 +27,21 @@
     vals <- paste0(counts, " (", round(props, 2), ")")
     matrix(vals, ncol = 2, dimnames = crossnames)
 }
+
+.groupMeans <- function(numVar, outcome) {
+    varName <- as.character(substitute(numVar))
+    numVar <- as.numeric(numVar)
+    splitSet <- split(numVar, outcome)
+    groupNames <- names(splitSet)
+    res <- vapply(seq_along(splitSet), function(i, x) {
+        m <- round(mean(x[[i]], na.rm = TRUE), 2)
+        std <- round(sd(x[[i]], na.rm = TRUE), 2)
+        paste0(m, " (", std, ")")
+    }, character(1L), x = splitSet)
+    resMat <- matrix(res, nrow = 1L, dimnames = list(varName, groupNames))
+    resMat[, rev(groupNames), drop = FALSE]
+}
+
 ## Bivariable Table 1
 rbind(.meansd(age),
 .meansd(childnum)
