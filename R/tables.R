@@ -12,7 +12,7 @@
         var <- var[[1L]]
     counts <- matrix(table(var), ncol = 1,
         dimnames = list(names(table(var)), "n"))
-    props <- matrix(round(prop.table(table(var)), 2), ncol = 1,
+    props <- matrix(round(prop.table(table(var))*100, 1), ncol = 1,
         dimnames = list(names(table(var)), "perc"))
     cbind.data.frame(counts, props)
 }
@@ -32,7 +32,7 @@
 rbind(.meansd(age),
 .meansd(childnum)
 )
-
+cbind(
 rbind(.prop(gender),
 .prop(regionOrg),
 .prop(hispanic),
@@ -40,7 +40,7 @@ rbind(.prop(gender),
 .prop(idealCrit),
 .prop(avoidPreg),
 .prop(pregControl)
-)
+),
 
 rbind(.crossTab(gender, pregFeel),
       .crossTab(regionOrg, pregFeel),
@@ -49,4 +49,5 @@ rbind(.crossTab(gender, pregFeel),
       .crossTab(idealCrit, pregFeel),
       .crossTab(avoidPreg, pregFeel),
       .crossTab(pregControl, pregFeel)
+)
 )
