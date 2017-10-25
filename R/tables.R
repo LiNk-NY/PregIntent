@@ -43,25 +43,16 @@
 }
 
 ## Bivariable Table 1
-rbind(.meansd(age),
-.meansd(childnum)
-)
-cbind(
-rbind(.prop(gender),
-.prop(regionOrg),
-.prop(hispanic),
-.prop(educ),
-.prop(idealCrit),
-.prop(avoidPreg),
-.prop(pregControl)
-),
+numericPortion <- cbind(
+    rbind(.meansd(age), .meansd(childnum) ),
+    rbind(.groupMeans(age, pregFeel), .groupMeans(childnum, pregFeel))
+    )
 
-rbind(.crossTab(gender, pregFeel),
-      .crossTab(regionOrg, pregFeel),
-      .crossTab(hispanic, pregFeel),
-      .crossTab(educ, pregFeel),
-      .crossTab(idealCrit, pregFeel),
-      .crossTab(avoidPreg, pregFeel),
-      .crossTab(pregControl, pregFeel)
-)
-)
+categorical <- cbind(
+    rbind(.prop(gender), .prop(regionOrg), .prop(hispanic), .prop(educ),
+        .prop(idealCrit), .prop(avoidPreg), .prop(pregControl)),
+    rbind(.crossTab(gender, pregFeel), .crossTab(regionOrg, pregFeel),
+        .crossTab(hispanic, pregFeel), .crossTab(educ, pregFeel),
+        .crossTab(idealCrit, pregFeel), .crossTab(avoidPreg, pregFeel),
+        .crossTab(pregControl, pregFeel))
+    )
