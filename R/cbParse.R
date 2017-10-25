@@ -51,10 +51,18 @@ Q122 <- lapply(YesNoResponse[2L], function(x) {
     cleanBlock(x)
 })
 
+Q3.5 <- lapply(YesNoResponse[1L], function(x) {
+    responses <- grepl("^Yes|^No", x)
+    x <- x[!responses]
+    x <- gsub("[A-Z]\\. ", "", x)
+    cleanBlock(x)
+})
+Q3.5 <- adjustVarVal(Q3.5, "Q3.5")
+
 ## Make adjustments to odd variables
 splitFrames <- adjustVarVal(splitFrames, c("Q1.7", "Q1.8", "Q2.2", "Q2.7"))
 
-splitFrames <- c(splitFrames, Q122)
+splitFrames <- c(splitFrames, Q122, Q3.5)
 
 ## Clean variables except the needed one
 rm(list = ls()[!ls() %in% c("splitFrames", "pregint", "codebook",
