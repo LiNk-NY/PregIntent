@@ -59,6 +59,11 @@ Q3.5 <- lapply(YesNoResponse[1L], function(x) {
 })
 Q3.5 <- adjustVarVal(Q3.5, "Q3.5")
 
+## Adjust for inconsistent names
+splitFrames$Q3.17a$variable <- paste0(gsub("a", "", splitFrames$Q3.17a$variable),
+    "_", splitFrames$Q3.17a$value)
+splitFrames$Q3.17a$value <- rep(1L, length(splitFrames$Q3.17a$value))
+
 ## Make adjustments to odd variables
 splitFrames <- adjustVarVal(splitFrames, c("Q1.7", "Q1.8", "Q2.2", "Q2.7"))
 
