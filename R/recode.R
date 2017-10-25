@@ -183,21 +183,21 @@ avoidPreg[females] <- favoid
 avoidPreg <- factor(avoidPreg == "can be avoided",
     levels = c(TRUE, FALSE), labels = c("Yes", "No"))
 
-pregCtrl <- vector("character", 2099)
+pregPlan <- vector("character", 2099)
 newFrame <- recodeFactors(pregint, splitFrames$Q3.5)
 newFrame[newFrame == 2L] <- NA
 nonSkips <- rowSums(!is.na(newFrame))  == 1L
 finalSkips <- recodeFactors(pregint, splitFrames$Q122)[!nonSkips, ]
-pregCtrl[!nonSkips] <- as.character(finalSkips)
-pregCtrl[nonSkips] <- sapply(newFrame[nonSkips, ],
+pregPlan[!nonSkips] <- as.character(finalSkips)
+pregPlan[nonSkips] <- sapply(newFrame[nonSkips, ],
     as.character)[!is.na(newFrame[nonSkips, ])]
-pregCtrl[pregCtrl %in% c("can be planned in advance",
+pregPlan[pregPlan %in% c("can be planned in advance",
     "can be planned in discussion with your partner",
     "can be planned to happen after one's ideal criteria are fulfilled")] <- "Yes"
-pregCtrl[pregCtrl %in% c("'just happens'",
+pregPlan[pregPlan %in% c("'just happens'",
   "can be left to 'fate' or a higher power like God",
   "is a natural process that happens when it’s meant to be")] <- "No"
-pregCtrl[pregCtrl %in% "other"] <- NA_character_
+pregPlan[pregPlan %in% "other"] <- NA_character_
 
 pregControl <- vector("character", 2099)
 splitFrames$Q3.13$variable <- "Q3.13_1"
