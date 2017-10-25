@@ -1,20 +1,19 @@
 .meansd <- function(var, na.rm = TRUE) {
     objName <- as.character(substitute(var))
     var <- as.numeric(var)
-    vec <- round(c(n = sum(!is.na(var)),
-    mean = mean(var, na.rm = na.rm),
-    stddev = sd(var, na.rm = na.rm)), 2)
-    matrix(vec, nrow = 1, dimnames = list(objName, names(vec)))
+    m <- round(mean(var, na.rm = na.rm), 2)
+    stddev <- round(sd(var, na.rm = na.rm), 2)
+    matrix(paste0(m, " (", stddev, ")"), ncol = 1L,
+        dimnames = list(objName, "M (SD)"))
 }
 
 .prop <- function(var) {
     if (is.data.frame(var))
         var <- var[[1L]]
-    counts <- matrix(table(var), ncol = 1,
-        dimnames = list(names(table(var)), "n"))
-    props <- matrix(round(prop.table(table(var))*100, 1), ncol = 1,
-        dimnames = list(names(table(var)), "perc"))
-    cbind.data.frame(counts, props)
+    counts <- table(var)
+    props <- round(prop.table(table(var))*100, 1)
+    vals <- paste0(counts, " (", round(props, 2), ")")
+    matrix(vals, ncol = 1, dimnames = list(names(table(var)), "n (%)"))
 }
 
 .crossTab <- function(var1, var2) {
