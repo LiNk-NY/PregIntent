@@ -207,6 +207,9 @@ pregControl[females] <- as.character(recodeFactors(pregint,
 pregControl[males] <- as.character(recodeFactors(pregint,
     splitFrames$Q3.12)[males, ])
 
+## Select all that apply question but not indicated in actual question
+## recodeFactors(pregint, splitFrames$Q3.17a)
+
 rm(povFrame, simppov, simpPov, povertyComp, incCat, povData, povThresh,
     newEduLabs, newRelLabs, state.fips, females, males, regionMap,
     newFrame, skip, nonSkips, finalSkips, mavoid, favoid)
