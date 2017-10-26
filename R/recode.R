@@ -210,6 +210,7 @@ becomeControl[females] <- as.character(recodeFactors(pregint,
 becomeControl %<>%
     fct_collapse(`Low control` = c("no control", "a little control"),
         `High control` = c("complete control", "a lot of control"))
+
 ## Select all that apply question but not indicated in actual question
 ## recodeFactors(pregint, splitFrames$Q3.17a)
 
