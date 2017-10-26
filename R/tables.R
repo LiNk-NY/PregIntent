@@ -12,7 +12,7 @@ ttestres <- rbind(.ttestPval(age, pregFeel), .ttestPval(childnum, pregFeel))
 
 categorical <- cbind(
     rbind(.prop(gender), .prop(regionOrg), .prop(hispanic), .prop(educ),
-        .prop(idealCrit), .prop(avoidPreg)),
+        .prop(idealCrit), .prop(avoidPreg), .prop(pregPlan)),
     rbind(.crossTab(gender, pregFeel), .crossTab(regionOrg, pregFeel),
         .crossTab(hispanic, pregFeel), .crossTab(educ, pregFeel),
         .crossTab(idealCrit, pregFeel), .crossTab(avoidPreg, pregFeel),
@@ -39,3 +39,36 @@ simpleCap <- function(x) {
 rownames(tab1) <- simpleCap(rownames(tab1))
 
 write.csv(tab1, file = "data/table1.csv")
+
+# Table 2 - Control over Pregnancy ----------------------------------------
+
+nums0 <- cbind(
+    rbind(.groupMeans(age, avoidControl), .groupMeans(childnum, avoidControl)),
+    rbind(.ttestPval(age, avoidControl), .ttestPval(childnum, avoidControl))
+    )
+
+categorical0 <- rbind(.crossTab(gender, avoidControl), .crossTab(regionOrg, avoidControl),
+        .crossTab(hispanic, avoidControl), .crossTab(educ, avoidControl),
+        .crossTab(idealCrit, avoidControl), .crossTab(avoidPreg, avoidControl),
+        .crossTab(pregPlan, avoidControl))
+
+chitestres0 <- rbind(.chitestPval(gender, avoidControl),
+    .chitestPval(regionOrg, avoidControl), .chitestPval(hispanic, avoidControl),
+    .chitestPval(educ, avoidControl), .chitestPval(idealCrit, avoidControl),
+    .chitestPval(avoidPreg, avoidControl), .chitestPval(pregPlan, avoidControl))
+
+nums1 <- cbind(
+    rbind(.groupMeans(age, becomeControl), .groupMeans(childnum, becomeControl)),
+    rbind(.ttestPval(age, becomeControl), .ttestPval(childnum, becomeControl))
+    )
+
+categorical1 <- rbind(.crossTab(gender, becomeControl), .crossTab(regionOrg, becomeControl),
+        .crossTab(hispanic, becomeControl), .crossTab(educ, becomeControl),
+        .crossTab(idealCrit, becomeControl), .crossTab(avoidPreg, becomeControl),
+        .crossTab(pregPlan, becomeControl))
+
+chitestres1 <- rbind(.chitestPval(gender, becomeControl),
+    .chitestPval(regionOrg, becomeControl), .chitestPval(hispanic, becomeControl),
+    .chitestPval(educ, becomeControl), .chitestPval(idealCrit, becomeControl),
+    .chitestPval(avoidPreg, becomeControl), .chitestPval(pregPlan, becomeControl))
+
