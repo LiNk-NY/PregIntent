@@ -199,16 +199,31 @@ pregPlan[pregPlan %in% c("'just happens'",
   "is a natural process that happens when it’s meant to be")] <- "No"
 pregPlan[pregPlan %in% "other"] <- NA_character_
 
-pregControl <- vector("character", 2099)
-splitFrames$Q3.13$variable <- "Q3.13_1"
+becomeControl <- vector("character", 2099)
 splitFrames$Q3.12$variable <- "Q3.12_1"
-pregControl[females] <- as.character(recodeFactors(pregint,
-    splitFrames$Q3.13)[females, ])
-pregControl[males] <- as.character(recodeFactors(pregint,
+splitFrames$Q3.13$variable <- "Q3.13_1"
+becomeControl[males] <- as.character(recodeFactors(pregint,
     splitFrames$Q3.12)[males, ])
+becomeControl[females] <- as.character(recodeFactors(pregint,
+    splitFrames$Q3.13)[females, ])
 
+becomeControl %<>%
+    fct_collapse(`Low control` = c("no control", "a little control"),
+        `High control` = c("complete control", "a lot of control"))
 ## Select all that apply question but not indicated in actual question
 ## recodeFactors(pregint, splitFrames$Q3.17a)
+
+avoidControl <- vector("character", 2099)
+splitFrames$Q2.12$variable <- "Q3.12_1"
+splitFrames$Q2.13$variable <- "Q3.13_1"
+avoidControl[males] <- as.character(recodeFactors(pregint,
+    splitFrames$Q2.12)[males, ])
+avoidControl[females] <- as.character(recodeFactors(pregint,
+    splitFrames$Q2.13)[females, ])
+
+avoidControl %<>%
+    fct_collapse(`Low control` = c("no control", "a little control"),
+        `High control` = c("complete control", "a lot of control"))
 
 rm(povFrame, simppov, simpPov, povertyComp, incCat, povData, povThresh,
     newEduLabs, newRelLabs, state.fips, females, males, regionMap,
