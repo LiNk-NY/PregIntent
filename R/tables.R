@@ -73,17 +73,16 @@ ttestres <- rbind(.ttestPval(age, pregFeel), .ttestPval(childnum, pregFeel))
 
 categorical <- cbind(
     rbind(.prop(gender), .prop(regionOrg), .prop(hispanic), .prop(educ),
-        .prop(idealCrit), .prop(avoidPreg), .prop(pregControl)),
+        .prop(idealCrit), .prop(avoidPreg)),
     rbind(.crossTab(gender, pregFeel), .crossTab(regionOrg, pregFeel),
         .crossTab(hispanic, pregFeel), .crossTab(educ, pregFeel),
-        .crossTab(idealCrit, pregFeel), .crossTab(avoidPreg, pregFeel),
-        .crossTab(pregControl, pregFeel))
+        .crossTab(idealCrit, pregFeel), .crossTab(avoidPreg, pregFeel))
     )
 
 chitestres <- rbind(.chitestPval(gender, pregFeel),
     .chitestPval(regionOrg, pregFeel), .chitestPval(hispanic, pregFeel),
     .chitestPval(educ, pregFeel), .chitestPval(idealCrit, pregFeel),
-    .chitestPval(avoidPreg, pregFeel), .chitestPval(pregControl, pregFeel))
+    .chitestPval(avoidPreg, pregFeel))
 
 ## Bind chisq tests and p.vals
 (cats <- cbind(categorical, chitestres))
