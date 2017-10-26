@@ -42,11 +42,34 @@
     resMat[, rev(groupNames), drop = FALSE]
 }
 
+.ttestPval <- function(numVar, outcome) {
+    varName <- as.character(substitute(numVar))
+    numVar <- as.numeric(numVar)
+    matrix(
+        Hmisc::format.pval(pv =  t.test(numVar ~ outcome)$p.value, digits = 3,
+            eps = 0.0001,  nsmall = 3), nrow = 1L,
+            dimnames = list(varName, "p.value"))
+}
+
+.chitestPval <- function(catVar, outcome) {
+    if (is.data.frame(catVar))
+        catVar <- catVar[[1L]]
+    labels <- names(table(catVar))
+    lvls <- length(labels)
+    matrix(c(Hmisc::format.pval(pv = chisq.test(catVar, outcome)$p.value,
+        digits = 3, eps = 0.0001, nsmall = 3), rep("", lvls-1)), ncol = 1L,
+        dimnames = list(labels, "p.value"))
+}
+
 ## Bivariable Table 1
 numericPortion <- cbind(
     rbind(.meansd(age), .meansd(childnum) ),
     rbind(.groupMeans(age, pregFeel), .groupMeans(childnum, pregFeel))
     )
+ttestres <- rbind(.ttestPval(age, pregFeel), .ttestPval(childnum, pregFeel))
+
+## Bind means and p.vals
+(nums <- cbind(numericPortion, ttestres ))
 
 categorical <- cbind(
     rbind(.prop(gender), .prop(regionOrg), .prop(hispanic), .prop(educ),
@@ -56,3 +79,15 @@ categorical <- cbind(
         .crossTab(idealCrit, pregFeel), .crossTab(avoidPreg, pregFeel),
         .crossTab(pregControl, pregFeel))
     )
+
+chitestres <- rbind(.chitestPval(gender, pregFeel),
+    .chitestPval(regionOrg, pregFeel), .chitestPval(hispanic, pregFeel),
+    .chitestPval(educ, pregFeel), .chitestPval(idealCrit, pregFeel),
+    .chitestPval(avoidPreg, pregFeel), .chitestPval(pregControl, pregFeel))
+
+## Bind chisq tests and p.vals
+(cats <- cbind(categorical, chitestres))
+
+tab1 <- rbind(nums, cats)
+
+write.csv(tab1, file = "data/table1.csv")
