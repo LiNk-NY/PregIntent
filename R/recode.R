@@ -4,6 +4,8 @@ library(tidyr)
 library(maps)
 data("state.fips")
 library(Hmisc)
+library(magrittr)
+library(forcats)
 
 ## Initial checks
 # Sexual preference
