@@ -215,8 +215,8 @@ becomeControl %<>%
 ## recodeFactors(pregint, splitFrames$Q3.17a)
 
 avoidControl <- vector("character", 2099)
-splitFrames$Q2.12$variable <- "Q3.12_1"
-splitFrames$Q2.13$variable <- "Q3.13_1"
+splitFrames$Q2.12$variable <- "Q2.12_1"
+splitFrames$Q2.13$variable <- "Q2.13_1"
 avoidControl[males] <- as.character(recodeFactors(pregint,
     splitFrames$Q2.12)[males, ])
 avoidControl[females] <- as.character(recodeFactors(pregint,
