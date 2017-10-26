@@ -90,4 +90,13 @@ chitestres <- rbind(.chitestPval(gender, pregFeel),
 
 tab1 <- rbind(nums, cats)
 
+## Fix caps in categories
+simpleCap <- function(x) {
+    unname(vapply(x, function(s) {
+    paste(toupper(substring(s, 1, 1)), substring(s, 2), sep="", collapse=" ")
+    }, character(1L)))
+}
+
+rownames(tab1) <- simpleCap(rownames(tab1))
+
 write.csv(tab1, file = "data/table1.csv")
