@@ -57,6 +57,10 @@ chitestres0 <- rbind(.chitestPval(gender, avoidControl),
     .chitestPval(educ, avoidControl), .chitestPval(idealCrit, avoidControl),
     .chitestPval(avoidPreg, avoidControl), .chitestPval(pregPlan, avoidControl))
 
+cats0 <- cbind(categorical0, chitestres0)
+
+leftside <- rbind(nums0, cats0)
+
 nums1 <- cbind(
     rbind(.groupMeans(age, becomeControl), .groupMeans(childnum, becomeControl)),
     rbind(.ttestPval(age, becomeControl), .ttestPval(childnum, becomeControl))
@@ -72,3 +76,13 @@ chitestres1 <- rbind(.chitestPval(gender, becomeControl),
     .chitestPval(educ, becomeControl), .chitestPval(idealCrit, becomeControl),
     .chitestPval(avoidPreg, becomeControl), .chitestPval(pregPlan, becomeControl))
 
+cats1 <- cbind(categorical1, chitestres1)
+
+rightside <- rbind(nums1, cats1)
+
+## AVOID CONTROL // BECOME CONTROL
+tab2 <- cbind(leftside, rightside)
+
+rownames(tab2) <- simpleCap(rownames(tab2))
+
+write.csv(tab2, "data/table2.csv")
