@@ -10,7 +10,7 @@ names(modeldf) <- c("age", "childnum", "gender", "hispanic", "idealCrit",
 
 fit1 <- glm(pregFeel ~ ., data = modeldf, family = "binomial")
 
-tidy(fit1) %>%
+posneg <- tidy(fit1) %>%
     mutate(estimate = exp(estimate)) %>%
     cbind.data.frame(exp(confint(fit1)), row.names = NULL) %>%
     select(-statistic, -std.error) %>% select(-p.value, everything())
@@ -24,7 +24,7 @@ names(modeldf) <- c("age", "childnum", "gender", "hispanic", "idealCrit",
 
 fit2 <- glm(avoidControl ~ ., data = modeldf, family = "binomial")
 
-tidy(fit2) %>%
+avoid <- tidy(fit2) %>%
     mutate(estimate = exp(estimate)) %>%
     cbind.data.frame(exp(confint(fit2)), row.names = NULL) %>%
     select(-statistic, -std.error) %>% select(-p.value, everything())
@@ -37,7 +37,17 @@ names(modeldf) <- c("age", "childnum", "gender", "hispanic", "idealCrit",
 
 fit3 <- glm(becomeControl ~ ., data = modeldf, family = "binomial")
 
-tidy(fit3) %>%
+become <- tidy(fit3) %>%
     mutate(estimate = exp(estimate)) %>%
     cbind.data.frame(exp(confint(fit3)), row.names = NULL) %>%
     select(-statistic, -std.error) %>% select(-p.value, everything())
+
+posneg
+write.csv(posneg, "data/regFeel.csv")
+
+avoid
+write.csv(avoid, "data/regAvoid.csv")
+
+become
+write.csv(become, "data/becomeReg.csv")
+
