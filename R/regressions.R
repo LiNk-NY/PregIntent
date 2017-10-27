@@ -1,16 +1,6 @@
 ## Load pkg
 library(broom)
 
-## Minor conversions to factors
-idealCrit <- factor(idealCrit)
-idealCrit <- relevel(idealCrit, ref = "no")
-
-avoidPreg <- relevel(avoidPreg, ref = "No")
-pregPlan <- factor(pregPlan)
-pregFeel <- factor(pregFeel)
-
-educ <- relevel(educ[[1L]], "LT/some HS")
-
 ## Models
 modeldf <- cbind.data.frame(age, as.numeric(childnum), gender, hispanic,
     idealCrit, avoidPreg, pregPlan, pregFeel)

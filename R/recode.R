@@ -226,6 +226,20 @@ avoidControl %<>%
     fct_collapse(`Low control` = c("no control", "a little control"),
         `High control` = c("complete control", "a lot of control"))
 
+# recoding and releveling -------------------------------------------------
+
+idealCrit <- factor(idealCrit)
+idealCrit <- relevel(idealCrit, ref = "no")
+
+avoidPreg <- relevel(avoidPreg, ref = "No")
+pregPlan <- factor(pregPlan)
+pregFeel <- factor(pregFeel)
+
+educ <- relevel(educ[[1L]], "LT/some HS")
+
+
+# removal of extra obj ----------------------------------------------------
+
 rm(povFrame, simppov, simpPov, povertyComp, incCat, povData, povThresh,
     newEduLabs, newRelLabs, state.fips, females, males, regionMap,
     newFrame, skip, nonSkips, finalSkips, mavoid, favoid)
