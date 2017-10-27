@@ -13,7 +13,7 @@ pregFeel <- factor(pregFeel)
 modeldf <- cbind.data.frame(age, as.numeric(childnum), gender, hispanic,
     idealCrit, avoidPreg, pregPlan, pregFeel)
 
-names(modeldf) <- c("age", "childnum", "gender", "hispanic", "idealCrit",
+names(modeldf) <- c("Age", "childnum", "Gender", "Hispanic", "idealCrit",
     "avoidPreg", "pregPlan", "pregFeel")
 
 fit1 <- glm(pregFeel ~ ., data = modeldf, family = "binomial")
@@ -31,7 +31,7 @@ fit1 <- glm(pregFeel ~ ., data = modeldf, family = "binomial")
 modeldf <- cbind.data.frame(age, as.numeric(childnum), gender, educ,
     idealCrit, avoidPreg, pregPlan, avoidControl)
 
-names(modeldf) <- c("age", "childnum", "gender", "hispanic", "idealCrit",
+names(modeldf) <- c("Age", "childnum", "Gender", "Education", "idealCrit",
     "avoidPreg", "pregPlan", "avoidControl")
 
 fit2 <- glm(avoidControl ~ ., data = modeldf, family = "binomial")
@@ -48,7 +48,7 @@ fit2 <- glm(avoidControl ~ ., data = modeldf, family = "binomial")
 modeldf <- cbind.data.frame(as.numeric(childnum), gender, hispanic,
     idealCrit, avoidPreg, pregPlan, becomeControl)
 
-names(modeldf) <- c("age", "childnum", "gender", "hispanic", "idealCrit",
+names(modeldf) <- c("childnum", "gender", "hispanic", "idealCrit",
     "avoidPreg", "pregPlan", "becomeControl")
 
 fit3 <- glm(becomeControl ~ ., data = modeldf, family = "binomial")
