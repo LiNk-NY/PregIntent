@@ -1,4 +1,6 @@
 # Table 1 Sociodemographics x Feelings about Pregnancy --------------------
+# Totals by group
+table(pregFeel)
 
 ## Bivariable Table 1
 numericPortion <- cbind(
@@ -41,6 +43,8 @@ rownames(tab1) <- simpleCap(rownames(tab1))
 write.csv(tab1, file = "data/table1.csv")
 
 # Table 2 - Control over Pregnancy ----------------------------------------
+## Totals by group
+table(avoidControl)
 
 nums0 <- cbind(
     rbind(.groupMeans(age, avoidControl), .groupMeans(childnum, avoidControl)),
@@ -60,6 +64,9 @@ chitestres0 <- rbind(.chitestPval(gender, avoidControl),
 cats0 <- cbind(categorical0, chitestres0)
 
 leftside <- rbind(nums0, cats0)
+
+## Total by group
+table(becomeControl)
 
 nums1 <- cbind(
     rbind(.groupMeans(age, becomeControl), .groupMeans(childnum, becomeControl)),
