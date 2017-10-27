@@ -11,7 +11,8 @@ invisible(lapply(file.path("R", filesToSource), source))
 # rm(filesInDir, filesToSource, fileOrd)
 
 
-variables <- ls()[!ls() %in% c("codebook", "recodeFactors", "splitFrames")]
+variables <- ls()[!ls() %in% c("codebook", "recodeFactors",
+    "splitFrames", "adjustVarVal")]
 names(variables) <- variables
 dfsLog <- vapply(variables, function(x) is.data.frame(get(x)), logical(1L))
 
