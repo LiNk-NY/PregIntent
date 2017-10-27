@@ -129,8 +129,8 @@ povFrame <- do.call(rbind, lapply(as.character(0:8), function(x)
     ))
 )
 povFrame <- povFrame[!is.na(povFrame$povThresh), ]
-simpPov <- povFrame %>% dplyr::group_by(famUnit, childUnder18) %>%
-    summarise(mPovThresh = mean(povThresh))
+simpPov <- povFrame %>% group_by(famUnit, childUnder18) %>%
+    dplyr::summarize(mPovThresh = mean(povThresh, na.rm = TRUE))
 simpPov <- as.data.frame(simpPov)
 
 simpPov$incGroup <- Hmisc::cut2(simpPov$mPovThresh,
