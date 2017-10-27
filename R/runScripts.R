@@ -1,16 +1,17 @@
 ## Script to run data cleaning and recoding
-filesInDir <- list.files("R/")
-filesToSource <- filesInDir[-which(filesInDir == "runScripts.R")]
-fileOrd <- c(4, 3, 2, 1, 5)
-filesToSource <- filesToSource[fileOrd]
+filesToSource <- c("install.R", "helpers.R", "clean.R", "cbParse.R", "recode.R")
+filePaths <- file.path("R", filesToSource)
+
+## Make sure all files exist
+all(file.exists(filePaths))
 
 ## Source all scripts
-invisible(lapply(file.path("R", filesToSource), source))
+invisible(lapply(filePaths, source))
 
 ## remove variables (if not already removed)
-# rm(filesInDir, filesToSource, fileOrd)
+## rm(filesToSource, filePaths)
 
-
+## Remove objs that were used for cleaning
 variables <- ls()[!ls() %in% c("codebook", "recodeFactors",
     "splitFrames", "adjustVarVal")]
 names(variables) <- variables
