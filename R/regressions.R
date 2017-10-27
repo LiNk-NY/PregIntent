@@ -1,6 +1,14 @@
 ## Load pkg
 library(broom)
 
+## Minor conversions to factors
+idealCrit <- factor(idealCrit)
+idealCrit <- relevel(idealCrit, ref = "no")
+
+avoidPreg <- relevel(avoidPreg, ref = "No")
+pregPlan <- factor(pregPlan)
+pregFeel <- factor(pregFeel)
+
 ## Models
 modeldf <- cbind.data.frame(age, as.numeric(childnum), gender, hispanic,
     idealCrit, avoidPreg, pregPlan, pregFeel)
@@ -10,10 +18,14 @@ names(modeldf) <- c("age", "childnum", "gender", "hispanic", "idealCrit",
 
 fit1 <- glm(pregFeel ~ ., data = modeldf, family = "binomial")
 
-posneg <- tidy(fit1) %>%
-    mutate(estimate = exp(estimate)) %>%
-    cbind.data.frame(exp(confint(fit1)), row.names = NULL) %>%
-    select(-statistic, -std.error) %>% select(-p.value, everything())
+(posneg <- tidy(fit1) %>%
+    mutate(estimate = round(exp(estimate), 2)) %>%
+    cbind.data.frame(round(exp(confint(fit1)), 1), row.names = NULL) %>%
+    select(-statistic, -std.error) %>% select(-p.value, everything()) %>%
+    mutate(p.value = format.pval(pv = p.value, digits = 3, eps = 0.001)) %>%
+    unite("95% CI", c("2.5 %", "97.5 %"), sep = " - ") %>%
+        rename(beta = "estimate", variable = "term")
+)
 
 ## Models
 modeldf <- cbind.data.frame(age, as.numeric(childnum), gender, hispanic,
@@ -24,10 +36,14 @@ names(modeldf) <- c("age", "childnum", "gender", "hispanic", "idealCrit",
 
 fit2 <- glm(avoidControl ~ ., data = modeldf, family = "binomial")
 
-avoid <- tidy(fit2) %>%
-    mutate(estimate = exp(estimate)) %>%
-    cbind.data.frame(exp(confint(fit2)), row.names = NULL) %>%
-    select(-statistic, -std.error) %>% select(-p.value, everything())
+(avoid <- tidy(fit2) %>%
+    mutate(estimate = round(exp(estimate), 2)) %>%
+    cbind.data.frame(round(exp(confint(fit2)), 1), row.names = NULL) %>%
+    select(-statistic, -std.error) %>% select(-p.value, everything()) %>%
+    mutate(p.value = format.pval(pv = p.value, digits = 3, eps = 0.001)) %>%
+    unite("95% CI", c("2.5 %", "97.5 %"), sep = " - ") %>%
+        rename(beta = "estimate", variable = "term")
+)
 
 modeldf <- cbind.data.frame(age, as.numeric(childnum), gender, hispanic,
     idealCrit, avoidPreg, pregPlan, becomeControl)
@@ -37,10 +53,14 @@ names(modeldf) <- c("age", "childnum", "gender", "hispanic", "idealCrit",
 
 fit3 <- glm(becomeControl ~ ., data = modeldf, family = "binomial")
 
-become <- tidy(fit3) %>%
-    mutate(estimate = exp(estimate)) %>%
-    cbind.data.frame(exp(confint(fit3)), row.names = NULL) %>%
-    select(-statistic, -std.error) %>% select(-p.value, everything())
+(become <- tidy(fit3) %>%
+    mutate(estimate = round(exp(estimate), 2)) %>%
+    cbind.data.frame(round(exp(confint(fit3)), 1), row.names = NULL) %>%
+    select(-statistic, -std.error) %>% select(-p.value, everything()) %>%
+    mutate(p.value = format.pval(pv = p.value, digits = 3, eps = 0.001)) %>%
+    unite("95% CI", c("2.5 %", "97.5 %"), sep = " - ") %>%
+        rename(beta = "estimate", variable = "term")
+)
 
 posneg
 write.csv(posneg, "data/regFeel.csv")
