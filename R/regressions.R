@@ -28,7 +28,7 @@ fit1 <- glm(pregFeel ~ ., data = modeldf, family = "binomial")
 )
 
 ## Models
-modeldf <- cbind.data.frame(age, as.numeric(childnum), gender, hispanic,
+modeldf <- cbind.data.frame(age, as.numeric(childnum), gender, educ,
     idealCrit, avoidPreg, pregPlan, avoidControl)
 
 names(modeldf) <- c("age", "childnum", "gender", "hispanic", "idealCrit",
@@ -45,7 +45,7 @@ fit2 <- glm(avoidControl ~ ., data = modeldf, family = "binomial")
         rename(beta = "estimate", variable = "term")
 )
 
-modeldf <- cbind.data.frame(age, as.numeric(childnum), gender, hispanic,
+modeldf <- cbind.data.frame(as.numeric(childnum), gender, hispanic,
     idealCrit, avoidPreg, pregPlan, becomeControl)
 
 names(modeldf) <- c("age", "childnum", "gender", "hispanic", "idealCrit",
