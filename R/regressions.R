@@ -9,6 +9,8 @@ avoidPreg <- relevel(avoidPreg, ref = "No")
 pregPlan <- factor(pregPlan)
 pregFeel <- factor(pregFeel)
 
+educ <- relevel(educ[[1L]], "LT/some HS")
+
 ## Models
 modeldf <- cbind.data.frame(age, as.numeric(childnum), gender, hispanic,
     idealCrit, avoidPreg, pregPlan, pregFeel)
