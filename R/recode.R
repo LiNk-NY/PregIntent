@@ -226,6 +226,21 @@ avoidControl %<>%
     fct_collapse(`Low control` = c("no control", "a little control"),
         `High control` = c("complete control", "a lot of control"))
 
+sitRecode <- c("you/partner is pregnant",
+    "would like you/partner to become pregnant soon",
+    "don't want you/partner to become pregnant soon",
+    "aren't trying, but would feel okay if you/partner became pregnant",
+    "you/partner can't get pregnant",
+    "other")
+
+currentSit <- vector("character", 2099)
+
+splitFrames$Q3.25$response <- sitRecode
+splitFrames$Q3.26$response <- sitRecode
+
+currentSit[males] <- as.character(recodeFactors(pregint, splitFrames$Q3.25)[males, ])
+currentSit[females] <- as.character(recodeFactors(pregint, splitFrames$Q3.26)[females, ])
+
 # recoding and releveling -------------------------------------------------
 
 idealCrit <- factor(idealCrit)
@@ -237,9 +252,8 @@ pregFeel <- factor(pregFeel)
 
 educ <- relevel(educ[[1L]], "LT/some HS")
 
-
 # removal of extra obj ----------------------------------------------------
 
 rm(povFrame, simppov, simpPov, povertyComp, incCat, povData, povThresh,
     newEduLabs, newRelLabs, state.fips, females, males, regionMap,
-    newFrame, skip, nonSkips, finalSkips, mavoid, favoid)
+    newFrame, skip, nonSkips, finalSkips, mavoid, favoid, sitRecode)
