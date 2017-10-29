@@ -52,7 +52,7 @@ table(idealCrit)
 ## Number of children
 childnum <- gsub("NO", "0", pregint$Q1.9, ignore.case = TRUE)
 childnum[childnum %in% c("mm", "na")] <- NA
-childnum %>% table
+childnum <- as.integer(childnum)
 
 ## Reference dataset for regions
 regionMap <- state.fips[!duplicated(state.fips$fips), c("fips", "region", "polyname")]
@@ -72,6 +72,13 @@ head(cbind(stateOrg, regionOrg))
 
 ## Race (select all that apply)
 raceDF <- recodeFactors(pregint, splitFrames$Q1.8)
+
+race <- vector("character", 2099)
+singleRes <- rowSums(!is.na(raceDF)) == 1
+
+race[singleRes] <- apply(raceDF[singleRes, ], 1L, na.omit)
+## More than 1 gets coded as OTHER
+race[!singleRes] <- "other"
 
 ## Hispanic
 hispanic <- recodeFactors(pregint, splitFrames$Q1.6)
@@ -138,12 +145,13 @@ simpPov$incGroup <- Hmisc::cut2(simpPov$mPovThresh,
 simpPov$incGroup <- factor(simpPov$incGroup, ordered = TRUE,
     levels = c(levels(simpPov$incGroup), "100000 or more"))
 levels(simpPov$incGroup) <- splitFrames$Q1.14$response
+
 simppov <- simpPov %>% unite(famch, famUnit, childUnder18)
 
 
 ## Get factor and order it
 incCat <- recodeFactors(pregint, splitFrames$Q1.14)[[1L]]
-levels(incCat) <- levels(simppov$incGroup)
+levels(incCat) <- splitFrames$Q1.14$response
 incCat <- factor(incCat, ordered = TRUE)
 povData <- cbind.data.frame(famUn = pregint$Q1.12,
     childUn18 = pregint$Q1.13, incCat)
@@ -241,19 +249,18 @@ splitFrames$Q3.26$response <- sitRecode
 currentSit[males] <- as.character(recodeFactors(pregint, splitFrames$Q3.25)[males, ])
 currentSit[females] <- as.character(recodeFactors(pregint, splitFrames$Q3.26)[females, ])
 
-# recoding and releveling -------------------------------------------------
+## if you/partner pregnant how would you feel?
+splitFrames <- adjustVarVal(splitFrames, "Q3.32")
+splitFrames <- adjustVarVal(splitFrames, "Q3.33")
 
-idealCrit <- factor(idealCrit)
-idealCrit <- relevel(idealCrit, ref = "no")
+feelsDF <- as.data.frame(matrix(NA, nrow = 2099, ncol = 12,
+    dimnames = list(NULL, splitFrames$Q3.33$response)))
+feelsDF[males,] <- recodeFactors(pregint, splitFrames$Q3.32)[males, ]
+feelsDF[females,] <- recodeFactors(pregint, splitFrames$Q3.33)[females, ]
 
-avoidPreg <- relevel(avoidPreg, ref = "No")
-pregPlan <- factor(pregPlan)
-pregFeel <- factor(pregFeel)
-
-educ <- relevel(educ[[1L]], "LT/some HS")
 
 # removal of extra obj ----------------------------------------------------
 
-rm(povFrame, simppov, simpPov, povertyComp, incCat, povData, povThresh,
-    newEduLabs, newRelLabs, state.fips, females, males, regionMap,
-    newFrame, skip, nonSkips, finalSkips, mavoid, favoid, sitRecode)
+rm(povFrame, simppov, simpPov, povertyComp, povData, povThresh,
+    newEduLabs, newRelLabs, state.fips, females, males, regionMap, raceDF,
+    newFrame, skip, nonSkips, finalSkips, mavoid, favoid, sitRecode, educLev)
