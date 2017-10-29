@@ -1,20 +1,22 @@
 ## Helper functions for constructing results
-.meansd <- function(var, na.rm = TRUE) {
-    objName <- as.character(substitute(var))
-    var <- as.numeric(var)
-    m <- round(mean(var, na.rm = na.rm), 2)
-    stddev <- round(sd(var, na.rm = na.rm), 2)
+.meansd <- function(numVar, na.rm = TRUE) {
+    varName <- as.character(substitute(numVar))
+    varName <- varName[[length(varName)]]
+    stopifnot(S4Vectors::isSingleString(varName))
+    numVar <- as.numeric(numVar)
+    m <- round(mean(numVar, na.rm = na.rm), 2)
+    stddev <- round(sd(numVar, na.rm = na.rm), 2)
     matrix(paste0(m, " (", stddev, ")"), ncol = 1L,
-        dimnames = list(objName, "M (SD)"))
+        dimnames = list(varName, "M (SD)"))
 }
 
-.prop <- function(var) {
-    if (is.data.frame(var))
-        var <- var[[1L]]
-    counts <- table(var)
-    props <- round(prop.table(table(var))*100, 1)
+.prop <- function(numVar) {
+    if (is.data.frame(numVar))
+        numVar <- numVar[[1L]]
+    counts <- table(numVar)
+    props <- round(prop.table(table(numVar))*100, 1)
     vals <- paste0(counts, " (", round(props, 2), ")")
-    matrix(vals, ncol = 1, dimnames = list(names(table(var)), "n (%)"))
+    matrix(vals, ncol = 1, dimnames = list(names(table(numVar)), "n (%)"))
 }
 
 .crossTab <- function(var1, var2) {
@@ -31,8 +33,13 @@
 
 .groupMeans <- function(numVar, outcome) {
     varName <- as.character(substitute(numVar))
+    varName <- varName[[length(varName)]]
+    stopifnot(S4Vectors::isSingleString(varName))
+
     numVar <- as.numeric(numVar)
     splitSet <- split(numVar, outcome)
+    ## Enforce alphabetical order
+    splitSet <- splitSet[order(na.omit(unique(outcome)))]
     groupNames <- names(splitSet)
     res <- vapply(seq_along(splitSet), function(i, x) {
         m <- round(mean(x[[i]], na.rm = TRUE), 2)
