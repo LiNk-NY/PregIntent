@@ -1,7 +1,9 @@
 ## Helper functions for constructing results
-.meansd <- function(numVar, na.rm = TRUE) {
+.meansd <- function(numVar, na.rm = TRUE, varName = NULL) {
+    if (is.null(varName)) {
     varName <- as.character(substitute(numVar))
     varName <- varName[[length(varName)]]
+    }
     stopifnot(S4Vectors::isSingleString(varName))
     numVar <- as.numeric(numVar)
     m <- round(mean(numVar, na.rm = na.rm), 2)
@@ -77,4 +79,23 @@
     matrix(c(Hmisc::format.pval(pv = fisher.test(catVar, outcome,
         workspace = 800000)$p.value, digits = 2, eps = 0.001, nsmall = 3),
         rep("", lvls-1)), ncol = 1L, dimnames = list(labels, "p.value"))
+}
+
+.comparisonTable <- function(..., outcome, headerRow = NULL, outcomeOrder = NULL, deparse.level = 2) {
+    listvars <- as.list(substitute(list(...)))[-1L]
+    nams <- vapply(listvars, function(x) {
+        switch(deparse.level + 1L,
+        "", if (is.symbol(x)) as.character(x) else "",
+        gsub("\\w+\\$", "", deparse(x, nlines = 1L)[1L]))
+        }, character(1L))
+    args <- list(...)
+    numerics <- vapply(args, is.numeric, logical(1L))
+    nams[numerics]
+            lapply(vars, function(x, compVar) {
+                if (is.numeric(x)) {
+                    cbind(.meansd(x, varName = varnm), .groupMeans(x, compVar))
+                } else {
+                    cbind(.prop(x), .crossTab(x, compVar))
+                }
+                }, compVar = outcome, varnm = )
 }
