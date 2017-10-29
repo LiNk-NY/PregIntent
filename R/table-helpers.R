@@ -61,3 +61,13 @@
         digits = 3, eps = 0.001, nsmall = 3), rep("", lvls-1)), ncol = 1L,
         dimnames = list(labels, "p.value"))
 }
+
+.fishertestPval <- function(catVar, outcome) {
+    if (is.data.frame(catVar))
+        catVar <- catVar[[1L]]
+    labels <- names(table(catVar))
+    lvls <- length(labels)
+    matrix(c(Hmisc::format.pval(pv = fisher.test(catVar, outcome,
+        workspace = 800000)$p.value, digits = 2, eps = 0.001, nsmall = 3),
+        rep("", lvls-1)), ncol = 1L, dimnames = list(labels, "p.value"))
+}
