@@ -7,15 +7,15 @@ library(Hmisc)
 
 ## Initial checks
 # Sexual preference
-sexpref <- recodeFactors(pregint, splitFrames$Q114)
+sexpref <- recodeFactors(pregint, codebook$Q114)
 all.equal(sum(table(sexpref)), 2099)
 
 # Gender
-gender <- recodeFactors(pregint, splitFrames$Q1.2)
+gender <- recodeFactors(pregint, codebook$Q1.2)
 all.equal(sum(table(gender)), 2099)
 
 ## State of residence (all should reside in US)
-stateOrg <- recodeFactors(pregint, splitFrames$Q110)
+stateOrg <- recodeFactors(pregint, codebook$Q110)
 sum(table(stateOrg))
 
 ## Check if any values are code 53 (do not reside in US) or 40 (Puerto Rico)
@@ -32,16 +32,16 @@ codebooktext[rownames(codebooktext) == "Q121", ]
 
 pregFeel <- vector("character", 2099)
 ## "Ultimately, how would you feel about being pregnant right now?"
-pregFeel[females] <- recodeFactors(pregint, splitFrames$Q3.34)[females]
-pregFeel[males] <- recodeFactors(pregint, splitFrames$Q121)[males]
+pregFeel[females] <- recodeFactors(pregint, codebook$Q3.34)[females]
+pregFeel[males] <- recodeFactors(pregint, codebook$Q121)[males]
 table(pregFeel)
 data.frame(AnsPreg = sum(table(pregFeel)), N = 2099,
     Perc = round((sum(table(pregFeel))/2099)*100, 2))
 
 ## Ideal criteria
 idealCrit <- vector("character", 2099)
-idealCrit[females] <- recodeFactors(pregint, splitFrames$Q3.3)[females]
-idealCrit[males] <- recodeFactors(pregint, splitFrames$Q3.2)[males]
+idealCrit[females] <- recodeFactors(pregint, codebook$Q3.3)[females]
+idealCrit[males] <- recodeFactors(pregint, codebook$Q3.2)[males]
 table(idealCrit)
 
 ## Number of children
@@ -66,7 +66,7 @@ head(cbind(stateOrg, regionOrg))
 ## KEEP regionorg
 
 ## Race (select all that apply)
-raceDF <- recodeFactors(pregint, splitFrames$Q1.8)
+raceDF <- recodeFactors(pregint, codebook$Q1.8)
 
 race <- vector("character", 2099)
 singleRes <- rowSums(!is.na(raceDF)) == 1
@@ -76,10 +76,10 @@ race[singleRes] <- apply(raceDF[singleRes, ], 1L, na.omit)
 race[!singleRes] <- "other"
 
 ## Hispanic
-hispanic <- recodeFactors(pregint, splitFrames$Q1.6)
+hispanic <- recodeFactors(pregint, codebook$Q1.6)
 table(hispanic)
 ## Hispanic origin
-hispOrg <- recodeFactors(pregint, splitFrames$Q1.7)
+hispOrg <- recodeFactors(pregint, codebook$Q1.7)
 
 ## Check to see if all who said "Yes" Hispanic answered origin question
 ## equal number of responses in both variables after subsetting by "yes"
@@ -96,10 +96,10 @@ ageGroup <- Hmisc::cut2(age, cuts = c(25, 30, 35, 40))
 levels(ageGroup) <- c("21-24", "25-29", "30-34", "35-39", "40-44")
 
 ## Modify labels to recode using function
-educ <- recodeFactors(pregint, splitFrames$Q1.10)
+educ <- recodeFactors(pregint, codebook$Q1.10)
 
 ## Relationshp recode
-relationship <- recodeFactors(pregint, splitFrames$Q1.11)
+relationship <- recodeFactors(pregint, codebook$Q1.11)
 
 
 ## Derived variable for income – based on Poverty Threshold for 2016
@@ -124,14 +124,14 @@ simpPov$incGroup <- Hmisc::cut2(simpPov$mPovThresh,
     cuts = c(20000, 40000, 60000, 80000, 100000))
 simpPov$incGroup <- factor(simpPov$incGroup, ordered = TRUE,
     levels = c(levels(simpPov$incGroup), "100000 or more"))
-levels(simpPov$incGroup) <- splitFrames$Q1.14$response
+levels(simpPov$incGroup) <- codebook$Q1.14$response
 
 simppov <- simpPov %>% unite(famch, famUnit, childUnder18)
 
 
 ## Get factor and order it
-incCat <- recodeFactors(pregint, splitFrames$Q1.14)[[1L]]
-levels(incCat) <- splitFrames$Q1.14$response
+incCat <- recodeFactors(pregint, codebook$Q1.14)[[1L]]
+levels(incCat) <- codebook$Q1.14$response
 incCat <- factor(incCat, ordered = TRUE)
 povData <- cbind.data.frame(famUn = pregint$Q1.12,
     childUn18 = pregint$Q1.13, incCat)
@@ -149,19 +149,19 @@ avoidPreg <- vector("character", 2099)
 
 mavoid <- vector("character", 2099)[males]
 
-newFrame <- recodeFactors(pregint, splitFrames$Q2.2)[males, ]
+newFrame <- recodeFactors(pregint, codebook$Q2.2)[males, ]
 skip <- rowSums(!is.na(newFrame)) > 1
 nonSkips <- sapply(newFrame[!skip, ], as.character)[!is.na(newFrame[!skip, ])]
-finalSkips <- recodeFactors(pregint, splitFrames$Q2.5)[males, ][skip]
+finalSkips <- recodeFactors(pregint, codebook$Q2.5)[males, ][skip]
 mavoid[skip] <- as.character(finalSkips)
 mavoid[!skip] <- nonSkips
 
 favoid <- vector("character", 2099)[females]
 
-newFrame <- recodeFactors(pregint, splitFrames$Q2.7)[females, ]
+newFrame <- recodeFactors(pregint, codebook$Q2.7)[females, ]
 skip <- rowSums(!is.na(newFrame)) > 1L
 nonSkips <- sapply(newFrame[!skip, ], as.character)[!is.na(newFrame[!skip, ])]
-finalSkips <- recodeFactors(pregint, splitFrames$Q2.10)[females, ][skip]
+finalSkips <- recodeFactors(pregint, codebook$Q2.10)[females, ][skip]
 favoid[skip] <- as.character(finalSkips)
 favoid[!skip] <- nonSkips
 
@@ -172,10 +172,10 @@ avoidPreg <- factor(avoidPreg == "can be avoided",
     levels = c(TRUE, FALSE), labels = c("Yes", "No"))
 
 pregPlan <- vector("character", 2099)
-newFrame <- recodeFactors(pregint, splitFrames$Q3.5)
+newFrame <- recodeFactors(pregint, codebook$Q3.5)
 newFrame[newFrame == 2L] <- NA
 nonSkips <- rowSums(!is.na(newFrame))  == 1L
-finalSkips <- recodeFactors(pregint, splitFrames$Q122)[!nonSkips, ]
+finalSkips <- recodeFactors(pregint, codebook$Q122)[!nonSkips, ]
 pregPlan[!nonSkips] <- as.character(finalSkips)
 pregPlan[nonSkips] <- sapply(newFrame[nonSkips, ],
     as.character)[!is.na(newFrame[nonSkips, ])]
@@ -189,35 +189,35 @@ pregPlan[pregPlan %in% "other"] <- NA_character_
 
 becomeControl <- vector("character", 2099)
 becomeControl[males] <- as.character(recodeFactors(pregint,
-    splitFrames$Q3.12)[males, ])
+    codebook$Q3.12)[males, ])
 becomeControl[females] <- as.character(recodeFactors(pregint,
-    splitFrames$Q3.13)[females, ])
+    codebook$Q3.13)[females, ])
 
 becomeControl %<>%
     fct_collapse(`Low control` = c("no control", "a little control"),
         `High control` = c("complete control", "a lot of control"))
 
 ## Select all that apply question but not indicated in actual question
-## recodeFactors(pregint, splitFrames$Q3.17a)
+## recodeFactors(pregint, codebook$Q3.17a)
 
 avoidControl <- vector("character", 2099)
 avoidControl[males] <- as.character(recodeFactors(pregint,
-    splitFrames$Q2.12)[males, ])
+    codebook$Q2.12)[males, ])
 avoidControl[females] <- as.character(recodeFactors(pregint,
-    splitFrames$Q2.13)[females, ])
+    codebook$Q2.13)[females, ])
 
 avoidControl %<>%
     fct_collapse(`Low control` = c("no control", "a little control"),
         `High control` = c("complete control", "a lot of control"))
 
 currentSit <- vector("character", 2099)
-currentSit[males] <- as.character(recodeFactors(pregint, splitFrames$Q3.25)[males, ])
-currentSit[females] <- as.character(recodeFactors(pregint, splitFrames$Q3.26)[females, ])
+currentSit[males] <- as.character(recodeFactors(pregint, codebook$Q3.25)[males, ])
+currentSit[females] <- as.character(recodeFactors(pregint, codebook$Q3.26)[females, ])
 
 feelsDF <- as.data.frame(matrix(NA, nrow = 2099, ncol = 12,
-    dimnames = list(NULL, splitFrames$Q3.33$response)))
-feelsDF[males,] <- recodeFactors(pregint, splitFrames$Q3.32)[males, ]
-feelsDF[females,] <- recodeFactors(pregint, splitFrames$Q3.33)[females, ]
+    dimnames = list(NULL, codebook$Q3.33$response)))
+feelsDF[males,] <- recodeFactors(pregint, codebook$Q3.32)[males, ]
+feelsDF[females,] <- recodeFactors(pregint, codebook$Q3.33)[females, ]
 
 
 # removal of extra obj ----------------------------------------------------

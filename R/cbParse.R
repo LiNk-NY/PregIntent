@@ -40,7 +40,7 @@ multipleCoded <- vapply(cleanChunks, function(x)
 YesNoResponse <- cleanChunks[multipleCoded]
 cleanChunks <- cleanChunks[!multipleCoded]
 
-splitFrames <- lapply(cleanChunks, function(x) {
+codebook <- lapply(cleanChunks, function(x) {
     x <- x[!(grepl("I would say I", x, fixed = TRUE) |
         grepl("I have...", x, fixed = TRUE))]
     cleanBlock(x)
@@ -60,33 +60,33 @@ Q3.5 <- lapply(YesNoResponse[1L], function(x) {
 Q3.5 <- adjustVarVal(Q3.5, "Q3.5")
 
 ## Adjust for inconsistent names
-splitFrames$Q3.17a$variable <- paste0(gsub("a", "", splitFrames$Q3.17a$variable),
-    "_", splitFrames$Q3.17a$value)
-splitFrames$Q3.17a$value <- rep(1L, length(splitFrames$Q3.17a$value))
+codebook$Q3.17a$variable <- paste0(gsub("a", "", codebook$Q3.17a$variable),
+    "_", codebook$Q3.17a$value)
+codebook$Q3.17a$value <- rep(1L, length(codebook$Q3.17a$value))
 
 ## Make adjustments to odd variables
-splitFrames <- adjustVarVal(splitFrames, c("Q1.7", "Q1.8", "Q2.2", "Q2.7"))
+codebook <- adjustVarVal(codebook, c("Q1.7", "Q1.8", "Q2.2", "Q2.7"))
 
-splitFrames <- c(splitFrames, Q122, Q3.5)
+codebook <- c(codebook, Q122, Q3.5)
 
 ## PregFeel recode
-splitFrames$Q3.2[4, "response"] <- "don't want me/partner pregnant"
-splitFrames$Q3.3[4, "response"] <- "don't want me/partner pregnant"
+codebook$Q3.2[4, "response"] <- "don't want me/partner pregnant"
+codebook$Q3.3[4, "response"] <- "don't want me/partner pregnant"
 
 ## Education recode
-splitFrames$Q1.10$response <- c("LT/some HS", "LT/some HS", "HS diploma/GED",
+codebook$Q1.10$response <- c("LT/some HS", "LT/some HS", "HS diploma/GED",
     "Some college", "College degree/Some Grad", "College degree/Some Grad",
     "Grad degree")
 
 ## Relationship recode
-splitFrames$Q1.11$response <- c("single", rep("married/living/commit", 3),
+codebook$Q1.11$response <- c("single", rep("married/living/commit", 3),
     "div/sep/wid", "other")
 
 ## Rename variables in recoding scheme
-splitFrames$Q3.12$variable <- "Q3.12_1"
-splitFrames$Q3.13$variable <- "Q3.13_1"
-splitFrames$Q2.12$variable <- "Q2.12_1"
-splitFrames$Q2.13$variable <- "Q2.13_1"
+codebook$Q3.12$variable <- "Q3.12_1"
+codebook$Q3.13$variable <- "Q3.13_1"
+codebook$Q2.12$variable <- "Q2.12_1"
+codebook$Q2.13$variable <- "Q2.13_1"
 
 ## Current situation recode
 sitRecode <- c("you/partner is pregnant",
@@ -96,15 +96,15 @@ sitRecode <- c("you/partner is pregnant",
     "you/partner can't get pregnant",
     "other")
 
-splitFrames$Q3.25$response <- sitRecode
-splitFrames$Q3.26$response <- sitRecode
+codebook$Q3.25$response <- sitRecode
+codebook$Q3.26$response <- sitRecode
 
 ## if you/partner pregnant how would you feel?
-splitFrames <- adjustVarVal(splitFrames, "Q3.32")
-splitFrames <- adjustVarVal(splitFrames, "Q3.33")
+codebook <- adjustVarVal(codebook, "Q3.32")
+codebook <- adjustVarVal(codebook, "Q3.33")
 
 
 
 ## Clean variables except the needed one
-rm(list = ls()[!ls() %in% c("splitFrames", "pregint", "codebook",
+rm(list = ls()[!ls() %in% c("codebook", "pregint", "codebook",
     "recodeFactors", "adjustVarVal")])
