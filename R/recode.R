@@ -8,17 +8,14 @@ library(Hmisc)
 ## Initial checks
 # Sexual preference
 sexpref <- recodeFactors(pregint, splitFrames$Q114)
-table(sexpref)
 all.equal(sum(table(sexpref)), 2099)
 
 # Gender
 gender <- recodeFactors(pregint, splitFrames$Q1.2)
-table(gender)
 all.equal(sum(table(gender)), 2099)
 
 ## State of residence (all should reside in US)
 stateOrg <- recodeFactors(pregint, splitFrames$Q110)
-table(stateOrg)
 sum(table(stateOrg))
 
 ## Check if any values are code 53 (do not reside in US) or 40 (Puerto Rico)
@@ -43,8 +40,6 @@ data.frame(AnsPreg = sum(table(pregFeel)), N = 2099,
 
 ## Ideal criteria
 idealCrit <- vector("character", 2099)
-splitFrames$Q3.2[4, "response"] <- "don't want me/partner pregnant"
-splitFrames$Q3.3[4, "response"] <- "don't want me/partner pregnant"
 idealCrit[females] <- recodeFactors(pregint, splitFrames$Q3.3)[females]
 idealCrit[males] <- recodeFactors(pregint, splitFrames$Q3.2)[males]
 table(idealCrit)
@@ -100,25 +95,10 @@ summary(age)
 ageGroup <- Hmisc::cut2(age, cuts = c(25, 30, 35, 40))
 levels(ageGroup) <- c("21-24", "25-29", "30-34", "35-39", "40-44")
 
-
-## Education
-splitFrames$Q1.10
 ## Modify labels to recode using function
-newEduLabs <- c("LT/some HS", "LT/some HS", "HS diploma/GED", "Some college",
-    "College degree/Some Grad", "College degree/Some Grad", "Grad degree")
-splitFrames$Q1.10$response <- newEduLabs
 educ <- recodeFactors(pregint, splitFrames$Q1.10)
-table(educ)
 
-## Relationship
-##  single
-##  married or living together or committed rel
-##  divorced/sep/wid
-##  other
-splitFrames$Q1.11
-## Modify labels to recode using function
-newRelLabs <- c("single", rep("married/living/commit", 3), "div/sep/wid", "other")
-splitFrames$Q1.11$response <- newRelLabs
+## Relationshp recode
 relationship <- recodeFactors(pregint, splitFrames$Q1.11)
 
 
@@ -208,8 +188,6 @@ pregPlan[pregPlan %in% c("'just happens'",
 pregPlan[pregPlan %in% "other"] <- NA_character_
 
 becomeControl <- vector("character", 2099)
-splitFrames$Q3.12$variable <- "Q3.12_1"
-splitFrames$Q3.13$variable <- "Q3.13_1"
 becomeControl[males] <- as.character(recodeFactors(pregint,
     splitFrames$Q3.12)[males, ])
 becomeControl[females] <- as.character(recodeFactors(pregint,
@@ -223,8 +201,6 @@ becomeControl %<>%
 ## recodeFactors(pregint, splitFrames$Q3.17a)
 
 avoidControl <- vector("character", 2099)
-splitFrames$Q2.12$variable <- "Q2.12_1"
-splitFrames$Q2.13$variable <- "Q2.13_1"
 avoidControl[males] <- as.character(recodeFactors(pregint,
     splitFrames$Q2.12)[males, ])
 avoidControl[females] <- as.character(recodeFactors(pregint,
@@ -234,24 +210,9 @@ avoidControl %<>%
     fct_collapse(`Low control` = c("no control", "a little control"),
         `High control` = c("complete control", "a lot of control"))
 
-sitRecode <- c("you/partner is pregnant",
-    "would like you/partner to become pregnant soon",
-    "don't want you/partner to become pregnant soon",
-    "aren't trying, but would feel okay if you/partner became pregnant",
-    "you/partner can't get pregnant",
-    "other")
-
 currentSit <- vector("character", 2099)
-
-splitFrames$Q3.25$response <- sitRecode
-splitFrames$Q3.26$response <- sitRecode
-
 currentSit[males] <- as.character(recodeFactors(pregint, splitFrames$Q3.25)[males, ])
 currentSit[females] <- as.character(recodeFactors(pregint, splitFrames$Q3.26)[females, ])
-
-## if you/partner pregnant how would you feel?
-splitFrames <- adjustVarVal(splitFrames, "Q3.32")
-splitFrames <- adjustVarVal(splitFrames, "Q3.33")
 
 feelsDF <- as.data.frame(matrix(NA, nrow = 2099, ncol = 12,
     dimnames = list(NULL, splitFrames$Q3.33$response)))

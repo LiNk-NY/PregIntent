@@ -69,6 +69,42 @@ splitFrames <- adjustVarVal(splitFrames, c("Q1.7", "Q1.8", "Q2.2", "Q2.7"))
 
 splitFrames <- c(splitFrames, Q122, Q3.5)
 
+## PregFeel recode
+splitFrames$Q3.2[4, "response"] <- "don't want me/partner pregnant"
+splitFrames$Q3.3[4, "response"] <- "don't want me/partner pregnant"
+
+## Education recode
+splitFrames$Q1.10$response <- c("LT/some HS", "LT/some HS", "HS diploma/GED",
+    "Some college", "College degree/Some Grad", "College degree/Some Grad",
+    "Grad degree")
+
+## Relationship recode
+splitFrames$Q1.11$response <- c("single", rep("married/living/commit", 3),
+    "div/sep/wid", "other")
+
+## Rename variables in recoding scheme
+splitFrames$Q3.12$variable <- "Q3.12_1"
+splitFrames$Q3.13$variable <- "Q3.13_1"
+splitFrames$Q2.12$variable <- "Q2.12_1"
+splitFrames$Q2.13$variable <- "Q2.13_1"
+
+## Current situation recode
+sitRecode <- c("you/partner is pregnant",
+    "would like you/partner to become pregnant soon",
+    "don't want you/partner to become pregnant soon",
+    "aren't trying, but would feel okay if you/partner became pregnant",
+    "you/partner can't get pregnant",
+    "other")
+
+splitFrames$Q3.25$response <- sitRecode
+splitFrames$Q3.26$response <- sitRecode
+
+## if you/partner pregnant how would you feel?
+splitFrames <- adjustVarVal(splitFrames, "Q3.32")
+splitFrames <- adjustVarVal(splitFrames, "Q3.33")
+
+
+
 ## Clean variables except the needed one
 rm(list = ls()[!ls() %in% c("splitFrames", "pregint", "codebook",
     "recodeFactors", "adjustVarVal")])
