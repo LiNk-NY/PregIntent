@@ -30,8 +30,8 @@ females <- gender == "female"
 males <- gender == "male"
 
 ## Main outcome
-codebook[rownames(codebook) == "Q3.34", ]
-codebook[rownames(codebook) == "Q121", ]
+codebooktext[rownames(codebooktext) == "Q3.34", ]
+codebooktext[rownames(codebooktext) == "Q121", ]
 
 pregFeel <- vector("character", 2099)
 ## "Ultimately, how would you feel about being pregnant right now?"

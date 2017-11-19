@@ -12,7 +12,7 @@ invisible(lapply(filePaths, source))
 ## rm(filesToSource, filePaths)
 
 ## Remove objs that were used for cleaning
-variables <- ls()[!ls() %in% c("codebook", "recodeFactors",
+variables <- ls()[!ls() %in% c("codebooktext", "recodeFactors",
     "splitFrames", "adjustVarVal")]
 names(variables) <- variables
 dfsLog <- vapply(variables, function(x) is.data.frame(get(x)) && x != "pregint", logical(1L))
