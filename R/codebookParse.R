@@ -66,7 +66,7 @@ codebook$Q3.17a$value <- rep(1L, length(codebook$Q3.17a$value))
 
 ## Make adjustments to odd variables
 codebook <- adjustVarVal(codebook, c("Q1.7", "Q1.8", "Q2.2", "Q2.7",
-    "Q3.32", "Q3.33", "Q3.4", "Q3.17"))
+    "Q3.32", "Q3.33", "Q3.4", "Q3.17", "Q3.18"))
 
 codebook <- c(codebook, Q122, Q3.5)
 
@@ -90,6 +90,11 @@ codebook$Q2.12$variable <- "Q2.12_1"
 codebook$Q2.13$variable <- "Q2.13_1"
 codebook$Q3.17a$variable <- "Q3.17a_1"
 codebook$Q3.18a$variable <- "Q3.18a_1"
+
+codebook$Q3.23$variable <- with(codebook$Q3.23,
+    paste0(variable, "_", "x",value))
+codebook$Q3.23 <- codebook$Q3.23[codebook$Q3.23$variable != "Q3.23_x11", ]
+codebook$Q3.23$value <- 1L
 
 ## Current situation recode
 sitRecode <- c("you/partner is pregnant",
