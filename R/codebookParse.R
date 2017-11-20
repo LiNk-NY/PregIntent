@@ -66,7 +66,8 @@ codebook$Q3.17a$value <- rep(1L, length(codebook$Q3.17a$value))
 
 ## Make adjustments to odd variables
 codebook <- adjustVarVal(codebook, c("Q1.7", "Q1.8", "Q2.2", "Q2.7",
-    "Q3.32", "Q3.33", "Q3.4", "Q3.17", "Q3.18"))
+    "Q3.32", "Q3.33", "Q3.4", "Q3.17", "Q3.18", "Q3.27", "Q3.28", "Q3.29",
+    "Q3.30"))
 
 codebook <- c(codebook, Q122, Q3.5)
 
