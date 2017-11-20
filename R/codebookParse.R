@@ -65,7 +65,8 @@ codebook$Q3.17a$variable <- paste0(gsub("a", "", codebook$Q3.17a$variable),
 codebook$Q3.17a$value <- rep(1L, length(codebook$Q3.17a$value))
 
 ## Make adjustments to odd variables
-codebook <- adjustVarVal(codebook, c("Q1.7", "Q1.8", "Q2.2", "Q2.7"))
+codebook <- adjustVarVal(codebook, c("Q1.7", "Q1.8", "Q2.2", "Q2.7",
+    "Q3.32", "Q3.33", "Q3.4", "Q3.17"))
 
 codebook <- c(codebook, Q122, Q3.5)
 
@@ -87,6 +88,8 @@ codebook$Q3.12$variable <- "Q3.12_1"
 codebook$Q3.13$variable <- "Q3.13_1"
 codebook$Q2.12$variable <- "Q2.12_1"
 codebook$Q2.13$variable <- "Q2.13_1"
+codebook$Q3.17a$variable <- "Q3.17a_1"
+codebook$Q3.18a$variable <- "Q3.18a_1"
 
 ## Current situation recode
 sitRecode <- c("you/partner is pregnant",
@@ -99,12 +102,7 @@ sitRecode <- c("you/partner is pregnant",
 codebook$Q3.25$response <- sitRecode
 codebook$Q3.26$response <- sitRecode
 
-## if you/partner pregnant how would you feel?
-codebook <- adjustVarVal(codebook, "Q3.32")
-codebook <- adjustVarVal(codebook, "Q3.33")
-
-
 
 ## Clean variables except the needed one
-rm(list = ls()[!ls() %in% c("codebook", "pregint", "codebook",
-    "recodeFactors", "adjustVarVal")])
+# rm(list = ls()[!ls() %in% c("codebook", "pregint", "codebook",
+#     "recodeFactors", "adjustVarVal")])
