@@ -224,4 +224,4 @@ feelsDF[females,] <- recodeFactors(pregint, codebook$Q3.33)[females, ]
 
 rm(povFrame, simppov, simpPov, povertyComp, povData, povThresh,
    state.fips, females, males, regionMap, raceDF, newFrame, skip, nonSkips,
-   finalSkips, mavoid, favoid, sitRecode)
+   finalSkips, mavoid, favoid)

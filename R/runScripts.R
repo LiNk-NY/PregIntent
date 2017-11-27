@@ -14,7 +14,7 @@ invisible(lapply(filePaths, source))
 
 ## Remove objs that were used for cleaning
 variables <- ls()[!ls() %in% c("codebooktext", "recodeFactors",
-    "codebook", "adjustVarVal")]
+    "codebook", "adjustVarVal", "cleanChunks")]
 names(variables) <- variables
 dfsLog <- vapply(variables, function(x) is.data.frame(get(x)) && x != "pregint", logical(1L))
 pullNames <- variables[dfsLog]
