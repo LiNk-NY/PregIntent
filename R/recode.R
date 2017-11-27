@@ -223,5 +223,5 @@ feelsDF[females,] <- recodeFactors(pregint, codebook$Q3.33)[females, ]
 # removal of extra obj ----------------------------------------------------
 
 rm(povFrame, simppov, simpPov, povertyComp, povData, povThresh,
-    newEduLabs, newRelLabs, state.fips, females, males, regionMap, raceDF,
-    newFrame, skip, nonSkips, finalSkips, mavoid, favoid, sitRecode, educLev)
+   state.fips, females, males, regionMap, raceDF, newFrame, skip, nonSkips,
+   finalSkips, mavoid, favoid, sitRecode)
