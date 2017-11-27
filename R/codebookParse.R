@@ -24,6 +24,11 @@ withValues <- vapply(readChunks, function(x)
 # Take only chunks with response values
 readChunks <- readChunks[withValues]
 
+# Get only gender word from codebook chunk
+sexCond <- lapply(readChunks, function(x) gsub("(.*)\\s(.*male)$", "\\2",
+    grep("^If.*male$", x, value = TRUE, ignore.case = TRUE)))
+sexCond[!lengths(sexCond)] <- "none"
+
 # Remove lines in chunks that are not responses
 cleanChunks <- lapply(readChunks, function(x) {
     goodLines <- grep("^Q[0-9]|\\([0-9]{1,2}\\)", x, value = TRUE)
@@ -39,6 +44,7 @@ multipleCoded <- vapply(cleanChunks, function(x)
 
 YesNoResponse <- cleanChunks[multipleCoded]
 cleanChunks <- cleanChunks[!multipleCoded]
+sexCond <- sexCond[!multipleCoded]
 
 codebook <- lapply(cleanChunks, function(x) {
     x <- x[!(grepl("I would say I", x, fixed = TRUE) |
@@ -46,10 +52,14 @@ codebook <- lapply(cleanChunks, function(x) {
     cleanBlock(x)
 })
 
+codebook <- Map(function(x, y) { x[["subset"]] <-  rep(y, nrow(x))
+    return(x) }, x = codebook, y = sexCond)
+
 Q122 <- lapply(YesNoResponse[2L], function(x) {
     x <- gsub("[A-Z]\\. ", "", x)
     cleanBlock(x)
 })
+Q122$Q122[["subset"]] <- "none"
 
 Q3.5 <- lapply(YesNoResponse[1L], function(x) {
     responses <- grepl("^Yes|^No", x)
@@ -58,6 +68,7 @@ Q3.5 <- lapply(YesNoResponse[1L], function(x) {
     cleanBlock(x)
 })
 Q3.5 <- adjustVarVal(Q3.5, "Q3.5")
+Q3.5$Q3.5[["subset"]] <- "none"
 
 ## Adjust for inconsistent names
 codebook$Q3.17a$variable <- paste0(gsub("a", "", codebook$Q3.17a$variable),
@@ -110,5 +121,5 @@ codebook$Q3.26$response <- sitRecode
 
 
 ## Clean variables except the needed one
-# rm(list = ls()[!ls() %in% c("codebook", "pregint", "codebook",
-#     "recodeFactors", "adjustVarVal")])
+rm(list = ls()[!ls() %in% c("codebook", "pregint", "codebooktext",
+    "recodeFactors", "adjustVarVal")])
