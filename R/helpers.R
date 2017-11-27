@@ -42,5 +42,5 @@ cleanBlock <- function(block) {
     codeScheme <- do.call(rbind, codeFormats)
     colnames(codeScheme) <- c("response", "value")
     data.frame(variable = varName, codeScheme[, c(2, 1)],
-        stringsAsFactors = FALSE)
+        subset = "", stringsAsFactors = FALSE)
 }
