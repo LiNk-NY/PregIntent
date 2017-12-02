@@ -89,13 +89,13 @@
         gsub("\\w+\\$", "", deparse(x, nlines = 1L)[1L]))
         }, character(1L))
     args <- list(...)
+    names(args) <- nams
     numerics <- vapply(args, is.numeric, logical(1L))
-    nams[numerics]
-            lapply(vars, function(x, compVar) {
-                if (is.numeric(x)) {
-                    cbind(.meansd(x, varName = varnm), .groupMeans(x, compVar))
-                } else {
-                    cbind(.prop(x), .crossTab(x, compVar))
-                }
-                }, compVar = outcome, varnm = )
+    lapply(seq_along(args), function(i, x, compVar) {
+        if (is.numeric(x[[i]])) {
+            cbind(.meansd(x[[i]], varName = names(x[i])), .groupMeans(x[[i]], compVar))
+        } else {
+            cbind(.prop(x[[i]]), .crossTab(x[[i]], compVar))
+        }
+    }, compVar = outcome, x = args)
 }
