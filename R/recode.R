@@ -8,18 +8,12 @@ library(Hmisc)
 ## Initial checks
 # Sexual preference
 sexpref <- recodeFactors(pregint, codebook$Q114)
-all.equal(sum(table(sexpref)), 2099)
 
 # Gender
 gender <- recodeFactors(pregint, codebook$Q1.2)
-all.equal(sum(table(gender)), 2099)
 
 ## State of residence (all should reside in US)
 stateOrg <- recodeFactors(pregint, codebook$Q110)
-sum(table(stateOrg))
-
-## Check if any values are code 53 (do not reside in US) or 40 (Puerto Rico)
-any(pregint$Q110 %in% c(53, 40))
 
 ## Coding for Main Outcome
 ## Logical vectors for each gender
