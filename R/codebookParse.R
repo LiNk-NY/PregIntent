@@ -68,13 +68,13 @@ codebook <- lapply(cleanChunks, function(x) {
 codebook <- Map(function(x, y) { x[["subset"]] <-  rep(y, nrow(x))
     return(x) }, x = codebook, y = sexCond)
 
-Q122 <- lapply(YesNoResponse[2L], function(x) {
+Q122 <- lapply(YesNoResponse["Q122"], function(x) {
     x <- gsub("[A-Z]\\. ", "", x)
     cleanBlock(x)
 })
 Q122$Q122[["subset"]] <- "none"
 
-Q3.5 <- lapply(YesNoResponse[1L], function(x) {
+Q3.5 <- lapply(YesNoResponse["Q3.5"], function(x) {
     responses <- grepl("^Yes|^No", x)
     x <- x[!responses]
     x <- gsub("[A-Z]\\. ", "", x)
