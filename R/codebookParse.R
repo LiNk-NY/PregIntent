@@ -5,7 +5,7 @@ library(reshape2)
 surv <- readLines("docs/Final_Pregnancy_Intentions_Survey.txt")
 
 # Get index of lines with question numbers
-starts <- grep("^Q[0-9]", surv, value = FALSE)
+starts <- grep("^Q[0-9]|^Display", surv, value = FALSE)
 ends <- starts[-1]-1
 starts <- starts[-length(starts)]
 
@@ -17,6 +17,19 @@ readChunks <- apply(ranges, 1L, function(x) {
     surv[seq(x[[1]], x[[2]])]
 })
 
+## Remove empty characters
+readChunks <- lapply(readChunks, function(x) trimws(x[x != ""]))
+
+## Find "Display This Question" chunks
+startDisp <- vapply(readChunks, function(x)
+    any(grepl("^Display", x, ignore.case = TRUE)), logical(1L))
+
+withDisplay <- lapply(which(startDisp), function(x)
+    unlist(readChunks[c(x, x+1)]))
+woDisplay <- readChunks[!seq_along(readChunks) %in%
+    c(which(startDisp), which(startDisp)+1)]
+
+readChunks <- c(withDisplay, woDisplay)
 # Find chunks with close ended response values
 withValues <- vapply(readChunks, function(x)
     any(grepl("\\([0-9]{1,2}\\)", x)), logical(1L))
