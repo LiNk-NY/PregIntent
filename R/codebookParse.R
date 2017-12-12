@@ -132,6 +132,35 @@ sitRecode <- c("you/partner is pregnant",
 codebook$Q3.25$response <- sitRecode
 codebook$Q3.26$response <- sitRecode
 
+## Variables with subset values either "male" or "female"
+mfcodeframes <- codebook[vapply(codebook,
+    function(x) all(x$subset %in% c("male", "female")), logical(1L))]
+mfcodes <- names(mfcodeframes)
+
+## Include a corresponds variable to relate gender-specific questions
+codebook$Q1.9a[["corresponds"]] <- "Q1.9c"
+codebook$Q1.9c[["corresponds"]] <- "Q1.9a"
+codebook$Q1.9b[["corresponds"]] <- "Q1.9d"
+codebook$Q1.9d[["corresponds"]] <- "Q1.9b"
+codebook$Q2.2[["corresponds"]] <- "Q2.7"
+codebook$Q2.7[["corresponds"]] <- "Q2.2"
+codebook$Q2.12[["corresponds"]] <- "Q2.13"
+codebook$Q2.13[["corresponds"]] <- "Q2.12"
+codebook$Q3.2[["corresponds"]] <- "Q3.3"
+codebook$Q3.3[["corresponds"]] <- "Q3.2"
+codebook$Q3.12[["corresponds"]] <- "Q3.13"
+codebook$Q3.13[["corresponds"]] <- "Q3.12"
+codebook$Q3.15[["corresponds"]] <- "Q3.16"
+codebook$Q3.16[["corresponds"]] <- "Q3.15"
+codebook$Q3.19[["corresponds"]] <- "Q3.20"
+codebook$Q3.20[["corresponds"]] <- "Q3.19"
+codebook$Q3.25[["corresponds"]] <- "Q3.26"
+codebook$Q3.26[["corresponds"]] <- "Q3.25"
+codebook$Q3.32[["corresponds"]] <- "Q3.33"
+codebook$Q3.33[["corresponds"]] <- "Q3.32"
+codebook$Q3.34[["corresponds"]] <- "Q3.121"
+codebook$Q3.121[["corresponds"]] <- "Q3.34"
+
 
 ## Clean variables except the needed one
 rm(list = ls()[!ls() %in% c("codebook", "pregint", "codebooktext",
