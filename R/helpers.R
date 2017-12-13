@@ -2,16 +2,35 @@
 library(plyr)
 
 # Set factors from recoding data frames
-recodeFactors <- function(dataset, recodeFrame) {
+recodeFactors <-
+    function(dataset, recodeFrame, subsetVariable = "Q1.2",
+        values = c(1, 2), labels = c("male", "female")) {
     dataset <- as.data.frame(dataset, stringsAsFactors = FALSE)
     indicVar <- unique(recodeFrame[["variable"]])
-    target <- dataset[, indicVar, drop = FALSE]
+    correspVar <- unique(recodeFrame[["corresponds"]])
+    target <- as.data.frame(matrix(NA, nrow = nrow(dataset)))
+
+    stopifnot(identical(length(values), length(labels)))
+
+    subvar <- dataset[[subsetVariable]]
+    valueLogic <- vapply(values, function(x) subvar == x, logical(length(subvar)))
+    subsetCat <- unique(recodeFrame[["subset"]])
+    if (subsetCat != "none") {
+        subValue <- values[match(subsetCat, labels)]
+        ## only works for 2 categories
+        varnames <- paste0(indicVar, "..", correspVar)
+        indicLogic <- valueLogic[, values == subValue]
+        target[indicLogic, ] <- dataset[indicLogic, indicVar, drop = FALSE]
+        target[!indicLogic, ] <- dataset[!indicLogic, correspVar, drop = FALSE]
+        names(target) <- varnames
+    } else {
+        target <- dataset[, indicVar, drop = FALSE]
+    }
     if (S4Vectors::isSingleString(indicVar)) {
         target[] <- factor(plyr::mapvalues(target[[1L]],
             from = recodeFrame[["value"]], to = recodeFrame[["response"]]))
     } else {
-        stopifnot(identical(length(unique(recodeFrame[["variable"]])),
-            length(target)))
+        stopifnot(identical(length(indicVar), length(target)))
         target[] <- lapply(seq_along(target), function(i) {
             factor(plyr::mapvalues(target[[i]],
                 from = recodeFrame[["value"]][i],
