@@ -158,8 +158,8 @@ codebook$Q3.25[["corresponds"]] <- "Q3.26"
 codebook$Q3.26[["corresponds"]] <- "Q3.25"
 codebook$Q3.32[["corresponds"]] <- "Q3.33"
 codebook$Q3.33[["corresponds"]] <- "Q3.32"
-codebook$Q3.34[["corresponds"]] <- "Q3.121"
-codebook$Q3.121[["corresponds"]] <- "Q3.34"
+codebook$Q3.34[["corresponds"]] <- "Q121"
+codebook$Q121[["corresponds"]] <- "Q3.34"
 
 
 ## Clean variables except the needed one
