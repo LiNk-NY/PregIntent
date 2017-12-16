@@ -14,11 +14,8 @@ recodedData <- dplyr::bind_cols(dataList)
 doubles <- grepl("\\.\\.", names(recodedData))
 dupped <- duplicated(lapply(strsplit(names(recodedData)[doubles], "\\.\\."), sort))
 dupNames <- names(recodedData)[doubles][dupped]
+
 recodedData <- recodedData[, !(names(recodedData) %in% dupNames)]
-
-nonRecode <- pregint[, !names(pregint) %in% names(codebook)]
-
-pregRecode <- cbind.data.frame(nonRecode, recodedData, stringsAsFactors = FALSE)
 
 # Gender
 gender <- recodeFactors(pregint, codebook$Q1.2)
@@ -222,6 +219,6 @@ feelings[females,] <- recodeFactors(pregint, codebook$Q3.33)[females, ]
 # removal of extra obj ----------------------------------------------------
 
 rm(povFrame, simppov, simpPov, povertyComp, povData, povThresh,
-   state.fips, females, males, regionMap, raceDF, newFrame, skip, nonSkips,
-   finalSkips, mavoid, favoid, dataList, recodedData, doubles, dupped,
+   state.fips, females, males, regionMap, raceDF, newFrame, skip,
+   nonSkips, finalSkips, mavoid, favoid, dataList, doubles, dupped,
    dupNames, nonRecode)
