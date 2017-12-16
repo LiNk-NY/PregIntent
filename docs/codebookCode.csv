@@ -1,4 +1,4 @@
-codebname,variable,value,response,subset,corresponds
+codebname,dataname,value,response,subset,corresponds
 Q1.9a,Q1.9a,1,yes,male,Q1.9c
 Q1.9a,Q1.9a,2,no,male,Q1.9c
 Q1.9b,Q1.9b,1,yes,male,Q1.9d
