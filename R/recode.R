@@ -5,25 +5,22 @@ library(maps)
 data("state.fips")
 library(Hmisc)
 
-## Initial checks
-# Sexual preference
-sexpref <- recodeFactors(pregint, codebook$Q114)
+## Use ALL codebook chunks to recode data
+dataList <- lapply(codebook, function(recodeChunk) {
+    recodeFactors(pregint, recodeChunk)
+})
 
-# Gender
-gender <- recodeFactors(pregint, codebook$Q1.2)
+recodedData <- dplyr::bind_cols(dataList)
+doubles <- grepl("\\.\\.", names(recodedData))
+dupped <- duplicated(lapply(strsplit(names(recodedData)[doubles], "\\.\\."), sort))
+dupNames <- names(recodedData)[doubles][dupped]
+recodedData <- recodedData[, !(names(recodedData) %in% dupNames)]
 
-## State of residence (all should reside in US)
-stateOrg <- recodeFactors(pregint, codebook$Q110)
+nonRecode <- pregint[, !names(pregint) %in% names(codebook)]
 
-## Coding for Main Outcome
-## Logical vectors for each gender
-females <- gender == "female"
-males <- gender == "male"
+pregRecode <- cbind.data.frame(nonRecode, recodedData, stringsAsFactors = FALSE)
 
-## Main outcome
-codebooktext[rownames(codebooktext) == "Q3.34", ]
-codebooktext[rownames(codebooktext) == "Q121", ]
-
+## Outcome
 pregFeel <- vector("character", 2099)
 ## "Ultimately, how would you feel about being pregnant right now?"
 pregFeel[females] <- recodeFactors(pregint, codebook$Q3.34)[females]
@@ -52,12 +49,14 @@ regionMap$region <- factor(regionMap$region, levels = 1:4,
 regionMap <- rbind(regionMap, data.frame(fips = c(2, 15), region = "West",
     state = c("alaska", "hawaii")))
 
+## State of residence (all should reside in US)
+stateOrg <- recodeFactors(pregint, codebook$Q110)
+
 ## Region of residence
 regionOrg <-
     regionMap$region[match(tolower(as.character(stateOrg[[1L]])), regionMap$state)]
 ## check proper merge
-head(cbind(stateOrg, regionOrg))
-## KEEP regionorg
+## head(cbind(stateOrg, regionOrg))
 
 ## Race (select all that apply)
 raceDF <- recodeFactors(pregint, codebook$Q1.8)
@@ -78,12 +77,14 @@ hispOrg <- recodeFactors(pregint, codebook$Q1.7)
 ## Check to see if all who said "Yes" Hispanic answered origin question
 ## equal number of responses in both variables after subsetting by "yes"
 ## responses
-sum(!apply(hispOrg[hispanic[[1L]] == "yes",], 1L,
-    function(row) all(is.na(row))))
+# sum(!apply(hispOrg[hispanic[[1L]] == "yes",], 1L,
+#     function(row) all(is.na(row))))
+
+# sexual preference
+sexpref <- recodeFactors(pregint, codebook$Q114)
 
 ## Age
 age <- pregint$Q112
-summary(age)
 
 ## ageGroup
 ageGroup <- Hmisc::cut2(age, cuts = c(25, 30, 35, 40))
@@ -94,7 +95,6 @@ educ <- recodeFactors(pregint, codebook$Q1.10)
 
 ## Relationshp recode
 relationship <- recodeFactors(pregint, codebook$Q1.11)
-
 
 ## Derived variable for income – based on Poverty Threshold for 2016
 ## https://www.census.gov/data/tables/time-series/demo/income-poverty/historical-poverty-thresholds.html
@@ -137,6 +137,12 @@ povertyComp <- cbind.data.frame(povFromTable =
 underPovLevel <-
     factor(povertyComp[["povFromData"]] <= povertyComp[["povFromTable"]],
         levels = c(TRUE, FALSE), labels = c("Yes", "No"))
+
+
+# Gender
+gender <- recodeFactors(pregint, codebook$Q1.2)
+males <- gender == "male"
+females <- gender == "female"
 
 # Pregnancy can be avoided
 avoidPreg <- vector("character", 2099)
@@ -208,14 +214,15 @@ currentSit <- vector("character", 2099)
 currentSit[males] <- as.character(recodeFactors(pregint, codebook$Q3.25)[males, ])
 currentSit[females] <- as.character(recodeFactors(pregint, codebook$Q3.26)[females, ])
 
-feelsDF <- as.data.frame(matrix(NA, nrow = 2099, ncol = 12,
+feelings <- as.data.frame(matrix(NA, nrow = 2099, ncol = 12,
     dimnames = list(NULL, codebook$Q3.33$response)))
-feelsDF[males,] <- recodeFactors(pregint, codebook$Q3.32)[males, ]
-feelsDF[females,] <- recodeFactors(pregint, codebook$Q3.33)[females, ]
+feelings[males,] <- recodeFactors(pregint, codebook$Q3.32)[males, ]
+feelings[females,] <- recodeFactors(pregint, codebook$Q3.33)[females, ]
 
 
 # removal of extra obj ----------------------------------------------------
 
 rm(povFrame, simppov, simpPov, povertyComp, povData, povThresh,
    state.fips, females, males, regionMap, raceDF, newFrame, skip, nonSkips,
-   finalSkips, mavoid, favoid)
+   finalSkips, mavoid, favoid, dataList, recodedData, doubles, dupped,
+   dupNames, nonRecode)
