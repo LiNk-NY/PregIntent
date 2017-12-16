@@ -36,6 +36,11 @@ DFvecs <- do.call(cbind.data.frame,
 
 pregRec <- cbind(DFs, DFvecs)
 
-pregRec <- cbind.data.frame(pregint, pregRec)
+names(pregRec) <- gsub("recodedData\\.|feelings\\.", "", names(pregRec))
+
+pregint <- pregint[, !names(pregint) %in% intersect(names(pregRec), names(pregint))]
+
+pregData <- cbind.data.frame(pregint, pregRec)
+
 ## Save Dataset
-readr::write_csv(pregRec, "data/pregint.csv")
+# readr::write_csv(pregData, "data/pregint.csv")
