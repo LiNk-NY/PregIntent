@@ -4,7 +4,7 @@ filesToSource <- c("install.R", "helpers.R", "clean.R", "codebookParse.R",
 filePaths <- file.path("R", filesToSource)
 
 ## Make sure all files exist
-all(file.exists(filePaths))
+stopifnot(all(file.exists(filePaths)))
 
 ## Source all scripts
 invisible(lapply(filePaths, source))
