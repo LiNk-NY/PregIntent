@@ -161,6 +161,16 @@ codebook$Q3.33[["corresponds"]] <- codebook[["Q3.32"]]$variable
 codebook$Q3.34[["corresponds"]] <- "Q121"
 codebook$Q121[["corresponds"]] <- "Q3.34"
 
+codebook <- lapply(codebook, function(x) readr::type_convert(x))
+
+codebookSheet <- dplyr::bind_rows(codebook)
+codebookSheet <- cbind.data.frame(
+    codebname = rep(names(codebook), lapply(codebook, nrow)),
+    codebookSheet, stringsAsFactors = FALSE)
+codebookSheet <- dplyr::rename(codebookSheet, dataname = variable)
+
+# Write codebook
+# readr::write_csv(codebookSheet, "codebookCode.csv")
 
 ## Clean variables except the needed one
 rm(list = ls()[!ls() %in% c("codebook", "pregint", "codebooktext",
