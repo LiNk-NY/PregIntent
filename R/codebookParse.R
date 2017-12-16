@@ -170,7 +170,7 @@ codebookSheet <- cbind.data.frame(
 codebookSheet <- dplyr::rename(codebookSheet, dataname = variable)
 
 # Write codebook
-# readr::write_csv(codebookSheet, "codebookCode.csv")
+readr::write_csv(codebookSheet, "docs/codebookCode.csv")
 
 ## Clean variables except the needed one
 rm(list = ls()[!ls() %in% c("codebook", "pregint", "codebooktext",
