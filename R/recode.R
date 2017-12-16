@@ -20,6 +20,11 @@ nonRecode <- pregint[, !names(pregint) %in% names(codebook)]
 
 pregRecode <- cbind.data.frame(nonRecode, recodedData, stringsAsFactors = FALSE)
 
+# Gender
+gender <- recodeFactors(pregint, codebook$Q1.2)
+males <- gender == "male"
+females <- gender == "female"
+
 ## Outcome
 pregFeel <- vector("character", 2099)
 ## "Ultimately, how would you feel about being pregnant right now?"
@@ -137,12 +142,6 @@ povertyComp <- cbind.data.frame(povFromTable =
 underPovLevel <-
     factor(povertyComp[["povFromData"]] <= povertyComp[["povFromTable"]],
         levels = c(TRUE, FALSE), labels = c("Yes", "No"))
-
-
-# Gender
-gender <- recodeFactors(pregint, codebook$Q1.2)
-males <- gender == "male"
-females <- gender == "female"
 
 # Pregnancy can be avoided
 avoidPreg <- vector("character", 2099)
