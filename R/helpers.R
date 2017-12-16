@@ -8,7 +8,8 @@ recodeFactors <-
     dataset <- as.data.frame(dataset, stringsAsFactors = FALSE)
     indicVar <- unique(recodeFrame[["variable"]])
     correspVar <- unique(recodeFrame[["corresponds"]])
-    target <- as.data.frame(matrix(NA, nrow = nrow(dataset)))
+    target <- as.data.frame(
+        matrix(NA, nrow = nrow(dataset), ncol = length(indicVar)))
 
     stopifnot(identical(length(values), length(labels)))
 
@@ -24,7 +25,7 @@ recodeFactors <-
         target[!indicLogic, ] <- dataset[!indicLogic, correspVar, drop = FALSE]
         names(target) <- varnames
     } else {
-        target <- dataset[, indicVar, drop = FALSE]
+        target[] <- dataset[, indicVar, drop = FALSE]
     }
     if (S4Vectors::isSingleString(indicVar)) {
         target[] <- factor(plyr::mapvalues(target[[1L]],
