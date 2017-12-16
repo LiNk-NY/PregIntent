@@ -17,3 +17,7 @@
 
 # Plots
 *.pdf
+
+# Send these files
+!recodeBook.xlsx
+!codebookCode.csv
