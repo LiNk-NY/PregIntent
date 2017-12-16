@@ -26,6 +26,7 @@ recodeFactors <-
         names(target) <- varnames
     } else {
         target[] <- dataset[, indicVar, drop = FALSE]
+        names(target) <- indicVar
     }
     if (S4Vectors::isSingleString(indicVar)) {
         target[] <- factor(plyr::mapvalues(target[[1L]],
