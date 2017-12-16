@@ -64,17 +64,36 @@ regionOrg <-
 raceDF <- recodeFactors(pregint, codebook$Q1.8)
 
 race <- vector("character", 2099)
-singleRes <- rowSums(!is.na(raceDF)) == 1
+multiSelect <- rowSums(!is.na(raceDF)) > 1L
 
-race[singleRes] <- apply(raceDF[singleRes, ], 1L, na.omit)
+## Squash single select columns
+race[!multiSelect] <- apply(raceDF[!multiSelect, ], 1L,  function(row) {
+    if (all(is.na(row)))
+        NA_character_
+    else
+    na.omit(row)
+})
+
 ## More than 1 gets coded as OTHER
-race[!singleRes] <- "other"
+race[multiSelect] <- "other"
 
 ## Hispanic
 hispanic <- recodeFactors(pregint, codebook$Q1.6)
-table(hispanic)
+
 ## Hispanic origin
-hispOrg <- recodeFactors(pregint, codebook$Q1.7)
+hispoDF <- recodeFactors(pregint, codebook$Q1.7)
+
+hispOrg <- vector("character", 2099)
+multiSelect <- rowSums(!is.na(hispoDF)) > 1L
+
+## Squash single select columns
+hispOrg[!multiSelect] <- apply(hispoDF[!multiSelect, ], 1L, function(row) {
+    if (all(is.na(row)))
+        NA_character_
+    else
+    na.omit(row)
+})
+hispOrg[multiSelect] <- "other"
 
 ## Check to see if all who said "Yes" Hispanic answered origin question
 ## equal number of responses in both variables after subsetting by "yes"
@@ -221,4 +240,4 @@ feelings[females,] <- recodeFactors(pregint, codebook$Q3.33)[females, ]
 rm(povFrame, simppov, simpPov, povertyComp, povData, povThresh,
    state.fips, females, males, regionMap, raceDF, newFrame, skip,
    nonSkips, finalSkips, mavoid, favoid, dataList, doubles, dupped,
-   dupNames, nonRecode)
+   dupNames, multiSelect, hispoDF)
