@@ -7,54 +7,42 @@ library(Hmisc)
 library(magrittr)
 library(forcats)
 
-## Initial checks
-# Sexual preference
-sexpref <- recodeFactors(pregint, splitFrames$Q114)
-table(sexpref)
-all.equal(sum(table(sexpref)), 2099)
+## Use ALL codebook chunks to recode data
+dataList <- lapply(codebook, function(recodeChunk) {
+    recodeFactors(pregint, recodeChunk)
+})
+
+recodedData <- dplyr::bind_cols(dataList)
+doubles <- grepl("\\.\\.", names(recodedData))
+dupped <- duplicated(lapply(strsplit(names(recodedData)[doubles], "\\.\\."), sort))
+dupNames <- names(recodedData)[doubles][dupped]
+
+recodedData <- recodedData[, !(names(recodedData) %in% dupNames)]
 
 # Gender
-gender <- recodeFactors(pregint, splitFrames$Q1.2)
-table(gender)
-all.equal(sum(table(gender)), 2099)
-
-## State of residence (all should reside in US)
-stateOrg <- recodeFactors(pregint, splitFrames$Q110)
-table(stateOrg)
-sum(table(stateOrg))
-
-## Check if any values are code 53 (do not reside in US) or 40 (Puerto Rico)
-any(pregint$Q110 %in% c(53, 40))
-
-## Coding for Main Outcome
-## Logical vectors for each gender
-females <- gender == "female"
+gender <- recodeFactors(pregint, codebook$Q1.2)
 males <- gender == "male"
+females <- gender == "female"
 
-## Main outcome
-codebook[rownames(codebook) == "Q3.34", ]
-codebook[rownames(codebook) == "Q121", ]
-
+## Outcome
 pregFeel <- vector("character", 2099)
 ## "Ultimately, how would you feel about being pregnant right now?"
-pregFeel[females] <- recodeFactors(pregint, splitFrames$Q3.34)[females]
-pregFeel[males] <- recodeFactors(pregint, splitFrames$Q121)[males]
+pregFeel[females] <- recodeFactors(pregint, codebook$Q3.34)[females]
+pregFeel[males] <- recodeFactors(pregint, codebook$Q121)[males]
 table(pregFeel)
 data.frame(AnsPreg = sum(table(pregFeel)), N = 2099,
     Perc = round((sum(table(pregFeel))/2099)*100, 2))
 
 ## Ideal criteria
 idealCrit <- vector("character", 2099)
-splitFrames$Q3.2[4, "response"] <- "don't want me/partner pregnant"
-splitFrames$Q3.3[4, "response"] <- "don't want me/partner pregnant"
-idealCrit[females] <- recodeFactors(pregint, splitFrames$Q3.3)[females]
-idealCrit[males] <- recodeFactors(pregint, splitFrames$Q3.2)[males]
+idealCrit[females] <- recodeFactors(pregint, codebook$Q3.3)[females]
+idealCrit[males] <- recodeFactors(pregint, codebook$Q3.2)[males]
 table(idealCrit)
 
 ## Number of children
 childnum <- gsub("NO", "0", pregint$Q1.9, ignore.case = TRUE)
 childnum[childnum %in% c("mm", "na")] <- NA
-childnum %>% table
+childnum <- as.integer(childnum)
 
 ## Reference dataset for regions
 regionMap <- state.fips[!duplicated(state.fips$fips), c("fips", "region", "polyname")]
@@ -65,57 +53,71 @@ regionMap$region <- factor(regionMap$region, levels = 1:4,
 regionMap <- rbind(regionMap, data.frame(fips = c(2, 15), region = "West",
     state = c("alaska", "hawaii")))
 
+## State of residence (all should reside in US)
+stateOrg <- recodeFactors(pregint, codebook$Q110)
+
 ## Region of residence
 regionOrg <-
     regionMap$region[match(tolower(as.character(stateOrg[[1L]])), regionMap$state)]
 ## check proper merge
-head(cbind(stateOrg, regionOrg))
-## KEEP regionorg
+## head(cbind(stateOrg, regionOrg))
 
 ## Race (select all that apply)
-raceDF <- recodeFactors(pregint, splitFrames$Q1.8)
+raceDF <- recodeFactors(pregint, codebook$Q1.8)
+
+race <- vector("character", 2099)
+multiSelect <- rowSums(!is.na(raceDF)) > 1L
+
+## Squash single select columns
+race[!multiSelect] <- apply(raceDF[!multiSelect, ], 1L,  function(row) {
+    if (all(is.na(row)))
+        NA_character_
+    else
+    na.omit(row)
+})
+
+## More than 1 gets coded as OTHER
+race[multiSelect] <- "other"
 
 ## Hispanic
-hispanic <- recodeFactors(pregint, splitFrames$Q1.6)
-table(hispanic)
+hispanic <- recodeFactors(pregint, codebook$Q1.6)
+
 ## Hispanic origin
-hispOrg <- recodeFactors(pregint, splitFrames$Q1.7)
+hispoDF <- recodeFactors(pregint, codebook$Q1.7)
+
+hispOrg <- vector("character", 2099)
+multiSelect <- rowSums(!is.na(hispoDF)) > 1L
+
+## Squash single select columns
+hispOrg[!multiSelect] <- apply(hispoDF[!multiSelect, ], 1L, function(row) {
+    if (all(is.na(row)))
+        NA_character_
+    else
+    na.omit(row)
+})
+hispOrg[multiSelect] <- "other"
 
 ## Check to see if all who said "Yes" Hispanic answered origin question
 ## equal number of responses in both variables after subsetting by "yes"
 ## responses
-sum(!apply(hispOrg[hispanic[[1L]] == "yes",], 1L,
-    function(row) all(is.na(row))))
+# sum(!apply(hispOrg[hispanic[[1L]] == "yes",], 1L,
+#     function(row) all(is.na(row))))
+
+# sexual preference
+sexpref <- recodeFactors(pregint, codebook$Q114)
 
 ## Age
 age <- pregint$Q112
-summary(age)
 
 ## ageGroup
 ageGroup <- Hmisc::cut2(age, cuts = c(25, 30, 35, 40))
 levels(ageGroup) <- c("21-24", "25-29", "30-34", "35-39", "40-44")
 
-
-## Education
-splitFrames$Q1.10
 ## Modify labels to recode using function
-newEduLabs <- c("LT/some HS", "LT/some HS", "HS diploma/GED", "Some college",
-    "College degree/Some Grad", "College degree/Some Grad", "Grad degree")
-splitFrames$Q1.10$response <- newEduLabs
-educ <- recodeFactors(pregint, splitFrames$Q1.10)
-table(educ)
+educ <- recodeFactors(pregint, codebook$Q1.10)
 
-## Relationship
-##  single
-##  married or living together or committed rel
-##  divorced/sep/wid
-##  other
-splitFrames$Q1.11
-## Modify labels to recode using function
-newRelLabs <- c("single", rep("married/living/commit", 3), "div/sep/wid", "other")
-splitFrames$Q1.11$response <- newRelLabs
-relationship <- recodeFactors(pregint, splitFrames$Q1.11)
-
+## Relationshp recode
+relationship <- recodeFactors(pregint, codebook$Q1.11)
 
 ## Derived variable for income – based on Poverty Threshold for 2016
 ## https://www.census.gov/data/tables/time-series/demo/income-poverty/historical-poverty-thresholds.html
@@ -131,21 +133,22 @@ povFrame <- do.call(rbind, lapply(as.character(0:8), function(x)
     ))
 )
 povFrame <- povFrame[!is.na(povFrame$povThresh), ]
-simpPov <- povFrame %>% dplyr::group_by(famUnit, childUnder18) %>%
-    summarise(mPovThresh = mean(povThresh))
+simpPov <- povFrame %>% group_by(famUnit, childUnder18) %>%
+    dplyr::summarize(mPovThresh = mean(povThresh, na.rm = TRUE))
 simpPov <- as.data.frame(simpPov)
 
 simpPov$incGroup <- Hmisc::cut2(simpPov$mPovThresh,
     cuts = c(20000, 40000, 60000, 80000, 100000))
 simpPov$incGroup <- factor(simpPov$incGroup, ordered = TRUE,
     levels = c(levels(simpPov$incGroup), "100000 or more"))
-levels(simpPov$incGroup) <- splitFrames$Q1.14$response
+levels(simpPov$incGroup) <- codebook$Q1.14$response
+
 simppov <- simpPov %>% unite(famch, famUnit, childUnder18)
 
 
 ## Get factor and order it
-incCat <- recodeFactors(pregint, splitFrames$Q1.14)[[1L]]
-levels(incCat) <- levels(simppov$incGroup)
+incCat <- recodeFactors(pregint, codebook$Q1.14)[[1L]]
+levels(incCat) <- codebook$Q1.14$response
 incCat <- factor(incCat, ordered = TRUE)
 povData <- cbind.data.frame(famUn = pregint$Q1.12,
     childUn18 = pregint$Q1.13, incCat)
@@ -163,19 +166,19 @@ avoidPreg <- vector("character", 2099)
 
 mavoid <- vector("character", 2099)[males]
 
-newFrame <- recodeFactors(pregint, splitFrames$Q2.2)[males, ]
+newFrame <- recodeFactors(pregint, codebook$Q2.2)[males, ]
 skip <- rowSums(!is.na(newFrame)) > 1
 nonSkips <- sapply(newFrame[!skip, ], as.character)[!is.na(newFrame[!skip, ])]
-finalSkips <- recodeFactors(pregint, splitFrames$Q2.5)[males, ][skip]
+finalSkips <- recodeFactors(pregint, codebook$Q2.5)[males, ][skip]
 mavoid[skip] <- as.character(finalSkips)
 mavoid[!skip] <- nonSkips
 
 favoid <- vector("character", 2099)[females]
 
-newFrame <- recodeFactors(pregint, splitFrames$Q2.7)[females, ]
+newFrame <- recodeFactors(pregint, codebook$Q2.7)[females, ]
 skip <- rowSums(!is.na(newFrame)) > 1L
 nonSkips <- sapply(newFrame[!skip, ], as.character)[!is.na(newFrame[!skip, ])]
-finalSkips <- recodeFactors(pregint, splitFrames$Q2.10)[females, ][skip]
+finalSkips <- recodeFactors(pregint, codebook$Q2.10)[females, ][skip]
 favoid[skip] <- as.character(finalSkips)
 favoid[!skip] <- nonSkips
 
@@ -186,10 +189,10 @@ avoidPreg <- factor(avoidPreg == "can be avoided",
     levels = c(TRUE, FALSE), labels = c("Yes", "No"))
 
 pregPlan <- vector("character", 2099)
-newFrame <- recodeFactors(pregint, splitFrames$Q3.5)
+newFrame <- recodeFactors(pregint, codebook$Q3.5)
 newFrame[newFrame == 2L] <- NA
 nonSkips <- rowSums(!is.na(newFrame))  == 1L
-finalSkips <- recodeFactors(pregint, splitFrames$Q122)[!nonSkips, ]
+finalSkips <- recodeFactors(pregint, codebook$Q122)[!nonSkips, ]
 pregPlan[!nonSkips] <- as.character(finalSkips)
 pregPlan[nonSkips] <- sapply(newFrame[nonSkips, ],
     as.character)[!is.na(newFrame[nonSkips, ])]
@@ -202,32 +205,41 @@ pregPlan[pregPlan %in% c("'just happens'",
 pregPlan[pregPlan %in% "other"] <- NA_character_
 
 becomeControl <- vector("character", 2099)
-splitFrames$Q3.12$variable <- "Q3.12_1"
-splitFrames$Q3.13$variable <- "Q3.13_1"
 becomeControl[males] <- as.character(recodeFactors(pregint,
-    splitFrames$Q3.12)[males, ])
+    codebook$Q3.12)[males, ])
 becomeControl[females] <- as.character(recodeFactors(pregint,
-    splitFrames$Q3.13)[females, ])
+    codebook$Q3.13)[females, ])
 
 becomeControl %<>%
     fct_collapse(`Low control` = c("no control", "a little control"),
         `High control` = c("complete control", "a lot of control"))
 
 ## Select all that apply question but not indicated in actual question
-## recodeFactors(pregint, splitFrames$Q3.17a)
+## recodeFactors(pregint, codebook$Q3.17a)
 
 avoidControl <- vector("character", 2099)
-splitFrames$Q2.12$variable <- "Q2.12_1"
-splitFrames$Q2.13$variable <- "Q2.13_1"
 avoidControl[males] <- as.character(recodeFactors(pregint,
-    splitFrames$Q2.12)[males, ])
+    codebook$Q2.12)[males, ])
 avoidControl[females] <- as.character(recodeFactors(pregint,
-    splitFrames$Q2.13)[females, ])
+    codebook$Q2.13)[females, ])
 
 avoidControl %<>%
     fct_collapse(`Low control` = c("no control", "a little control"),
         `High control` = c("complete control", "a lot of control"))
 
-rm(povFrame, simppov, simpPov, povertyComp, incCat, povData, povThresh,
-    newEduLabs, newRelLabs, state.fips, females, males, regionMap,
-    newFrame, skip, nonSkips, finalSkips, mavoid, favoid)
+currentSit <- vector("character", 2099)
+currentSit[males] <- as.character(recodeFactors(pregint, codebook$Q3.25)[males, ])
+currentSit[females] <- as.character(recodeFactors(pregint, codebook$Q3.26)[females, ])
+
+feelings <- as.data.frame(matrix(NA, nrow = 2099, ncol = 12,
+    dimnames = list(NULL, codebook$Q3.33$response)))
+feelings[males,] <- recodeFactors(pregint, codebook$Q3.32)[males, ]
+feelings[females,] <- recodeFactors(pregint, codebook$Q3.33)[females, ]
+
+
+# removal of extra obj ----------------------------------------------------
+
+rm(povFrame, simppov, simpPov, povertyComp, povData, povThresh,
+   state.fips, females, males, regionMap, raceDF, newFrame, skip,
+   nonSkips, finalSkips, mavoid, favoid, dataList, doubles, dupped,
+   dupNames, multiSelect, hispoDF)

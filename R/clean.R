@@ -9,7 +9,7 @@ vIdx <- grep("^V[0-9]", names(namesVect))
 names(namesVect)[vIdx] <- namesVect[vIdx]
 
 # Varnames and questions
-codebook <- cbind(varname = names(namesVect), question = namesVect)
+codebooktext <- cbind(varname = names(namesVect), question = namesVect)
 
 # Read actual dataset with cleaned column names
 pregint <- suppressWarnings(
@@ -29,4 +29,4 @@ pregint <- pregint[pregint$gc == 1L, ]
 
 ## Keep only desired variable
 rm(list = ls()[!ls() %in%
-    c("pregint", "codebook", "recodeFactors", "adjustVarVal", "cleanBlock")])
+    c("pregint", "codebooktext", "recodeFactors", "adjustVarVal", "cleanBlock")])
