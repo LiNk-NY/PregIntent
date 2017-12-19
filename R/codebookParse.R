@@ -180,10 +180,13 @@ codebookSheet <- codebookSheet[!codebookSheet[["codebname"]] %in%
     lapply(strsplit(dupNames, "\\.\\."), `[`, 1L), ]
 naLogic <- is.na(codebookSheet[["recodeName"]]) & !is.na(codebookSheet[["corresponds"]])
 codebookSheet[naLogic, "recodeName"] <-
-    paste0(codebookSheet[naLogic, "codebname"], "..", codebookSheet[naLogic, "corresponds"])
+    paste0(codebookSheet[naLogic, "dataname"], "..",
+        codebookSheet[naLogic, "corresponds"])
+
+# naLogic <- is.na(codebookSheet[["recodeName"]]) & is.na(codebookSheet[["corresponds"]])
 
 # Write codebook
-# readr::write_csv(codebookSheet, "docs/codebookCode.csv")
+readr::write_csv(codebookSheet, "docs/codebookCode.csv")
 
 ## Clean variables except the needed one
 rm(list = ls()[!ls() %in% c("codebook", "pregint", "codebooktext",
