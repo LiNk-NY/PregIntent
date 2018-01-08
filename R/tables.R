@@ -10,7 +10,8 @@ attach(subdata)
 source("R/table-helpers.R")
 currentSit <- factor(currentSit) # drop levels
 
-# Produce Table 1
+# Table 1 -----------------------------------------------------------------
+
 tab1 <- .comparisonTable(age, childnum, gender, hispanic, educ, idealCrit,
     avoidPreg, pregPlan, currentSit, race, incCat, relationship,
     outcome = pregFeel,
