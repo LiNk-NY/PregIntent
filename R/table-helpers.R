@@ -40,8 +40,8 @@
 
     numVar <- as.numeric(numVar)
     splitSet <- split(numVar, outcome)
-    ## Enforce alphabetical order
-    splitSet <- splitSet[order(na.omit(unique(outcome)))]
+    ## Enforce levels
+    splitSet <- splitSet[levels(outcome)]
     groupNames <- names(splitSet)
     res <- vapply(seq_along(splitSet), function(i, x) {
         m <- round(mean(x[[i]], na.rm = TRUE), digits)
@@ -52,7 +52,8 @@
     resMat[, rev(groupNames), drop = FALSE]
 }
 
-.ttestPval <- function(numVar, outcome) {
+.ttestPval <- function(numVar, outcome, varName = NULL) {
+    if (is.null(varName))
     varName <- as.character(substitute(numVar))
     numVar <- as.numeric(numVar)
     matrix(
