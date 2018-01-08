@@ -9,39 +9,17 @@ rm(pregint)
 attach(subdata)
 source("R/table-helpers.R")
 currentSit <- factor(currentSit) # drop levels
-# Bivariable Table 1
-numericPortion <- cbind(
-    rbind(.meansd(age), .meansd(childnum)),
-    rbind(.groupMeans(age, pregFeel), .groupMeans(childnum, pregFeel))
-    )
-ttestres <- rbind(.ttestPval(age, pregFeel), .ttestPval(childnum, pregFeel))
 
-## Bind means and p.vals
-(nums <- cbind(numericPortion, ttestres ))
+# Produce Table 1
+tab1 <- .comparisonTable(age, childnum, gender, hispanic, educ, idealCrit,
+    avoidPreg, pregPlan, currentSit, race, incCat, relationship,
+    outcome = pregFeel,
+    headerRow = c("Age in years M (SD)", "No. of Children M (SD)", "Sex",
+        "Hispanic", "Educational attainment", "Ideal Criteria",
+        "Avoid Pregnancy", "Pregnancy can be planned", "Current situation",
+        "Race", "Income category", "Relationship status"))
 
-categorical <- cbind(
-    rbind(.prop(gender), .prop(regionOrg), .prop(hispanic), .prop(educ),
-        .prop(idealCrit), .prop(avoidPreg), .prop(pregPlan), .prop(currentSit),
-        .prop(race), .prop(incCat), .prop(relationship)),
-    rbind(.crossTab(gender, pregFeel), .crossTab(regionOrg, pregFeel),
-        .crossTab(hispanic, pregFeel), .crossTab(educ, pregFeel),
-        .crossTab(idealCrit, pregFeel), .crossTab(avoidPreg, pregFeel),
-        .crossTab(pregPlan, pregFeel), .crossTab(currentSit, pregFeel),
-        .crossTab(race, pregFeel), .crossTab(incCat, pregFeel), .crossTab(relationship, pregFeel))
-    )
-
-chitestres <- rbind(.chitestPval(gender, pregFeel),
-    .chitestPval(regionOrg, pregFeel), .chitestPval(hispanic, pregFeel),
-    .chitestPval(educ, pregFeel), .chitestPval(idealCrit, pregFeel),
-    .chitestPval(avoidPreg, pregFeel), .chitestPval(pregPlan, pregFeel),
-    .chitestPval(currentSit, pregFeel), .fishertestPval(race, pregFeel),
-    .chitestPval(incCat, pregFeel), .fishertestPval(relationship, pregFeel))
-
-## Bind chisq tests and p.vals
-(cats <- cbind(categorical, chitestres))
-
-tab1 <- rbind(nums, cats)
-
+tab1 <- do.call(rbind, tab1)
 ## Fix caps in categories
 simpleCap <- function(x) {
     unname(vapply(x, function(s) {
@@ -51,7 +29,9 @@ simpleCap <- function(x) {
 
 rownames(tab1) <- simpleCap(rownames(tab1))
 detach(subdata)
+
 write.csv(tab1, file = "data/table1.csv")
+
 # Table 2 - Control over Pregnancy ----------------------------------------
 
 rm(list = ls())
