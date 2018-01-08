@@ -83,24 +83,47 @@
 }
 
 .comparisonTable <- function(..., outcome, headerRow = NULL,
-    outcomeOrder = NULL, deparse.level = 2, digits = 2)
+    outcomeOrder = c(0, 1), deparse.level = 2, digits = 2)
 {
     listvars <- as.list(substitute(list(...)))[-1L]
+    args <- list(...)
+    if (!is.factor(outcome))
+        outcome <- as.factor(outcome)
+    levels(outcome) <-
+        rownames(contrasts(outcome)[outcomeOrder+1L, , drop = FALSE])
+    ## code from table()
     nams <- vapply(listvars, function(x) {
         switch(deparse.level + 1L,
         "", if (is.symbol(x)) as.character(x) else "",
         gsub("\\w+\\$", "", deparse(x, nlines = 1L)[1L]))
         }, character(1L))
-    args <- list(...)
-    names(args) <- nams
-    numerics <- vapply(args, is.numeric, logical(1L))
-    lapply(seq_along(args), function(i, x, compVar) {
-        if (is.numeric(x[[i]])) {
+    lengthArgs <- seq_along(args)
+
+    if (is.null(headerRow))
+        names(lengthArgs) <- names(args) <- nams
+    else
+        names(lengthArgs) <- names(args) <- headerRow
+
+    numeric <- vapply(args, is.numeric, logical(1L))
+    lapply(lengthArgs, function(i, x, compVar) {
+        if (numeric[[i]]) {
             cbind(.meansd(x[[i]], varName = names(x[i]), digits = digits),
-                .groupMeans(x[[i]], compVar, digits = digits))
+                .groupMeans(x[[i]], compVar, digits = digits),
+                .ttestPval(x[[i]], compVar, varName = names(x[i])))
         } else {
+            fourth <- .chitestPval(x[[i]], compVar)[[1L]]
+            if (!is.null(headerRow)) {
+                header <- matrix(c(rep("", 3L), fourth), nrow = 1L,
+                    dimnames = list(headerRow[[i]], NULL))
+                p.value <- rep("", length(levels(x[[i]])))
+            } else {
+                header <- character(0L)
+                p.value <- c(fourth, rep("", length(levels(x[[i]]))-1))
+            }
+            rbind(header,
             cbind(.prop(x[[i]], digits = digits),
-                .crossTab(x[[i]], compVar, digits = digits))
+                .crossTab(x[[i]], compVar, digits = digits),
+                p.value))
         }
     }, compVar = outcome, x = args)
 }
