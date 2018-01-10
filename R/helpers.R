@@ -1,6 +1,4 @@
 ## Dependencies
-library(plyr)
-
 # Set factors from recoding data frames
 recodeFactors <-
     function(dataset, recodeFrame, subsetVariable = "Q1.2",
