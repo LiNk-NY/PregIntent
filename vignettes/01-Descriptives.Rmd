@@ -14,6 +14,7 @@ suppressPackageStartupMessages({
     library(broom)
     library(dplyr)
     library(tidyr)
+    library(readr)
 })
 ```
 
@@ -23,12 +24,13 @@ suppressPackageStartupMessages({
 library(broom)
 library(dplyr)
 library(tidyr)
+library(readr)
 ```
 
 ## Load the dataset
 
 ```{r}
-pregint <- read.csv("data/pregint.csv")
+pregint <- read.csv("../data/pregint.csv")
 ```
 
 ## Filter variables
@@ -38,13 +40,26 @@ Separate variable names that should not be used:
 ```{r}
 ignoreVars <- c("ResponseID", "StartDate", "EndDate", "Finished",
     "SC0_0", "SC0_1", "SC0_2", "rid", "gc", "term", "LocationLatitude",
-    "LocationLongitude", "LocationAccuracy",
+    "LocationLongitude", "LocationAccuracy", "states", "region",
     grep("TEXT", names(pregint), fixed = TRUE, value = TRUE))
 
 validVars <- !names(pregint) %in% ignoreVars
 ```
 
+Read names from Excel file and filter variables that have been recoded:
+
 ```{r}
-summary(pregint[, validVars])
+codebookCode <- read_csv("../docs/codebookCode.csv")
+changedNames <- codebookCode[["dataname"]] != codebookCode[["recodeName"]]
+mkRemoval <- unlist(codebookCode[changedNames, "dataname"], use.names = FALSE)
+descVars <- !names(pregint) %in% c(names(pregint)[!validVars], mkRemoval)
+pregintDESC <- pregint[, descVars]
+pregintDESC <- pregintDESC[, !vapply(pregintDESC, function(x) all(is.na(x)), logical(1L))]
+```
+
+## Summary
+
+```{r}
+summary(pregintDESC)
 ```
 
