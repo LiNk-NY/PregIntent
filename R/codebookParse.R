@@ -183,7 +183,9 @@ codebookSheet[naLogic, "recodeName"] <-
     paste0(codebookSheet[naLogic, "dataname"], "..",
         codebookSheet[naLogic, "corresponds"])
 
-# naLogic <- is.na(codebookSheet[["recodeName"]]) & is.na(codebookSheet[["corresponds"]])
+## Fill in names that stay the same
+constantNames <- is.na(codebookSheet[["recodeName"]])
+codebookSheet[constantNames, "recodeName"] <- codebookSheet[constantNames, "dataname"]
 
 # Write codebook
 readr::write_csv(codebookSheet, "docs/codebookCode.csv")
