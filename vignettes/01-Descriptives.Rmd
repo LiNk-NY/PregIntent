@@ -1,0 +1,50 @@
+---
+title: "Descriptives"
+author: "Marcel Ramos"
+date: "January 9, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, include=FALSE}
+suppressPackageStartupMessages({
+    library(broom)
+    library(dplyr)
+    library(tidyr)
+})
+```
+
+## Load required packages
+
+```{r, eval = FALSE}
+library(broom)
+library(dplyr)
+library(tidyr)
+```
+
+## Load the dataset
+
+```{r}
+pregint <- read.csv("data/pregint.csv")
+```
+
+## Filter variables
+
+Separate variable names that should not be used:
+
+```{r}
+ignoreVars <- c("ResponseID", "StartDate", "EndDate", "Finished",
+    "SC0_0", "SC0_1", "SC0_2", "rid", "gc", "term", "LocationLatitude",
+    "LocationLongitude", "LocationAccuracy",
+    grep("TEXT", names(pregint), fixed = TRUE, value = TRUE))
+
+validVars <- !names(pregint) %in% ignoreVars
+```
+
+```{r}
+summary(pregint[, validVars])
+```
+
