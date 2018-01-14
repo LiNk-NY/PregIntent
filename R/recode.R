@@ -40,6 +40,7 @@ data.frame(AnsPreg = sum(table(pregFeel)), N = 2099,
 idealCrit <- vector("character", 2099)
 ## Manually recode values due to bad questionnaire
 pregint$Q3.3 <- plyr::mapvalues(pregint$Q3.3, c(6,7), c(4, 5))
+codebook$Q3.3$value <- plyr::mapvalues(codebook$Q3.3$value, c(6,7), c(4, 5))
 idealCrit[females] <- recodeFactors(pregint, codebook$Q3.3)[females]
 idealCrit[males] <- recodeFactors(pregint, codebook$Q3.2)[males]
 table(idealCrit)
