@@ -114,6 +114,7 @@ codebook$Q3.13$variable <- "Q3.13_1"
 codebook$Q2.12$variable <- "Q2.12_1"
 codebook$Q2.13$variable <- "Q2.13_1"
 codebook$Q3.17a$variable <- "Q3.17a_1"
+codebook$Q3.17a$value <- 1:4
 codebook$Q3.18a$variable <- "Q3.18a_1"
 
 codebook$Q3.23$variable <- with(codebook$Q3.23,
