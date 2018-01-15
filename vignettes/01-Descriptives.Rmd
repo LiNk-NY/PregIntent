@@ -15,6 +15,7 @@ suppressPackageStartupMessages({
     library(dplyr)
     library(tidyr)
     library(readr)
+    library(readxl)
 })
 ```
 
@@ -25,12 +26,15 @@ library(broom)
 library(dplyr)
 library(tidyr)
 library(readr)
+library(readxl)
 ```
 
 ## Load the dataset
 
 ```{r}
 pregint <- read.csv("../data/pregint.csv")
+codebookCode <- read_csv("../docs/codebookCode.csv")
+recodebook <- read_excel("../docs/recodeBook.xlsx")
 ```
 
 ## Filter variables
@@ -41,25 +45,64 @@ Separate variable names that should not be used:
 ignoreVars <- c("ResponseID", "StartDate", "EndDate", "Finished",
     "SC0_0", "SC0_1", "SC0_2", "rid", "gc", "term", "LocationLatitude",
     "LocationLongitude", "LocationAccuracy", "states", "region",
-    grep("TEXT", names(pregint), fixed = TRUE, value = TRUE))
+    grep("TEXT", names(pregint), fixed = TRUE, value = TRUE), "Q1.1a",
+    "Q1.1b", paste0("Q3.17_", 1:4))
+## Remove Q3.17a, the select all that apply question that was intended
+## as single select
 
-validVars <- !names(pregint) %in% ignoreVars
+keepL1 <- !names(pregint) %in% ignoreVars
+keepL2 <- names(pregint) %in%
+    unique(c(codebookCode[["recodeName"]], recodebook[["hname"]]))
+keepvars <- keepL1 & keepL2
+
+keepnames <- names(pregint)[keepvars]
 ```
 
-Read names from Excel file and filter variables that have been recoded:
+Filter variables that have been recoded:
 
 ```{r}
-codebookCode <- read_csv("../docs/codebookCode.csv")
-changedNames <- codebookCode[["dataname"]] != codebookCode[["recodeName"]]
-mkRemoval <- unlist(codebookCode[changedNames, "dataname"], use.names = FALSE)
-descVars <- !names(pregint) %in% c(names(pregint)[!validVars], mkRemoval)
-pregintDESC <- pregint[, descVars]
-pregintDESC <- pregintDESC[, !vapply(pregintDESC, function(x) all(is.na(x)), logical(1L))]
+pregintDESC <- pregint[, keepvars]
+pregintDESC <- pregintDESC[, !vapply(pregintDESC, function(x)
+    all(is.na(x)), logical(1L))]
+```
+
+## Load helper functions for creating summaries
+
+```{r}
+source("../R/table-helpers.R")
 ```
 
 ## Summary
 
 ```{r}
-summary(pregintDESC)
+alldatnames <- names(pregintDESC)
+idxVec <- seq_along(pregintDESC)
+names(idxVec) <- names(pregintDESC)
+descres <- lapply(idxVec, function(i, dataset) {
+    varname <- alldatnames[[i]]
+    if (is.integer(dataset[[i]]) || is.numeric(dataset[[i]])) {
+        resx <- .meansd(dataset[[i]], varName = varname)
+        cbind(resx, valid = sum(!is.na(dataset[[i]])))
+    } else if (is.factor(dataset[[i]]))
+        .prop(dataset[[i]])
+}, dataset = pregintDESC)
+
+resTables <- lapply(idxVec, function(i, listset) {
+    x <- listset[[i]]
+    varname <- alldatnames[[i]]
+    rex <- cbind(rownames(x), x)
+    colnames(rex)[1] <- varname
+    rownames(rex) <- NULL
+    rex
+}, listset = descres)
+```
+
+```{r}
+invisible(
+    lapply(idxVec,  function(i, listset) {
+        write.table(rbind(listset[[i]], c("", "")), file = "descriptives.csv",
+            append = TRUE, sep = ",", row.names = FALSE)
+    }, listset = resTables)
+)
 ```
 
