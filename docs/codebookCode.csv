@@ -56,9 +56,9 @@ Q3.17,Q3.17_6,1,'just happened',none,NA,Q3.17_6
 Q3.17,Q3.17_8,1,happened naturally because it was meant to be,none,NA,Q3.17_8
 Q3.17,Q3.17_7,1,other,none,NA,Q3.17_7
 Q3.17a,Q3.17a_1,1,No control,none,NA,Q3.17a_1
-Q3.17a,Q3.17a_1,1,A little control,none,NA,Q3.17a_1
-Q3.17a,Q3.17a_1,1,A lot of control,none,NA,Q3.17a_1
-Q3.17a,Q3.17a_1,1,Complete control,none,NA,Q3.17a_1
+Q3.17a,Q3.17a_1,2,A little control,none,NA,Q3.17a_1
+Q3.17a,Q3.17a_1,3,A lot of control,none,NA,Q3.17a_1
+Q3.17a,Q3.17a_1,4,Complete control,none,NA,Q3.17a_1
 Q3.18,Q3.18_1,1,was planned in advance,none,NA,Q3.18_1
 Q3.18,Q3.18_2,1,was planned to happen after my ideal criteria were fulfilled,none,NA,Q3.18_2
 Q3.18,Q3.18_3,1,was planned in discussion with my partner,none,NA,Q3.18_3
