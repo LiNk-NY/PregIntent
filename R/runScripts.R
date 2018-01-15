@@ -1,6 +1,13 @@
 ## Script to run data cleaning and recoding
-filesToSource <- c("install.R", "helpers.R", "clean.R", "codebookParse.R",
-    "recode.R")
+filesToSource <- c(
+    "install.R",
+    "helpers.R",
+    "clean.R",
+    "codebookParse.R"
+    # )
+    ,
+    "recode.R"
+    )
 filePaths <- file.path("R", filesToSource)
 
 ## Make sure all files exist
