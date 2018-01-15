@@ -192,8 +192,8 @@ constantNames <- is.na(codebookSheet[["recodeName"]])
 codebookSheet[constantNames, "recodeName"] <- codebookSheet[constantNames, "dataname"]
 
 # Write codebook
-# readr::write_csv(codebookSheet, "docs/codebookCode.csv")
+readr::write_csv(codebookSheet, "docs/codebookCode.csv")
 
 ## Clean variables except the needed one
 rm(list = ls()[!ls() %in% c("codebook", "pregint", "codebooktext",
-    "recodeFactors", "adjustVarVal")])
+    "codebookSheet", "recodeFactors", "adjustVarVal")])

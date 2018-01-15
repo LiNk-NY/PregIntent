@@ -18,7 +18,7 @@ doubles <- grepl("\\.\\.", names(recodedData))
 dupped <- duplicated(lapply(strsplit(names(recodedData)[doubles], "\\.\\."), sort))
 dupNames <- names(recodedData)[doubles][dupped]
 
-# writeLines(dupNames, con = file("docs/duplicateVariables.txt"))
+writeLines(dupNames, con = file("docs/duplicateVariables.txt"))
 
 recodedData <- recodedData[, !(names(recodedData) %in% dupNames)]
 
