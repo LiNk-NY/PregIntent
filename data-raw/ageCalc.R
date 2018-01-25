@@ -14,3 +14,7 @@ AgeV <- unlist(AgeV)
 
 mean(AgeV)
 sd(AgeV)
+
+age <- data.frame(Age = AgeV)
+write.csv(age, file = "../data/ageVar.csv", row.names = FALSE)
+
