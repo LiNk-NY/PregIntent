@@ -1,6 +1,13 @@
 ## Script to run data cleaning and recoding
-filesToSource <- c("install.R", "helpers.R", "clean.R", "codebookParse.R",
-    "recode.R")
+filesToSource <- c(
+    "install.R",
+    "helpers.R",
+    "clean.R",
+    "codebookParse.R"
+    # )
+    ,
+    "recode.R"
+    )
 filePaths <- file.path("R", filesToSource)
 
 ## Make sure all files exist
@@ -14,7 +21,7 @@ invisible(lapply(filePaths, source))
 
 ## Remove objs that were used for cleaning
 variables <- ls()[!ls() %in% c("codebooktext", "recodeFactors",
-    "codebook", "adjustVarVal", "cleanChunks")]
+    "codebook", "adjustVarVal", "cleanChunks", "codebookSheet")]
 names(variables) <- variables
 dfsLog <- vapply(variables, function(x) is.data.frame(get(x)) && x != "pregint", logical(1L))
 pullNames <- variables[dfsLog]

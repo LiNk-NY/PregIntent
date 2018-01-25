@@ -18,6 +18,9 @@
 # Plots
 *.pdf
 
+# Report files
+vignettes/rsconnect/*
+
 # Send these files
 !recodeBook.xlsx
 !codebookCode.csv

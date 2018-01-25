@@ -114,6 +114,7 @@ codebook$Q3.13$variable <- "Q3.13_1"
 codebook$Q2.12$variable <- "Q2.12_1"
 codebook$Q2.13$variable <- "Q2.13_1"
 codebook$Q3.17a$variable <- "Q3.17a_1"
+codebook$Q3.17a$value <- 1:4
 codebook$Q3.18a$variable <- "Q3.18a_1"
 
 codebook$Q3.23$variable <- with(codebook$Q3.23,
@@ -173,21 +174,32 @@ recodeBook <- readxl::read_excel("docs/recodeBook.xlsx")
 
 codebookSheet[["recodeName"]] <- unlist(recodeBook[
     match(codebookSheet[["codebname"]], recodeBook[["qname"]]), "hname"])
+altCodes <- is.na(codebookSheet[["recodeName"]])
+codebookSheet[altCodes, "recodeName"] <- unlist(recodeBook[
+    match(codebookSheet[altCodes, "dataname"], recodeBook[["qname"]]), "hname"])
 
 dupNames <- readLines("docs/duplicateVariables.txt")
 
-codebookSheet <- codebookSheet[!codebookSheet[["codebname"]] %in%
-    lapply(strsplit(dupNames, "\\.\\."), `[`, 1L), ]
-naLogic <- is.na(codebookSheet[["recodeName"]]) & !is.na(codebookSheet[["corresponds"]])
+dupsToCB <- unique(vapply(
+    strsplit(vapply(strsplit(dupNames, "\\.\\."), `[`, character(1L), 1L), "_"),
+    `[`, character(1L), 1L))
+
+codebookSheet <- codebookSheet[!codebookSheet[["codebname"]] %in% dupsToCB, ]
+
+naLogic <- is.na(codebookSheet[["recodeName"]]) &
+    !is.na(codebookSheet[["corresponds"]])
+
 codebookSheet[naLogic, "recodeName"] <-
     paste0(codebookSheet[naLogic, "dataname"], "..",
         codebookSheet[naLogic, "corresponds"])
 
-# naLogic <- is.na(codebookSheet[["recodeName"]]) & is.na(codebookSheet[["corresponds"]])
+## Fill in names that stay the same
+constantNames <- is.na(codebookSheet[["recodeName"]])
+codebookSheet[constantNames, "recodeName"] <- codebookSheet[constantNames, "dataname"]
 
 # Write codebook
 readr::write_csv(codebookSheet, "docs/codebookCode.csv")
 
 ## Clean variables except the needed one
 rm(list = ls()[!ls() %in% c("codebook", "pregint", "codebooktext",
-    "recodeFactors", "adjustVarVal")])
+    "codebookSheet", "recodeFactors", "adjustVarVal")])

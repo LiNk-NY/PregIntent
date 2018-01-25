@@ -1,4 +1,5 @@
 ## Descriptives
+library(plyr)
 library(dplyr)
 library(tidyr)
 library(maps)
@@ -17,7 +18,7 @@ doubles <- grepl("\\.\\.", names(recodedData))
 dupped <- duplicated(lapply(strsplit(names(recodedData)[doubles], "\\.\\."), sort))
 dupNames <- names(recodedData)[doubles][dupped]
 
-# writeLines(dupNames, con = file("docs/duplicateVariables.txt"))
+writeLines(dupNames, con = file("docs/duplicateVariables.txt"))
 
 recodedData <- recodedData[, !(names(recodedData) %in% dupNames)]
 
@@ -37,6 +38,9 @@ data.frame(AnsPreg = sum(table(pregFeel)), N = 2099,
 
 ## Ideal criteria
 idealCrit <- vector("character", 2099)
+## Manually recode values due to bad questionnaire
+pregint$Q3.3 <- plyr::mapvalues(pregint$Q3.3, c(6,7), c(4, 5))
+codebook$Q3.3$value <- plyr::mapvalues(codebook$Q3.3$value, c(6,7), c(4, 5))
 idealCrit[females] <- recodeFactors(pregint, codebook$Q3.3)[females]
 idealCrit[males] <- recodeFactors(pregint, codebook$Q3.2)[males]
 table(idealCrit)
@@ -60,7 +64,8 @@ stateOrg <- recodeFactors(pregint, codebook$Q110)
 
 ## Region of residence
 regionOrg <-
-    regionMap$region[match(tolower(as.character(stateOrg[[1L]])), regionMap$state)]
+    regionMap$region[match(tolower(as.character(stateOrg[[1L]])),
+        regionMap$state)]
 ## check proper merge
 ## head(cbind(stateOrg, regionOrg))
 
@@ -217,7 +222,7 @@ becomeControl %<>%
         `High control` = c("complete control", "a lot of control"))
 
 ## Select all that apply question but not indicated in actual question
-## recodeFactors(pregint, codebook$Q3.17a)
+# recodeFactors(pregint, codebook$Q3.17a)
 
 avoidControl <- vector("character", 2099)
 avoidControl[males] <- as.character(recodeFactors(pregint,
@@ -232,12 +237,6 @@ avoidControl %<>%
 currentSit <- vector("character", 2099)
 currentSit[males] <- as.character(recodeFactors(pregint, codebook$Q3.25)[males, ])
 currentSit[females] <- as.character(recodeFactors(pregint, codebook$Q3.26)[females, ])
-
-feelings <- as.data.frame(matrix(NA, nrow = 2099, ncol = 12,
-    dimnames = list(NULL, codebook$Q3.33$response)))
-feelings[males,] <- recodeFactors(pregint, codebook$Q3.32)[males, ]
-feelings[females,] <- recodeFactors(pregint, codebook$Q3.33)[females, ]
-
 
 # removal of extra obj ----------------------------------------------------
 

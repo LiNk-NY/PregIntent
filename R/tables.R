@@ -9,39 +9,18 @@ rm(pregint)
 attach(subdata)
 source("R/table-helpers.R")
 currentSit <- factor(currentSit) # drop levels
-# Bivariable Table 1
-numericPortion <- cbind(
-    rbind(.meansd(age), .meansd(childnum)),
-    rbind(.groupMeans(age, pregFeel), .groupMeans(childnum, pregFeel))
-    )
-ttestres <- rbind(.ttestPval(age, pregFeel), .ttestPval(childnum, pregFeel))
 
-## Bind means and p.vals
-(nums <- cbind(numericPortion, ttestres ))
+# Table 1 -----------------------------------------------------------------
 
-categorical <- cbind(
-    rbind(.prop(gender), .prop(regionOrg), .prop(hispanic), .prop(educ),
-        .prop(idealCrit), .prop(avoidPreg), .prop(pregPlan), .prop(currentSit),
-        .prop(race), .prop(incCat), .prop(relationship)),
-    rbind(.crossTab(gender, pregFeel), .crossTab(regionOrg, pregFeel),
-        .crossTab(hispanic, pregFeel), .crossTab(educ, pregFeel),
-        .crossTab(idealCrit, pregFeel), .crossTab(avoidPreg, pregFeel),
-        .crossTab(pregPlan, pregFeel), .crossTab(currentSit, pregFeel),
-        .crossTab(race, pregFeel), .crossTab(incCat, pregFeel), .crossTab(relationship, pregFeel))
-    )
+tab1 <- .comparisonTable(age, childnum, gender, hispanic, educ, idealCrit,
+    avoidPreg, pregPlan, currentSit, race, incCat, relationship,
+    outcome = pregFeel,
+    headerRow = c("Age in years M (SD)", "No. of Children M (SD)", "Sex",
+        "Hispanic", "Educational attainment", "Ideal Criteria",
+        "Avoid Pregnancy", "Pregnancy can be planned", "Current situation",
+        "Race", "Income category", "Relationship status"))
 
-chitestres <- rbind(.chitestPval(gender, pregFeel),
-    .chitestPval(regionOrg, pregFeel), .chitestPval(hispanic, pregFeel),
-    .chitestPval(educ, pregFeel), .chitestPval(idealCrit, pregFeel),
-    .chitestPval(avoidPreg, pregFeel), .chitestPval(pregPlan, pregFeel),
-    .chitestPval(currentSit, pregFeel), .fishertestPval(race, pregFeel),
-    .chitestPval(incCat, pregFeel), .fishertestPval(relationship, pregFeel))
-
-## Bind chisq tests and p.vals
-(cats <- cbind(categorical, chitestres))
-
-tab1 <- rbind(nums, cats)
-
+tab1 <- do.call(rbind, tab1)
 ## Fix caps in categories
 simpleCap <- function(x) {
     unname(vapply(x, function(s) {
@@ -51,60 +30,29 @@ simpleCap <- function(x) {
 
 rownames(tab1) <- simpleCap(rownames(tab1))
 detach(subdata)
+
 write.csv(tab1, file = "data/table1.csv")
+
 # Table 2 - Control over Pregnancy ----------------------------------------
 
 rm(list = ls())
 pregint <- read.csv("data/pregint.csv")
+source("R/table-helpers.R")
+
 attach(pregint)
 ## Totals by group
 table(avoidControl)
 
-nums0 <- cbind(
-    rbind(.groupMeans(age, avoidControl), .groupMeans(childnum, avoidControl)),
-    rbind(.ttestPval(age, avoidControl), .ttestPval(childnum, avoidControl))
-    )
-
-categorical0 <- rbind(.crossTab(gender, avoidControl), .crossTab(regionOrg, avoidControl),
-        .crossTab(hispanic, avoidControl), .crossTab(educ, avoidControl),
-        .crossTab(idealCrit, avoidControl), .crossTab(avoidPreg, avoidControl),
-        .crossTab(pregPlan, avoidControl), .crossTab(currentSit, avoidControl))
-
-chitestres0 <- rbind(.chitestPval(gender, avoidControl),
-    .chitestPval(regionOrg, avoidControl), .chitestPval(hispanic, avoidControl),
-    .chitestPval(educ, avoidControl), .chitestPval(idealCrit, avoidControl),
-    .chitestPval(avoidPreg, avoidControl), .chitestPval(pregPlan, avoidControl),
-    .chitestPval(currentSit, avoidControl))
-
-cats0 <- cbind(categorical0, chitestres0)
-
-leftside <- rbind(nums0, cats0)
-
-## Total by group
-table(becomeControl)
-
-nums1 <- cbind(
-    rbind(.groupMeans(age, becomeControl), .groupMeans(childnum, becomeControl)),
-    rbind(.ttestPval(age, becomeControl), .ttestPval(childnum, becomeControl))
-    )
-
-categorical1 <- rbind(.crossTab(gender, becomeControl), .crossTab(regionOrg, becomeControl),
-        .crossTab(hispanic, becomeControl), .crossTab(educ, becomeControl),
-        .crossTab(idealCrit, becomeControl), .crossTab(avoidPreg, becomeControl),
-        .crossTab(pregPlan, becomeControl), .crossTab(currentSit, becomeControl))
-
-chitestres1 <- rbind(.chitestPval(gender, becomeControl),
-    .chitestPval(regionOrg, becomeControl), .chitestPval(hispanic, becomeControl),
-    .chitestPval(educ, becomeControl), .chitestPval(idealCrit, becomeControl),
-    .chitestPval(avoidPreg, becomeControl), .chitestPval(pregPlan, becomeControl),
-    .chitestPval(currentSit, becomeControl))
-
-cats1 <- cbind(categorical1, chitestres1)
-
-rightside <- rbind(nums1, cats1)
+tab2 <- .comparisonTable(age, childnum, gender, hispanic, educ, idealCrit,
+    avoidPreg, pregPlan, currentSit, race, incCat, relationship,
+    outcome = avoidControl,
+    headerRow = c("Age in years M (SD)", "No. of Children M (SD)", "Sex",
+        "Hispanic", "Educational attainment", "Ideal Criteria",
+        "Avoid Pregnancy", "Pregnancy can be planned", "Current situation",
+        "Race", "Income category", "Relationship status"))
 
 ## AVOID CONTROL // BECOME CONTROL
-(tab2 <- cbind(leftside, rightside))
+tab2 <- do.call(rbind, tab2)
 
 rownames(tab2) <- simpleCap(rownames(tab2))
 
