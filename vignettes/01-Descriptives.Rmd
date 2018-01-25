@@ -50,18 +50,15 @@ ignoreVars <- c("ResponseID", "StartDate", "EndDate", "Finished",
 ## Remove Q3.17a, the select all that apply question that was intended
 ## as single select
 
-keepL1 <- !names(pregint) %in% ignoreVars
-keepL2 <- names(pregint) %in%
-    unique(c(codebookCode[["recodeName"]], recodebook[["hname"]]))
-keepvars <- keepL1 & keepL2
+keeps <- !names(pregint) %in% ignoreVars
 
-keepnames <- names(pregint)[keepvars]
+keepnames <- names(pregint)[keeps]
 ```
 
 Filter variables that have been recoded:
 
 ```{r}
-pregintDESC <- pregint[, keepvars]
+pregintDESC <- pregint[, keeps]
 pregintDESC <- pregintDESC[, !vapply(pregintDESC, function(x)
     all(is.na(x)), logical(1L))]
 ```
