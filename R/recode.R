@@ -238,12 +238,6 @@ currentSit <- vector("character", 2099)
 currentSit[males] <- as.character(recodeFactors(pregint, codebook$Q3.25)[males, ])
 currentSit[females] <- as.character(recodeFactors(pregint, codebook$Q3.26)[females, ])
 
-feelings <- as.data.frame(matrix(NA, nrow = 2099, ncol = 12,
-    dimnames = list(NULL, codebook$Q3.33$response)))
-feelings[males,] <- recodeFactors(pregint, codebook$Q3.32)[males, ]
-feelings[females,] <- recodeFactors(pregint, codebook$Q3.33)[females, ]
-
-
 # removal of extra obj ----------------------------------------------------
 
 rm(povFrame, simppov, simpPov, povertyComp, povData, povThresh,
