@@ -180,7 +180,8 @@ codebookSheet[altCodes, "recodeName"] <- unlist(recodeBook[
 
 dupNames <- readLines("docs/duplicateVariables.txt")
 
-dupsToCB <- unique(vapply(strsplit(unlist(strsplit(dupNames, "\\.\\.")), "_"),
+dupsToCB <- unique(vapply(
+    strsplit(vapply(strsplit(dupNames, "\\.\\."), `[`, character(1L), 1L), "_"),
     `[`, character(1L), 1L))
 
 codebookSheet <- codebookSheet[!codebookSheet[["codebname"]] %in% dupsToCB, ]
