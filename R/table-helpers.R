@@ -21,6 +21,18 @@
     matrix(vals, ncol = 1, dimnames = list(names(table(numVar)), "n (%)"))
 }
 
+.validsum <- function(numVar, digits = 1) {
+    varName <- as.character(substitute(numVar))
+    if (is.data.frame(numVar))
+        numVar <- numVar[[1L]]
+    totvalid <- sum(table(numVar))
+    totwithna <- sum(table(numVar, useNA = "always"))
+    perc <- round((totvalid/totwithna)*100, digits)
+    vals <- paste0(totvalid, " (", perc, ")")
+    nlev <- length(names(table(numVar)))
+    matrix(vals, ncol = 1, dimnames = list("valid", "n (%)"))
+}
+
 .crossTab <- function(var1, var2, digits = 2) {
     if (is.data.frame(var1))
         var1 <- var1[[1L]]
