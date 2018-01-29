@@ -59,6 +59,15 @@ YesNoResponse <- cleanChunks[multipleCoded]
 cleanChunks <- cleanChunks[!multipleCoded]
 sexCond <- sexCond[!multipleCoded]
 
+## Save variable names and descriptions
+vardesc <- vapply(cleanChunks, `[`, character(1L), 1L)
+vardesc <- gsub("^Q[0-9.]{1,4}[a-d]?\\s", "", vardesc) %>%
+    gsub("…", "", .) %>%
+    gsub("Select all that apply", "SATA", .)
+
+vardesctab <- cbind(item = names(vardesc), description = vardesc)
+write.table(vardesctab, "data/surveyvariables.txt", row.names = FALSE)
+
 codebook <- lapply(cleanChunks, function(x) {
     x <- x[!(grepl("I would say I", x, fixed = TRUE) |
         grepl("I have...", x, fixed = TRUE))]
