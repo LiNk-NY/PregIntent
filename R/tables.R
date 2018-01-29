@@ -12,7 +12,7 @@ currentSit <- factor(currentSit) # drop levels
 
 # Table 1 -----------------------------------------------------------------
 
-tab1 <- .comparisonTable(age, childnum, gender, hispanic, educ, idealCrit,
+tab1 <- .comparisonTable(age, childnum, sex, hispanic, educ, idealCrit,
     avoidPreg, pregPlan, currentSit, race, incCat, relationship,
     outcome = pregFeel,
     headerRow = c("Age in years M (SD)", "No. of Children M (SD)", "Sex",
@@ -43,7 +43,7 @@ attach(pregint)
 ## Totals by group
 table(avoidControl)
 
-tab2 <- .comparisonTable(age, childnum, gender, hispanic, educ, idealCrit,
+tab2 <- .comparisonTable(age, childnum, sex, hispanic, educ, idealCrit,
     avoidPreg, pregPlan, currentSit, race, incCat, relationship,
     outcome = avoidControl,
     headerRow = c("Age in years M (SD)", "No. of Children M (SD)", "Sex",

@@ -14,11 +14,11 @@ attach(subdata)
 source("R/relevel.R")
 
 ## Models
-modeldf <- cbind.data.frame(age, as.numeric(childnum), gender, hispanic,
+modeldf <- cbind.data.frame(age, as.numeric(childnum), sex, hispanic,
     idealCrit, avoidPreg, pregPlan, pregFeel, currentSit, race, relationship,
     incCat)
 
-names(modeldf) <- c("Age", "childnum", "Gender", "Hispanic", "idealCrit",
+names(modeldf) <- c("Age", "childnum", "sex", "Hispanic", "idealCrit",
     "avoidPreg", "pregPlan", "pregFeel", "currentSit", "Race", "Relationship",
     "IncomeCat")
 
@@ -41,10 +41,10 @@ write.csv(posneg, "data/regFeel.csv")
 
 
 ## Models
-modeldf <- cbind.data.frame(age, as.numeric(childnum), gender, educ,
+modeldf <- cbind.data.frame(age, as.numeric(childnum), sex, educ,
     idealCrit, avoidPreg, pregPlan, avoidControl)
 
-names(modeldf) <- c("Age", "childnum", "Gender", "Education", "idealCrit",
+names(modeldf) <- c("Age", "childnum", "sex", "Education", "idealCrit",
     "avoidPreg", "pregPlan", "avoidControl")
 
 fit2 <- glm(avoidControl ~ ., data = modeldf, family = "binomial")
@@ -58,10 +58,10 @@ fit2 <- glm(avoidControl ~ ., data = modeldf, family = "binomial")
         rename(beta = "estimate", variable = "term")
 )
 
-modeldf <- cbind.data.frame(as.numeric(childnum), gender, hispanic,
+modeldf <- cbind.data.frame(as.numeric(childnum), sex, hispanic,
     idealCrit, avoidPreg, pregPlan, becomeControl)
 
-names(modeldf) <- c("childnum", "gender", "hispanic", "idealCrit",
+names(modeldf) <- c("childnum", "sex", "hispanic", "idealCrit",
     "avoidPreg", "pregPlan", "becomeControl")
 
 fit3 <- glm(becomeControl ~ ., data = modeldf, family = "binomial")

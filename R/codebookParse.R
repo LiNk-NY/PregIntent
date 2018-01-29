@@ -37,7 +37,7 @@ withValues <- vapply(readChunks, function(x)
 # Take only chunks with response values
 readChunks <- readChunks[withValues]
 
-# Get only gender word from codebook chunk
+# Get only sex word from codebook chunk
 sexCond <- lapply(readChunks, function(x) gsub("(.*)\\s(.*male)$", "\\2",
     grep("^If.*male$", x, value = TRUE, ignore.case = TRUE)))
 sexCond[!lengths(sexCond)] <- "none"
@@ -147,7 +147,7 @@ mfcodeframes <- codebook[vapply(codebook,
     function(x) all(x$subset %in% c("male", "female")), logical(1L))]
 mfcodes <- names(mfcodeframes)
 
-## Include a corresponds variable to relate gender-specific questions
+## Include a corresponds variable to relate sex-specific questions
 codebook$Q1.9a[["corresponds"]] <- "Q1.9c"
 codebook$Q1.9c[["corresponds"]] <- "Q1.9a"
 codebook$Q1.9b[["corresponds"]] <- "Q1.9d"

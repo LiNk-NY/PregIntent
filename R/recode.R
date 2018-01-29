@@ -22,10 +22,10 @@ writeLines(dupNames, con = file("docs/duplicateVariables.txt"))
 
 recodedData <- recodedData[, !(names(recodedData) %in% dupNames)]
 
-# Gender
-gender <- recodeFactors(pregint, codebook$Q1.2)
-males <- gender == "male"
-females <- gender == "female"
+# Sex
+sex <- recodeFactors(pregint, codebook$Q1.2)
+males <- sex == "male"
+females <- sex == "female"
 
 ## Outcome
 pregFeel <- vector("character", 2099)
@@ -109,9 +109,6 @@ hispOrg[multiSelect] <- "other"
 ## responses
 # sum(!apply(hispOrg[hispanic[[1L]] == "yes",], 1L,
 #     function(row) all(is.na(row))))
-
-# sexual preference
-sexpref <- recodeFactors(pregint, codebook$Q114)
 
 ## Age
 age <- pregint$Q112
