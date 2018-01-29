@@ -81,7 +81,7 @@ descres <- lapply(idxVec, function(i, dataset) {
         resx <- .meansd(dataset[[i]], varName = varname)
         cbind(resx, valid = sum(!is.na(dataset[[i]])))
     } else if (is.factor(dataset[[i]]))
-        .prop(dataset[[i]])
+        rbind(.prop(dataset[[i]]), .validsum(dataset[[i]]))
 }, dataset = pregintDESC)
 
 resTables <- lapply(idxVec, function(i, listset) {
