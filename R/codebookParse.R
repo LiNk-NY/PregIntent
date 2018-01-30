@@ -175,10 +175,10 @@ codebook <- lapply(codebook, function(x) readr::type_convert(x))
 
 survq <- lapply(seq_along(codebook), function(i, chunks) {
     varname <- names(chunks[i])
-    availdesc <- vardesctab[["item"]] == varname
+    availdesc <- vardesctab[ ,"item"] == varname
     if (all(!availdesc))
         return(rep("", nrow(chunks[[i]])))
-    descsnip <- vardesctab[["description"]][availdesc]
+    descsnip <- vardesctab[, "description"][availdesc]
     numrows <- nrow(chunks[[i]])
     lsnip <- nchar(descsnip)
     desc <- strwrap(descsnip, width = 40)
