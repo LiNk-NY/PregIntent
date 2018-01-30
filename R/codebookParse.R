@@ -66,7 +66,7 @@ vardesc <- gsub("^Q[0-9.]{1,4}[a-d]?\\s", "", vardesc) %>%
     gsub("Select all that apply", "SATA", .)
 
 vardesctab <- cbind(item = names(vardesc), description = vardesc)
-write.table(vardesctab, "data/surveyvariables.txt", row.names = FALSE)
+# write.table(vardesctab, "data/surveyvariables.txt", row.names = FALSE)
 
 codebook <- lapply(cleanChunks, function(x) {
     x <- x[!(grepl("I would say I", x, fixed = TRUE) |
@@ -172,6 +172,27 @@ codebook$Q3.34[["corresponds"]] <- "Q121"
 codebook$Q121[["corresponds"]] <- "Q3.34"
 
 codebook <- lapply(codebook, function(x) readr::type_convert(x))
+
+survq <- lapply(seq_along(codebook), function(i, chunks) {
+    varname <- names(chunks[i])
+    availdesc <- vardesctab[["item"]] == varname
+    if (all(!availdesc))
+        return(rep("", nrow(chunks[[i]])))
+    descsnip <- vardesctab[["description"]][availdesc]
+    numrows <- nrow(chunks[[i]])
+    lsnip <- nchar(descsnip)
+    desc <- strwrap(descsnip, width = 40)
+    remainder <- numrows - length(desc)
+    if (remainder < 0L)
+        return(strwrap(descsnip, width = (lsnip/numrows)+10))
+    else
+        append(desc, rep("", times = remainder))
+}, chunks = codebook)
+
+codebook <- mapply(function(x, y) {
+    cbind.data.frame(x, question = y)
+}, x = codebook, y = survq, SIMPLIFY = FALSE)
+
 
 codebookSheet <- dplyr::bind_rows(codebook)
 codebookSheet <- cbind.data.frame(
