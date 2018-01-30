@@ -95,11 +95,13 @@ resTables <- lapply(idxVec, function(i, listset) {
 ```
 
 ```{r}
-invisible(
+file.remove("descriptives.csv")
+invisible(suppressMessages({
     lapply(idxVec,  function(i, listset) {
-        write.table(rbind(listset[[i]], c("", "")), file = "descriptives.csv",
+        write.table(rbind(listset[[i]], rep("", ncol(listset[[i]]))),
+            file = "descriptives.csv",
             append = TRUE, sep = ",", row.names = FALSE)
     }, listset = resTables)
-)
+}))
 ```
 
