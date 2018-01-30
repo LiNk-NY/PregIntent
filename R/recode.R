@@ -18,7 +18,7 @@ doubles <- grepl("\\.\\.", names(recodedData))
 dupped <- duplicated(lapply(strsplit(names(recodedData)[doubles], "\\.\\."), sort))
 dupNames <- names(recodedData)[doubles][dupped]
 
-writeLines(dupNames, con = file("docs/duplicateVariables.txt"))
+# writeLines(dupNames, con = file("docs/duplicateVariables.txt"))
 
 recodedData <- recodedData[, !(names(recodedData) %in% dupNames)]
 
@@ -38,12 +38,17 @@ data.frame(AnsPreg = sum(table(pregFeel)), N = 2099,
 
 ## Ideal criteria
 idealCrit <- vector("character", 2099)
+
 ## Manually recode values due to bad questionnaire
 pregint$Q3.3 <- plyr::mapvalues(pregint$Q3.3, c(6,7), c(4, 5))
 codebook$Q3.3$value <- plyr::mapvalues(codebook$Q3.3$value, c(6,7), c(4, 5))
+
+## More manual recoding of 4s to 3s
+pregint$Q1.9d <- plyr::mapvalues(pregint$Q1.9d, 4, 3)
+codebook$Q1.9d$value <- plyr::mapvalues(codebook$Q1.9d$value, 4, 3)
+
 idealCrit[females] <- recodeFactors(pregint, codebook$Q3.3)[females]
 idealCrit[males] <- recodeFactors(pregint, codebook$Q3.2)[males]
-table(idealCrit)
 
 ## Number of children
 childnum <- gsub("NO", "0", pregint$Q1.9, ignore.case = TRUE)
@@ -100,7 +105,7 @@ hispOrg[!multiSelect] <- apply(hispoDF[!multiSelect, ], 1L, function(row) {
     if (all(is.na(row)))
         NA_character_
     else
-    na.omit(row)
+        na.omit(row)
 })
 hispOrg[multiSelect] <- "other"
 
