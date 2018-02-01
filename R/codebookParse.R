@@ -92,9 +92,6 @@ Q3.5 <- lapply(YesNoResponse["Q3.5"], function(x) {
 Q3.5 <- adjustVarVal(Q3.5, "Q3.5")
 Q3.5$Q3.5[["subset"]] <- "none"
 
-Q3.5_X <- data.frame(variable = Q3.5[[1L]]$variable,
-    value = 2L, response = "No", subset = "none", stringsAsFactors = FALSE)
-
 ## Adjust for inconsistent names
 codebook$Q3.17a$variable <- paste0(gsub("a", "", codebook$Q3.17a$variable),
     "_", codebook$Q3.17a$value)
@@ -105,7 +102,7 @@ codebook <- adjustVarVal(codebook, c("Q1.7", "Q1.8", "Q2.2", "Q2.7",
     "Q3.32", "Q3.33", "Q3.4", "Q3.17", "Q3.18", "Q3.27", "Q3.28", "Q3.29",
     "Q3.30"))
 
-codebook <- c(codebook, Q122, Q3.5, Q3.5_X)
+codebook <- c(codebook, Q122, Q3.5)
 
 ## PregFeel recode
 codebook$Q3.2[4, "response"] <- "don't want me/partner pregnant"
@@ -144,6 +141,11 @@ sitRecode <- c("you/partner is pregnant",
 
 codebook$Q3.25$response <- sitRecode
 codebook$Q3.26$response <- sitRecode
+
+## Recode values 2 to No
+for (var in Q3.5[[1L]][["variable"]]) {
+    pregint[[var]] <- plyr::mapvalues(pregint[[var]], 2, "No")
+}
 
 ## Manually recode values due to bad questionnaire
 pregint$Q3.3 <- plyr::mapvalues(pregint$Q3.3, c(6,7), c(4, 5))
