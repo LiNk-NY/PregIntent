@@ -191,12 +191,11 @@ avoidPreg <- factor(avoidPreg == "can be avoided",
 
 pregPlan <- vector("character", 2099)
 newFrame <- recodeFactors(pregint, codebook$Q3.5)
-newFrame[newFrame == 2L] <- NA
-nonSkips <- rowSums(!is.na(newFrame))  == 1L
+nonSkips <- rowSums(newFrame != "No")  == 1L
 finalSkips <- recodeFactors(pregint, codebook$Q122)[!nonSkips, ]
 pregPlan[!nonSkips] <- as.character(finalSkips)
-pregPlan[nonSkips] <- sapply(newFrame[nonSkips, ],
-    as.character)[!is.na(newFrame[nonSkips, ])]
+pregPlan[nonSkips] <- sapply(newFrame[nonSkips, ], as.character)[
+    newFrame[nonSkips, ] != "No"]
 pregPlan[pregPlan %in% c("can be planned in advance",
     "can be planned in discussion with your partner",
     "can be planned to happen after one's ideal criteria are fulfilled")] <- "Yes"
