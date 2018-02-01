@@ -142,6 +142,14 @@ sitRecode <- c("you/partner is pregnant",
 codebook$Q3.25$response <- sitRecode
 codebook$Q3.26$response <- sitRecode
 
+## Manually recode values due to bad questionnaire
+pregint$Q3.3 <- plyr::mapvalues(pregint$Q3.3, c(6,7), c(4, 5))
+codebook$Q3.3$value <- plyr::mapvalues(codebook$Q3.3$value, c(6,7), c(4, 5))
+
+## More manual recoding of 4s to 3s
+pregint$Q1.9d <- plyr::mapvalues(pregint$Q1.9d, 4, 3)
+codebook$Q1.9d$value <- plyr::mapvalues(codebook$Q1.9d$value, 4, 3)
+
 ## Variables with subset values either "male" or "female"
 mfcodeframes <- codebook[vapply(codebook,
     function(x) all(x$subset %in% c("male", "female")), logical(1L))]
