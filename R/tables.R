@@ -1,6 +1,5 @@
 # Table 1 Sociodemographics x Feelings about Pregnancy --------------------
 # Totals by group
-rm(list = ls())
 pregint <- read.csv("data/pregint.csv")
 subGroup <- !is.na(pregint$pregFeel)
 subdata <- pregint[subGroup, ]
@@ -32,28 +31,3 @@ rownames(tab1) <- simpleCap(rownames(tab1))
 detach(subdata)
 
 write.csv(tab1, file = "data/table1.csv")
-
-# Table 2 - Control over Pregnancy ----------------------------------------
-
-rm(list = ls())
-pregint <- read.csv("data/pregint.csv")
-source("R/table-helpers.R")
-
-attach(pregint)
-## Totals by group
-table(avoidControl)
-
-tab2 <- .comparisonTable(age, childnum, sex, hispanic, educ, idealCrit,
-    avoidPreg, pregPlan, currentSit, race, incCat, relationship,
-    outcome = avoidControl,
-    headerRow = c("Age in years M (SD)", "No. of Children M (SD)", "Sex",
-        "Hispanic", "Educational attainment", "Ideal Criteria",
-        "Avoid Pregnancy", "Pregnancy can be planned", "Current situation",
-        "Race", "Income category", "Relationship status"))
-
-## AVOID CONTROL // BECOME CONTROL
-tab2 <- do.call(rbind, tab2)
-
-rownames(tab2) <- simpleCap(rownames(tab2))
-
-write.csv(tab2, "data/table2.csv")
