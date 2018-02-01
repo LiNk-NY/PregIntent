@@ -92,6 +92,9 @@ Q3.5 <- lapply(YesNoResponse["Q3.5"], function(x) {
 Q3.5 <- adjustVarVal(Q3.5, "Q3.5")
 Q3.5$Q3.5[["subset"]] <- "none"
 
+Q3.5_X <- data.frame(variable = Q3.5[[1L]]$variable,
+    value = 2L, response = "No", subset = "none", stringsAsFactors = FALSE)
+
 ## Adjust for inconsistent names
 codebook$Q3.17a$variable <- paste0(gsub("a", "", codebook$Q3.17a$variable),
     "_", codebook$Q3.17a$value)
@@ -102,7 +105,7 @@ codebook <- adjustVarVal(codebook, c("Q1.7", "Q1.8", "Q2.2", "Q2.7",
     "Q3.32", "Q3.33", "Q3.4", "Q3.17", "Q3.18", "Q3.27", "Q3.28", "Q3.29",
     "Q3.30"))
 
-codebook <- c(codebook, Q122, Q3.5)
+codebook <- c(codebook, Q122, Q3.5, Q3.5_X)
 
 ## PregFeel recode
 codebook$Q3.2[4, "response"] <- "don't want me/partner pregnant"

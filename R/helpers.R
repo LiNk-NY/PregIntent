@@ -4,7 +4,7 @@ recodeFactors <-
     function(dataset, recodeFrame, subsetVariable = "Q1.2",
         values = c(1, 2), labels = c("male", "female")) {
     dataset <- as.data.frame(dataset, stringsAsFactors = FALSE)
-    indicVar <- unique(recodeFrame[["variable"]])
+    indicVar <- as.character(unique(recodeFrame[["variable"]]))
     correspVar <- unique(recodeFrame[["corresponds"]])
     target <- as.data.frame(
         matrix(NA, nrow = nrow(dataset), ncol = length(indicVar)))
