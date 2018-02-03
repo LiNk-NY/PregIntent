@@ -1,0 +1,101 @@
+---
+title: "RFP"
+author: "Marcel Ramos"
+date: "February 2, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Required packages
+
+```{r}
+library(kableExtra)
+library(magrittr)
+library(knitr)
+```
+
+# Load data
+
+```{r}
+pregint <- read.csv("../data/pregint.csv")
+```
+
+# Subset for the select group
+
+```{r}
+youngsub <- pregint[pregint$age %in% 21:24, ]
+```
+
+## n = `r nrow(youngsub)`
+
+```{r, echo = FALSE}
+.kable <- function(x, ...) {
+    vname <- as.character(substitute(x))
+    kable(x, col.names = c(vname, "counts"), ...)
+}
+```
+
+# Demographics
+
+```{r}
+sex <- table(youngsub$sex, useNA = "always")
+regionOrg <- table(youngsub$regionOrg, useNA = "always")
+race <- table(youngsub$race, useNA = "always")
+hispanic <- table(youngsub$hispanic, useNA = "always")
+hispOrg <- table(youngsub$hispOrg, useNA = "always")
+incCat <- table(youngsub$incCat, useNA = "always")
+pregstat <- table(youngsub$Q3.25..Q3.26, useNA = "always")
+```
+
+### Sex
+
+```{r, echo=FALSE}
+.kable(sex, "html") %>% kable_styling(bootstrap_options = "striped",
+    full_width = FALSE, position = "left")
+```
+
+###  Region of origin (4 Categories)
+
+```{r, echo=FALSE}
+.kable(regionOrg, "html") %>% kable_styling(bootstrap_options = "striped",
+    full_width = FALSE, position = "left")
+```
+
+### Race category
+
+```{r, echo=FALSE}
+.kable(race, "html") %>% kable_styling(bootstrap_options = "striped",
+    full_width = FALSE, position = "left")
+```
+
+### Hispanic
+
+```{r, echo=FALSE}
+.kable(hispanic, "html") %>% kable_styling(bootstrap_options = "striped",
+    full_width = FALSE, position = "left")
+```
+
+### Hispanic origin
+
+```{r, echo=FALSE}
+.kable(hispOrg, "html") %>% kable_styling(bootstrap_options = "striped",
+    full_width = FALSE, position = "left")
+```
+
+### Income category
+
+```{r, echo=FALSE}
+.kable(incCat, "html") %>% kable_styling(bootstrap_options = "striped",
+    full_width = FALSE, position = "left")
+```
+
+### Pregnancy status and intentions
+
+```{r, echo=FALSE}
+.kable(pregstat, "html") %>% kable_styling(bootstrap_options = "striped",
+    full_width = FALSE, position = "left")
+```
+
