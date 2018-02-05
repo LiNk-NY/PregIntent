@@ -63,3 +63,27 @@ cleanBlock <- function(block) {
     data.frame(variable = varName, codeScheme[, c(2, 1)],
         subset = "", stringsAsFactors = FALSE)
 }
+
+.wrapItem <- function(block, descript) {
+    descript <- unlist(descript)
+    numrows <- nrow(block)
+    if (!length(descript))
+        return(rep("", times = numrows))
+    lsnip <- nchar(descript)
+    desc <- strwrap(descript, width = 40)
+    remainder <- numrows - length(desc)
+    if (remainder < 0L)
+        return(strwrap(descript, width = (lsnip/numrows)+10))
+    else
+        append(desc, rep("", times = remainder))
+}
+
+addQText <- function(idx, chunks, vardesctab) {
+    varname <- names(chunks[idx])
+    varname <- vapply(strsplit(varname, "_"), `[`, character(1L), 1L)
+    availdesc <- vardesctab[ ,"item"] == varname
+    if (all(!availdesc))
+        return(rep("", nrow(chunks[[idx]])))
+    descsnip <- vardesctab[, "description"][availdesc]
+    .wrapItem(chunks[[idx]], descsnip)
+}

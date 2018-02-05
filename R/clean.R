@@ -29,4 +29,5 @@ pregint <- pregint[pregint$gc == 1L, ]
 
 ## Keep only desired variable
 rm(list = ls()[!ls() %in%
-    c("pregint", "codebooktext", "recodeFactors", "adjustVarVal", "cleanBlock")])
+    c("pregint", "codebooktext", "recodeFactors",
+      "adjustVarVal", "cleanBlock", "addQText")])
