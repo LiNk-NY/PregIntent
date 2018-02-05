@@ -41,7 +41,7 @@
     perc <- round((totvalid/totwithna)*100, digits)
     vals <- paste0(totvalid, " (", perc, ")")
     nlev <- length(names(table(numVar)))
-    matrix(vals, ncol = 1, dimnames = list("valid", "n (%)"))
+    matrix(vals, ncol = 1, dimnames = list("valid (%)", "n (%)"))
 }
 
 .crossTab <- function(var1, var2, digits = 2) {
