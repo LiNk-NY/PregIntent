@@ -35,6 +35,7 @@ library(readxl)
 pregint <- read.csv("../data/pregint.csv")
 codebookCode <- read_csv("../docs/codebookCode.csv")
 recodebook <- read_excel("../docs/recodeBook.xlsx")
+vardesctab <- read.table("../data/surveyvariables.txt", header = TRUE)
 ```
 
 ## Filter variables
@@ -90,7 +91,11 @@ resTables <- lapply(idxVec, function(i, listset) {
     rex <- cbind(rownames(x), x)
     colnames(rex)[1] <- varname
     rownames(rex) <- NULL
-    rex
+    cname <- colnames(rex)[[1L]]
+    cname <- vapply(strsplit(cname, "_"), `[`, character(1L), 1L)
+    qchar <- vardesctab[cname == vardesctab[, "item"], "description"]
+    qtem <- .wrapItem(rex, as.character(qchar))
+    cbind(rex, question = qtem)
 }, listset = descres)
 ```
 
