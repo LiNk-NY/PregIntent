@@ -12,6 +12,17 @@
         dimnames = list(varName, "M (SD)"))
 }
 
+.validperc <- function(numVar, digits = 2, varName = NULL) {
+    if (is.null(varName)) {
+    varName <- as.character(substitute(numVar))
+    varName <- varName[[length(varName)]]
+    }
+    tally <- sum(!is.na(numVar))
+    perc <- round((tally/length(numVar))*100, digits)
+    matrix(paste0(tally, " (", perc, ")"), ncol = 1L,
+        dimnames = list(varName, "valid (%)"))
+}
+
 .prop <- function(numVar, digits = 1) {
     if (is.data.frame(numVar))
         numVar <- numVar[[1L]]

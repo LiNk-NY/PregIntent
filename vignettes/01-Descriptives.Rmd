@@ -79,7 +79,7 @@ descres <- lapply(idxVec, function(i, dataset) {
     varname <- alldatnames[[i]]
     if (is.integer(dataset[[i]]) || is.numeric(dataset[[i]])) {
         resx <- .meansd(dataset[[i]], varName = varname)
-        cbind(resx, valid = sum(!is.na(dataset[[i]])))
+        cbind(resx, .validperc(dataset[[i]]))
     } else if (is.factor(dataset[[i]]))
         rbind(.prop(dataset[[i]]), .validsum(dataset[[i]]))
 }, dataset = pregintDESC)
