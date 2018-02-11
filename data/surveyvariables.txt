@@ -43,3 +43,5 @@
 "Q1.11" "What is your current relationship status?"
 "Q1.14" "What is the total income for you and all other individuals living in your household (over the age of 15) in the last year? (Include income from all sources such as wages, salaries, and Social Security or retirement benefits)"
 "Q3.4" "Looking at this list, please check which of these you think should be fulfilled before becoming pregnant. (SATA)"
+"Q122" "Since you selected more than one response, please select from the list below the one you feel most strongly about.  When thinking about pregnancy, would you say that it"
+"Q3.5" "When thinking about pregnancy, would you say that it (SATA)     Note: Please respond Yes or No below to each question A-G. If you’d like to add a response under “other,” please enter it and select Yes; if you do not have a response to add under \"other\", leave it blank and select No."
