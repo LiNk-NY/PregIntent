@@ -64,6 +64,16 @@ cleanBlock <- function(block) {
         subset = "", stringsAsFactors = FALSE)
 }
 
+.findOptiWidth <- function(string, nrow, lengths = 1:10) {
+    reslengths <- vapply(lengths, function(widths)
+        length(strwrap(string, width = ceiling(nchar(string)/nrow)+widths)),
+        integer(1L))
+    optim <- lengths[which(reslengths == nrow)][[1L]]
+    if (is.na(optim))
+        stop("Increase lengths numbers")
+    optim
+}
+
 .wrapItem <- function(block, descript) {
     descript <- unlist(descript)
     descript <- gsub("[ ]{2,}", "", descript)
@@ -73,10 +83,12 @@ cleanBlock <- function(block) {
     lsnip <- nchar(descript)
     desc <- strwrap(descript, width = 40)
     remainder <- numrows - length(desc)
-    if (remainder < 0L)
-        return(strwrap(descript, width = ceiling(lsnip/numrows)))
-    else
+    if (remainder < 0L) {
+        width <- .findOptiWidth(descript, numrows)
+        return(strwrap(descript, width = ceiling(lsnip/numrows)+width))
+    } else {
         append(desc, rep("", times = remainder))
+    }
 }
 
 addQText <- function(idx, chunks, vardesctab) {
