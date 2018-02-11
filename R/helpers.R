@@ -66,6 +66,7 @@ cleanBlock <- function(block) {
 
 .wrapItem <- function(block, descript) {
     descript <- unlist(descript)
+    descript <- gsub("[ ]{2,}", "", descript)
     numrows <- nrow(block)
     if (!length(descript))
         return(rep("", times = numrows))
@@ -73,7 +74,7 @@ cleanBlock <- function(block) {
     desc <- strwrap(descript, width = 40)
     remainder <- numrows - length(desc)
     if (remainder < 0L)
-        return(strwrap(descript, width = (lsnip/numrows)+10))
+        return(strwrap(descript, width = ceiling(lsnip/numrows)))
     else
         append(desc, rep("", times = remainder))
 }
