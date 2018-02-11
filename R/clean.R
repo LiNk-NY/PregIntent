@@ -9,7 +9,7 @@ vIdx <- grep("^V[0-9]", names(namesVect))
 names(namesVect)[vIdx] <- namesVect[vIdx]
 
 # Varnames and questions
-codebooktext <- cbind(varname = names(namesVect), question = namesVect)
+codebooktext <- cbind(item = names(namesVect), question = namesVect)
 
 # Read actual dataset with cleaned column names
 pregint <- suppressWarnings(
