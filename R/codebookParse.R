@@ -60,7 +60,7 @@ cleanChunks <- cleanChunks[!multipleCoded]
 sexCond <- sexCond[!multipleCoded]
 
 ## Save variable names and descriptions
-vardesc <- vapply(cleanChunks, `[`, character(1L), 1L)
+vardesc <- vapply(c(cleanChunks, YesNoResponse), `[`, character(1L), 1L)
 vardesc <- gsub("^Q[0-9.]{1,4}[a-d]?\\s", "", vardesc) %>%
     gsub("…", "", .) %>%
     gsub("Select all that apply", "SATA", .)
@@ -186,7 +186,10 @@ codebook$Q121[["corresponds"]] <- "Q3.34"
 
 codebook <- lapply(codebook, function(x) readr::type_convert(x))
 
-survq <- lapply(seq_along(codebook), function(i, chunks) {
+cindx <- seq_along(codebook)
+names(cindx) <- names(codebook)
+
+survq <- lapply(cindx, function(i, chunks) {
     addQText(i, chunks, vardesctab)
 }, chunks = codebook)
 
