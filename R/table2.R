@@ -1,7 +1,8 @@
 # Table 2 - Control over Pregnancy ----------------------------------------
-
-pregint <- read.csv("data/pregint.csv")
 source("R/table-helpers.R")
+
+## load data
+pregint <- read.csv("data/pregint.csv")
 
 attach(pregint)
 ## Totals by group

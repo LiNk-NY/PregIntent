@@ -1,12 +1,19 @@
 # Table 1 Sociodemographics x Feelings about Pregnancy --------------------
+source("R/table-helpers.R")
+
 # Totals by group
 pregint <- read.csv("data/pregint.csv")
-subGroup <- !is.na(pregint$pregFeel)
-subdata <- pregint[subGroup, ]
+
+## include proper exclusion
+exclusionCriteria <- pregint$Q3.25..Q3.26 %in%
+    c("you/partner is pregnant", "you/partner can't get pregnant") |
+        pregint$Q1.9a..Q1.9c == "no" | pregint$Q1.9b..Q1.9d == "no" |
+        is.na(pregint$pregFeel)
+
+subdata <- pregint[!exclusionCriteria, ]
 rm(pregint)
 
 attach(subdata)
-source("R/table-helpers.R")
 currentSit <- factor(currentSit) # drop levels
 
 # Table 1 -----------------------------------------------------------------
