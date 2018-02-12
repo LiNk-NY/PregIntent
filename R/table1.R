@@ -20,12 +20,6 @@ tab1 <- .comparisonTable(age, childnum, sex, hispanic, educ, idealCrit,
         "Race", "Income category", "Relationship status"))
 
 tab1 <- do.call(rbind, tab1)
-## Fix caps in categories
-simpleCap <- function(x) {
-    unname(vapply(x, function(s) {
-    paste(toupper(substring(s, 1, 1)), substring(s, 2), sep="", collapse=" ")
-    }, character(1L)))
-}
 
 rownames(tab1) <- simpleCap(rownames(tab1))
 detach(subdata)
