@@ -1,4 +1,8 @@
 # APHA Abstract
+library(broom)
+library(dplyr)
+library(tidyr)
+
 # read data
 pregint <- read.csv("data/pregint.csv")
 source("R/table-helpers.R")
@@ -64,6 +68,9 @@ preg2[, avoidPregs] <- lapply(avoidPregs, function(varname) {
 
 preg2$currentSit <- droplevels(preg2$currentSit)
 
+## Load annotations data.frame
+source("R/annotations.R")
+
 tres <- .comparisonTable(sex, childnum, regionOrg, age, educ, race, hispanic,
     relationship, underPovLevel, ablepreg, idealCrit, Q2.2_1..Q2.7_1,
     pregPlan, Q2.2_3..Q2.7_3, Q2.2_2..Q2.7_2, Q2.2_5..Q2.7_5, Q2.12_1..Q2.13_1,
@@ -75,3 +82,29 @@ tablefeels <- do.call(rbind, tres)
 rownames(tablefeels) <- simpleCap(rownames(tablefeels))
 
 write.csv(tablefeels, file = "results/emotionspreg.csv")
+
+
+# Multivariable Logistic Regression ---------------------------------------
+
+modelfr <- preg2[, c("sex", "childnum", "regionOrg", "age", "hispanic",
+"relationship", "ablepreg", "idealCrit", "Q2.2_1..Q2.7_1", "pregPlan",
+"Q2.2_3..Q2.7_3", "Q2.2_5..Q2.7_5", "Q2.12_1..Q2.13_1",  "currentSit",
+"pregFeel")]
+
+preg2$Q2.12_1..Q2.13_1 <- relevel(preg2$Q2.12_1..Q2.13_1, ref = "no control")
+preg2$currentSit <- relevel(preg2$currentSit,
+    ref = "don't want you/partner to become pregnant soon")
+
+fit0 <- glm(pregFeel ~ ., data = modelfr, family = "binomial")
+
+(pfeel <- tidy(fit0) %>%
+    mutate(estimate = round(exp(estimate), 2)) %>%
+    cbind.data.frame(round(exp(confint(fit0)), 1), row.names = NULL) %>%
+    select(-statistic, -std.error) %>% select(-p.value, everything()) %>%
+    mutate(p.value = format.pval(pv = p.value, digits = 2, eps = 0.001)) %>%
+    unite("95% CI", c("2.5 %", "97.5 %"), sep = " - ") %>%
+        rename(beta = "estimate", variable = "term")
+)
+
+pfeel
+write.csv(pfeel, "results/mvpfeel.csv")
