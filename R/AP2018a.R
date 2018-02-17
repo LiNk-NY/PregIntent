@@ -37,8 +37,10 @@ rest <- lapply(emos, function(varname) {
     cbind(.prop(actvar), .crossTab(actvar, preg1$pregFeel),
         .chitestPval(actvar, preg1$pregFeel))
 })
-do.call(rbind, rest)
 
+feeltab <- do.call(rbind, rest)
+
+write.csv(feeltab, "results/feeltab.csv")
 
 # Modeling Feelings about Pregnancy ---------------------------------------
 
