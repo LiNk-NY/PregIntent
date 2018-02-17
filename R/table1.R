@@ -29,4 +29,4 @@ tab1 <- do.call(rbind, tab1)
 
 rownames(tab1) <- simpleCap(rownames(tab1))
 
-write.csv(tab1, file = "data/table1.csv")
+write.csv(tab1, file = "results/table1.csv")
