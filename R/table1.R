@@ -10,11 +10,9 @@ exclusionCriteria <- pregint$Q3.25..Q3.26 %in%
         pregint$Q1.9a..Q1.9c == "no" | pregint$Q1.9b..Q1.9d == "no" |
         is.na(pregint$pregFeel)
 
-subdata <- pregint[!exclusionCriteria, ]
-rm(pregint)
+pregsub <- pregint[!exclusionCriteria, ]
 
-attach(subdata)
-currentSit <- factor(currentSit) # drop levels
+pregsub$currentSit <- factor(pregsub$currentSit) # drop levels
 
 # Table 1 -----------------------------------------------------------------
 
@@ -24,7 +22,8 @@ tab1 <- .comparisonTable(age, childnum, sex, hispanic, educ, idealCrit,
     headerRow = c("Age in years M (SD)", "No. of Children M (SD)", "Sex",
         "Hispanic", "Educational attainment", "Ideal Criteria",
         "Avoid Pregnancy", "Pregnancy can be planned", "Current situation",
-        "Race", "Income category", "Relationship status"))
+        "Race", "Income category", "Relationship status"),
+    data = pregsub)
 
 tab1 <- do.call(rbind, tab1)
 
