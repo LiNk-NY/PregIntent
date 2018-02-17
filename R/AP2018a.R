@@ -62,9 +62,15 @@ preg2[, avoidPregs] <- lapply(avoidPregs, function(varname) {
     actvar
 })
 
-.comparisonTable(sex, childnum, regionOrg, age, educ, race, hispanic,
+preg2$currentSit <- droplevels(preg2$currentSit)
+
+tres <- .comparisonTable(sex, childnum, regionOrg, age, educ, race, hispanic,
     relationship, underPovLevel, ablepreg, idealCrit, Q2.2_1..Q2.7_1,
     pregPlan, Q2.2_3..Q2.7_3, Q2.2_2..Q2.7_2, Q2.2_5..Q2.7_5, Q2.12_1..Q2.13_1,
-    Q3.12_1..Q3.13_1,
+    Q3.12_1..Q3.13_1, currentSit,
     outcome = pregFeel,
-    data = preg2)
+    data = preg2, headerFrame = annotations)
+
+tablefeels <- do.call(rbind, tres)
+rownames(tablefeels) <- simpleCap(rownames(tablefeels))
+
