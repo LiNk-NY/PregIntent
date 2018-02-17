@@ -71,8 +71,7 @@
         std <- round(sd(x[[i]], na.rm = TRUE), digits)
         paste0(m, " (", std, ")")
     }, character(1L), x = splitSet)
-    resMat <- matrix(res, nrow = 1L, dimnames = list(varName, groupNames))
-    resMat[, rev(groupNames), drop = FALSE]
+    matrix(res, nrow = 1L, dimnames = list(varName, groupNames))
 }
 
 .ttestPval <- function(numVar, outcome, varName = NULL) {
@@ -105,21 +104,31 @@
         rep("", lvls-1)), ncol = 1L, dimnames = list(labels, "p.value"))
 }
 
-.comparisonTable <- function(..., outcome, headerRow = NULL,
+.comparisonTable <- function(..., outcome, data, headerRow = NULL,
     outcomeOrder = c(0, 1), deparse.level = 2, digits = 2)
 {
     listvars <- as.list(substitute(list(...)))[-1L]
-    args <- list(...)
-    if (!is.factor(outcome))
-        outcome <- as.factor(outcome)
-    levels(outcome) <-
-        rownames(contrasts(outcome)[outcomeOrder+1L, , drop = FALSE])
-    ## code from table()
     nams <- vapply(listvars, function(x) {
         switch(deparse.level + 1L,
         "", if (is.symbol(x)) as.character(x) else "",
         gsub("\\w+\\$", "", deparse(x, nlines = 1L)[1L]))
         }, character(1L))
+
+    if (!missing(data)) {
+        outname <- as.character(substitute(outcome))
+        args <- as.list(data[, nams])
+        if (length(outname) == 1L)
+            outcome <- data[, outname]
+        else
+            stop("Provide a single outcome")
+    } else {
+        args <- list(...)
+    }
+    if (!is.factor(outcome))
+        outcome <- as.factor(outcome)
+    levels(outcome) <-
+        rownames(contrasts(outcome)[outcomeOrder+1L, , drop = FALSE])
+    ## code from table()
     lengthArgs <- seq_along(args)
 
     if (is.null(headerRow))
@@ -129,23 +138,28 @@
 
     numeric <- vapply(args, is.numeric, logical(1L))
     lapply(lengthArgs, function(i, x, compVar) {
+        vari <- x[[i]]
+        if (is.data.frame(vari))
+            vari <- vari[[1L]]
+        if (is.character(vari))
+            vari <- as.factor(vari)
         if (numeric[[i]]) {
-            cbind(.meansd(x[[i]], varName = names(x[i]), digits = digits),
-                .groupMeans(x[[i]], compVar, digits = digits),
-                .ttestPval(x[[i]], compVar, varName = names(x[i])))
+            cbind(.meansd(vari, varName = names(x[i]), digits = digits),
+                .groupMeans(vari, compVar, digits = digits),
+                .ttestPval(vari, compVar, varName = names(x[i])))
         } else {
-            fourth <- .chitestPval(x[[i]], compVar)[[1L]]
+            fourth <- .chitestPval(vari, compVar)[[1L]]
             if (!is.null(headerRow)) {
                 header <- matrix(c(rep("", 3L), fourth), nrow = 1L,
                     dimnames = list(headerRow[[i]], NULL))
-                p.value <- rep("", length(levels(x[[i]])))
+                p.value <- rep("", length(levels(vari)))
             } else {
                 header <- character(0L)
-                p.value <- c(fourth, rep("", length(levels(x[[i]]))-1))
+                p.value <- c(fourth, rep("", length(levels(vari))-1))
             }
             rbind(header,
-            cbind(.prop(x[[i]], digits = digits),
-                .crossTab(x[[i]], compVar, digits = digits),
+            cbind(.prop(vari, digits = digits),
+                .crossTab(vari, compVar, digits = digits),
                 p.value))
         }
     }, compVar = outcome, x = args)
