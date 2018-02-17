@@ -28,6 +28,5 @@ tab1 <- .comparisonTable(age, childnum, sex, hispanic, educ, idealCrit,
 tab1 <- do.call(rbind, tab1)
 
 rownames(tab1) <- simpleCap(rownames(tab1))
-detach(subdata)
 
 write.csv(tab1, file = "data/table1.csv")

@@ -74,3 +74,4 @@ tres <- .comparisonTable(sex, childnum, regionOrg, age, educ, race, hispanic,
 tablefeels <- do.call(rbind, tres)
 rownames(tablefeels) <- simpleCap(rownames(tablefeels))
 
+write.csv(tablefeels, file = "data/emotionspreg.csv")
