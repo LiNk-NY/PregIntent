@@ -3,10 +3,7 @@ source("R/table-helpers.R")
 
 ## load data
 pregint <- read.csv("data/pregint.csv")
-
-attach(pregint)
-## Totals by group
-table(avoidControl)
+source("R/relevel.R")
 
 tab2 <- .comparisonTable(age, childnum, sex, hispanic, educ, idealCrit,
     avoidPreg, pregPlan, currentSit, race, incCat, relationship,
@@ -14,7 +11,8 @@ tab2 <- .comparisonTable(age, childnum, sex, hispanic, educ, idealCrit,
     headerRow = c("Age in years M (SD)", "No. of Children M (SD)", "Sex",
         "Hispanic", "Educational attainment", "Ideal Criteria",
         "Avoid Pregnancy", "Pregnancy can be planned", "Current situation",
-        "Race", "Income category", "Relationship status"))
+        "Race", "Income category", "Relationship status"),
+    data = pregint)
 
 ## AVOID CONTROL // BECOME CONTROL
 tab2 <- do.call(rbind, tab2)

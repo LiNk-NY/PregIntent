@@ -6,6 +6,8 @@ library(tidyr)
 # Subset model ------------------------------------------------------------
 
 pregint <- read.csv("data/pregint.csv")
+source("R/relevel.R")
+
 subGroup <- !is.na(pregint$pregFeel)
 subdata <- pregint[subGroup, ]
 rm(pregint)
