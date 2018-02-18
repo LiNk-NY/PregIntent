@@ -2,6 +2,14 @@
 # read data
 pregint <- read.csv("data/pregint.csv")
 source("R/table-helpers.R")
+source("R/relevel.R")
+
+# Main Outcome PregFeel ---------------------------------------------------
+
+(intentbyfeel <- table(pregint$Q3.25..Q3.26, pregint$pregFeel,
+    useNA = "always"))
+colintent <- cbind(intentbyfeel, total = margin.table(intentbyfeel, 1L))
+intentbyfeeltotal <- rbind(colintent, total = margin.table(colintent, 2L))
 
 exclusionCriteria <- pregint$Q3.25..Q3.26 %in%
     c("you/partner is pregnant", "you/partner can't get pregnant") |
@@ -52,15 +60,6 @@ preg2$idealCrit <- droplevels(preg2$idealCrit)
 preg2$ablepreg <- ifelse(preg2$Q1.9a..Q1.9c == "no" |
     preg2$Q1.9b..Q1.9d == "no" | preg2$Q3.25..Q3.26 ==
         "you/partner can't get pregnant", "No", "Yes")
-
-avoidPregs <- sort(grep("Q2\\.2.*\\.\\.*", names(preg2), value = TRUE))
-
-preg2[, avoidPregs] <- lapply(avoidPregs, function(varname) {
-    actvar <- preg2[, varname]
-    levels(actvar) <- c(levels(actvar), "Not selected")
-    actvar[is.na(actvar)] <- "Not selected"
-    actvar
-})
 
 .comparisonTable(sex, childnum, regionOrg, age, educ, race, hispanic,
     relationship, underPovLevel, ablepreg, idealCrit, Q2.2_1..Q2.7_1,
