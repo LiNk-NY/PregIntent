@@ -8,27 +8,18 @@ library(tidyr)
 pregint <- read.csv("data/pregint.csv")
 source("R/relevel.R")
 
-subGroup <- !is.na(pregint$pregFeel)
-subdata <- pregint[subGroup, ]
-rm(pregint)
+subdata <- pregint[!is.na(pregint$pregFeel), ]
 
-attach(subdata)
-source("R/relevel.R")
-
-## Models
-modeldf <- cbind.data.frame(age, as.numeric(childnum), sex, hispanic,
-    idealCrit, avoidPreg, pregPlan, pregFeel, currentSit, race, relationship,
-    incCat)
-
-names(modeldf) <- c("Age", "childnum", "sex", "Hispanic", "idealCrit",
-    "avoidPreg", "pregPlan", "pregFeel", "currentSit", "Race", "Relationship",
-    "IncomeCat")
+modeldf <- pregint[, c("age", "childnum", "sex", "hispanic", "idealCrit",
+    "avoidPreg", "pregPlan", "pregFeel", "currentSit", "race", "relationship",
+    "incCat")]
 
 fit1 <- glm(pregFeel ~ ., data = modeldf, family = "binomial")
 
 (posneg <- tidy(fit1) %>%
     mutate(estimate = round(exp(estimate), 2)) %>%
     cbind.data.frame(round(exp(confint(fit1)), 1), row.names = NULL) %>%
+
     dplyr::rename(lowCI = `2.5 %`, upCI = `97.5 %`) %>%
     select(-statistic, -std.error) %>% select(-p.value, everything()) %>%
     mutate(p.value = format.pval(pv = p.value, digits = 3, eps = 0.001)) %>%

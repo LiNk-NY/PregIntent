@@ -10,10 +10,9 @@ source("R/relevel.R")
 
 # Main Outcome PregFeel ---------------------------------------------------
 
-(intentbyfeel <- table(pregint$Q3.25..Q3.26, pregint$pregFeel,
-    useNA = "always"))
+intentbyfeel <- table(pregint$Q3.25..Q3.26, pregint$pregFeel, useNA = "always")
 colintent <- cbind(intentbyfeel, total = margin.table(intentbyfeel, 1L))
-intentbyfeeltotal <- rbind(colintent, total = margin.table(colintent, 2L))
+(intentbyfeeltotal <- rbind(colintent, total = margin.table(colintent, 2L)))
 
 exclusionCriteria <- pregint$Q3.25..Q3.26 %in%
     c("you/partner is pregnant", "you/partner can't get pregnant") |
