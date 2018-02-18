@@ -10,11 +10,11 @@ source("R/relevel.R")
 
 subdata <- pregint[!is.na(pregint$pregFeel), ]
 
-modeldf <- pregint[, c("age", "childnum", "sex", "hispanic", "idealCrit",
+modeldf1 <- pregint[, c("age", "childnum", "sex", "hispanic", "idealCrit",
     "avoidPreg", "pregPlan", "pregFeel", "currentSit", "race", "relationship",
     "incCat")]
 
-fit1 <- glm(pregFeel ~ ., data = modeldf, family = "binomial")
+fit1 <- glm(pregFeel ~ ., data = modeldf1, family = "binomial")
 
 (posneg <- tidy(fit1) %>%
     mutate(estimate = round(exp(estimate), 2)) %>%
@@ -32,15 +32,11 @@ write.csv(posneg, "results/regFeel.csv")
 
 # Models using full data --------------------------------------------------
 
-
 ## Models
-modeldf <- cbind.data.frame(age, as.numeric(childnum), sex, educ,
-    idealCrit, avoidPreg, pregPlan, avoidControl)
+modeldf2 <- pregint[, c("age", "childnum", "sex", "educ", "idealCrit",
+    "avoidPreg", "pregPlan", "avoidControl")]
 
-names(modeldf) <- c("Age", "childnum", "sex", "Education", "idealCrit",
-    "avoidPreg", "pregPlan", "avoidControl")
-
-fit2 <- glm(avoidControl ~ ., data = modeldf, family = "binomial")
+fit2 <- glm(avoidControl ~ ., data = modeldf2, family = "binomial")
 
 (avoid <- tidy(fit2) %>%
     mutate(estimate = round(exp(estimate), 2)) %>%
@@ -51,13 +47,10 @@ fit2 <- glm(avoidControl ~ ., data = modeldf, family = "binomial")
         rename(beta = "estimate", variable = "term")
 )
 
-modeldf <- cbind.data.frame(as.numeric(childnum), sex, hispanic,
-    idealCrit, avoidPreg, pregPlan, becomeControl)
+modeldf3 <- pregint[, c("childnum", "sex", "hispanic", "idealCrit",
+    "avoidPreg", "pregPlan", "becomeControl")]
 
-names(modeldf) <- c("childnum", "sex", "hispanic", "idealCrit",
-    "avoidPreg", "pregPlan", "becomeControl")
-
-fit3 <- glm(becomeControl ~ ., data = modeldf, family = "binomial")
+fit3 <- glm(becomeControl ~ ., data = modeldf3, family = "binomial")
 
 (become <- tidy(fit3) %>%
     mutate(estimate = round(exp(estimate), 2)) %>%
@@ -67,7 +60,6 @@ fit3 <- glm(becomeControl ~ ., data = modeldf, family = "binomial")
     unite("95% CI", c("2.5 %", "97.5 %"), sep = " - ") %>%
         rename(beta = "estimate", variable = "term")
 )
-
 
 avoid
 write.csv(avoid, "results/regAvoid.csv")
