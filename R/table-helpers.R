@@ -105,7 +105,7 @@
 }
 
 .comparisonTable <- function(..., outcome, data, headerRow = NULL,
-    outcomeOrder = c(0, 1), deparse.level = 2, digits = 2)
+    headerFrame = NULL, outcomeOrder = c(0, 1), deparse.level = 2, digits = 2)
 {
     listvars <- as.list(substitute(list(...)))[-1L]
     nams <- vapply(listvars, function(x) {
@@ -131,10 +131,13 @@
     ## code from table()
     lengthArgs <- seq_along(args)
 
-    if (is.null(headerRow))
-        names(lengthArgs) <- names(args) <- nams
-    else
+    if (!is.null(headerRow))
         names(lengthArgs) <- names(args) <- headerRow
+    else if (!is.null(headerFrame))
+        names(lengthArgs) <- names(args) <- headerRow <-
+            headerFrame[[2L]][match(nams, headerFrame[[1L]])]
+    else
+        names(lengthArgs) <- names(args) <- nams
 
     numeric <- vapply(args, is.numeric, logical(1L))
     lapply(lengthArgs, function(i, x, compVar) {

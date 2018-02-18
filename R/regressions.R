@@ -35,7 +35,7 @@ fit1 <- glm(pregFeel ~ ., data = modeldf, family = "binomial")
 )
 
 posneg
-write.csv(posneg, "data/regFeel.csv")
+write.csv(posneg, "results/regFeel.csv")
 
 # Models using full data --------------------------------------------------
 
@@ -77,8 +77,8 @@ fit3 <- glm(becomeControl ~ ., data = modeldf, family = "binomial")
 
 
 avoid
-write.csv(avoid, "data/regAvoid.csv")
+write.csv(avoid, "results/regAvoid.csv")
 
 become
-write.csv(become, "data/becomeReg.csv")
+write.csv(become, "results/becomeReg.csv")
 
