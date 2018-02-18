@@ -24,7 +24,7 @@ fit1 <- glm(pregFeel ~ ., data = modeldf1, family = "binomial")
     select(-statistic, -std.error) %>% select(-p.value, everything()) %>%
     mutate(p.value = format.pval(pv = p.value, digits = 3, eps = 0.001)) %>%
     unite("95% CI", c("lowCI", "upCI"), sep = " - ") %>%
-        dplyr::rename(beta = "estimate", variable = "term")
+        dplyr::rename(OR = "estimate", variable = "term")
 )
 
 posneg
@@ -44,7 +44,7 @@ fit2 <- glm(avoidControl ~ ., data = modeldf2, family = "binomial")
     select(-statistic, -std.error) %>% select(-p.value, everything()) %>%
     mutate(p.value = format.pval(pv = p.value, digits = 2, eps = 0.001)) %>%
     unite("95% CI", c("2.5 %", "97.5 %"), sep = " - ") %>%
-        rename(beta = "estimate", variable = "term")
+        rename(OR = "estimate", variable = "term")
 )
 
 modeldf3 <- pregint[, c("childnum", "sex", "hispanic", "idealCrit",
@@ -58,7 +58,7 @@ fit3 <- glm(becomeControl ~ ., data = modeldf3, family = "binomial")
     select(-statistic, -std.error) %>% select(-p.value, everything()) %>%
     mutate(p.value = format.pval(pv = p.value, digits = 3, eps = 0.001)) %>%
     unite("95% CI", c("2.5 %", "97.5 %"), sep = " - ") %>%
-        rename(beta = "estimate", variable = "term")
+        rename(OR = "estimate", variable = "term")
 )
 
 avoid

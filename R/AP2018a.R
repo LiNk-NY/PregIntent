@@ -60,22 +60,12 @@ exclu2 <- pregint$Q3.25..Q3.26 %in%
 
 preg2 <- pregint[!exclu2, ]
 preg2$idealCrit <- droplevels(preg2$idealCrit)
+preg2$currentSit <- droplevels(preg2$currentSit)
 
 ## Able to get pregnant
 preg2$ablepreg <- ifelse(preg2$Q1.9a..Q1.9c == "no" |
     preg2$Q1.9b..Q1.9d == "no" | preg2$Q3.25..Q3.26 ==
         "you/partner can't get pregnant", "No", "Yes")
-
-avoidPregs <- sort(grep("Q2\\.2.*\\.\\.*", names(preg2), value = TRUE))
-
-preg2[, avoidPregs] <- lapply(avoidPregs, function(varname) {
-    actvar <- preg2[, varname]
-    levels(actvar) <- c(levels(actvar), "Not selected")
-    actvar[is.na(actvar)] <- "Not selected"
-    actvar
-})
-
-preg2$currentSit <- droplevels(preg2$currentSit)
 
 ## Load annotations data.frame
 source("R/annotations.R")
@@ -92,17 +82,14 @@ rownames(tablefeels) <- simpleCap(rownames(tablefeels))
 
 write.csv(tablefeels, file = "results/emotionspreg.csv")
 
-
 # Multivariable Logistic Regression ---------------------------------------
 
-modelfr <- preg2[, c("sex", "childnum", "regionOrg", "age", "hispanic",
+preg2$age5 <- preg2$age/5
+
+modelfr <- preg2[, c("sex", "childnum", "regionOrg", "age5", "hispanic",
 "relationship", "ablepreg", "idealCrit", "Q2.2_1..Q2.7_1", "pregPlan",
 "Q2.2_3..Q2.7_3", "Q2.2_5..Q2.7_5", "Q2.12_1..Q2.13_1",  "currentSit",
 "pregFeel")]
-
-preg2$Q2.12_1..Q2.13_1 <- relevel(preg2$Q2.12_1..Q2.13_1, ref = "no control")
-preg2$currentSit <- relevel(preg2$currentSit,
-    ref = "don't want you/partner to become pregnant soon")
 
 fit0 <- glm(pregFeel ~ ., data = modelfr, family = "binomial")
 
@@ -112,7 +99,7 @@ fit0 <- glm(pregFeel ~ ., data = modelfr, family = "binomial")
     select(-statistic, -std.error) %>% select(-p.value, everything()) %>%
     mutate(p.value = format.pval(pv = p.value, digits = 2, eps = 0.001)) %>%
     unite("95% CI", c("2.5 %", "97.5 %"), sep = " - ") %>%
-        rename(beta = "estimate", variable = "term")
+        rename(OR = "estimate", variable = "term")
 )
 
 pfeel

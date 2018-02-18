@@ -25,3 +25,5 @@ pregint$Q2.12_1..Q2.13_1 <- relevel(pregint$Q2.12_1..Q2.13_1, ref = "no control"
 pregint$Q3.12_1..Q3.13_1 <- relevel(pregint$Q3.12_1..Q3.13_1, ref = "no control")
 pregint$educ <- relevel(pregint$educ, ref = "HS diploma/GED")
 pregint$sex <- relevel(pregint$sex, ref = "male")
+pregint$currentSit <- relevel(pregint$currentSit,
+    ref = "don't want you/partner to become pregnant soon")
