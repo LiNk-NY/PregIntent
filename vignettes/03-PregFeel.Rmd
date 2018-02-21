@@ -1,0 +1,54 @@
+---
+title: "Current Situation by Pregnancy Feelings"
+author: "Marcel Ramos"
+date: "February 20, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Required packages
+
+```{r}
+library(kableExtra)
+library(magrittr)
+library(knitr)
+```
+
+## Loading the dataset...
+
+```{r}
+pregint <- read.csv("../data/pregint.csv")
+```
+
+### Positive or Negative feelings about pregnancy
+
+Pregnancy feelings are taken from `Q3.34` and `Q121` and are recoded as
+`pregFeel`.
+
+Question: "Ultimately, how would you feel about a partner, or anyone you had
+sex with, being pregnant right now?"
+
+### Current situation with regards to pregnancy
+
+Current situation is taken from questions `Q3.26` and `Q3.25` and is recoded
+as `currentSit`. 
+
+Question: "When thinking about your current situation,
+would you say that you..."
+
+## Pregnancy feelings by current situation.
+
+```{r}
+intentbyfeel <- table(pregint$currentSit, pregint$pregFeel, useNA = "always")
+colintent <- cbind(intentbyfeel, total = margin.table(intentbyfeel, 1L))
+intentbyfeeltotal <- rbind(colintent, total = margin.table(colintent, 2L))
+```
+
+```{r, echo = FALSE}
+kable(intentbyfeeltotal, "html") %>% kable_styling(bootstrap_options = "striped",
+    full_width = FALSE, position = "left")
+```
+
