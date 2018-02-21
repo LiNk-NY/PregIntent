@@ -46,3 +46,52 @@ rownames(becomeCont) <- simpleCap(rownames(becomeCont))
 
 write.csv(avoidCont, file = "results/avoidControl.csv")
 write.csv(becomeCont, file = "results/becomeControl.csv")
+
+# Multivariable Logistic Regression ---------------------------------------
+
+preg3$age5 <- preg3$age/5
+
+
+# Control over avoiding pregnancy -----------------------------------------
+## How much control would you say you have over avoiding a (partner’s)
+## pregnancy?
+
+modelavoid <- preg3[, c("sex", "childnum", "age5", "educ", "race",
+"relationship", "ablepreg", "idealCrit", "Q2.2_1..Q2.7_1", "pregPlan",
+"Q2.2_3..Q2.7_3", "Q2.2_2..Q2.7_2", "Q2.2_5..Q2.7_5", "currentSit",
+"avoidControl")]
+
+fitA <- glm(avoidControl ~ ., data = modelavoid, family = "binomial")
+
+(pavoid <- tidy(fitA) %>%
+    mutate(estimate = round(exp(estimate), 2)) %>%
+    cbind.data.frame(round(exp(confint(fitA)), 1), row.names = NULL) %>%
+    select(-statistic, -std.error) %>% select(-p.value, everything()) %>%
+    mutate(p.value = format.pval(pv = p.value, digits = 2, eps = 0.001)) %>%
+    unite("95% CI", c("2.5 %", "97.5 %"), sep = " - ") %>%
+        rename(OR = "estimate", variable = "term")
+)
+
+write.csv(pavoid, "results/regressAvoid.csv")
+
+
+# Control over becoming pregnant ------------------------------------------
+## If you wanted (a partner) to become pregnant, how much control would you say
+## you have over (her) becoming pregnant?
+
+modelbecome <- preg3[, c("sex", "childnum", "educ", "idealCrit",
+    "Q2.2_1..Q2.7_1", "pregPlan", "Q2.2_3..Q2.7_3",
+    "becomeControl")]
+
+fitB <- glm(becomeControl ~ ., data = modelbecome, family = "binomial")
+
+(pbecome <- tidy(fitB) %>%
+    mutate(estimate = round(exp(estimate), 2)) %>%
+    cbind.data.frame(round(exp(confint(fitB)), 1), row.names = NULL) %>%
+    select(-statistic, -std.error) %>% select(-p.value, everything()) %>%
+    mutate(p.value = format.pval(pv = p.value, digits = 2, eps = 0.001)) %>%
+    unite("95% CI", c("2.5 %", "97.5 %"), sep = " - ") %>%
+        rename(OR = "estimate", variable = "term")
+)
+
+write.csv(pbecome, "results/regressBecome.csv")
