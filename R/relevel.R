@@ -14,6 +14,8 @@ pregint[, avoidPregs] <- lapply(avoidPregs, function(varname) {
 ## Relevel variables
 pregint$idealCrit <- relevel(pregint$idealCrit, ref = "no")
 pregint$avoidPreg <- relevel(pregint$avoidPreg, ref = "No")
+pregint$becomeControl <- relevel(pregint$becomeControl, ref = "Low control")
+pregint$avoidControl <- relevel(pregint$avoidControl, ref = "Low control")
 
 pregint$currentSit <- relevel(pregint$currentSit,
     "don't want you/partner to become pregnant soon")
