@@ -11,7 +11,7 @@ source("R/relevel.R")
 ## Exclude those who are/partner is pregnant Q3.25 & 3.26 (should be n=1,755)
 exclu3 <- pregint$Q3.25..Q3.26 %in%
     c("you/partner is pregnant", "you/partner can't get pregnant") |
-        is.na(pregint$pregFeel)
+        is.na(pregint$pregFeel) | pregint$relationship == "other"
 
 preg3 <- pregint[!exclu3, ]
 
@@ -26,17 +26,20 @@ preg3$ablepreg <- ifelse(preg3$Q1.9a..Q1.9c == "no" |
 ## Load annotations data.frame
 source("R/annotations.R")
 
-avoidC <- .comparisonTable(sex, childnum, regionOrg, age, educ, race, hispanic,
-    relationship, underPovLevel, ablepreg, idealCrit, Q2.2_1..Q2.7_1,
-    pregPlan, Q2.2_3..Q2.7_3, Q2.2_2..Q2.7_2, Q2.2_5..Q2.7_5, currentSit,
+avoidC <- .comparisonTable(sex, childnum, regionOrg, age, educ, race2,
+    hispanic, relationship, underPovLevel, ablepreg, idealCrit,
+    Q2.2_1..Q2.7_1, pregPlan, Q2.2_3..Q2.7_3, Q2.2_2..Q2.7_2, Q2.2_5..Q2.7_5,
+    currentSit,
     outcome = avoidControl,
-    data = preg3, headerFrame = annotations)
+    data = preg3,
+    headerFrame = annotations)
 
-becomeC <- .comparisonTable(sex, childnum, regionOrg, age, educ, race, hispanic,
-    relationship, underPovLevel, ablepreg, idealCrit, Q2.2_1..Q2.7_1,
+becomeC <- .comparisonTable(sex, childnum, regionOrg, age, educ, race2,
+    hispanic, relationship, underPovLevel, ablepreg, idealCrit, Q2.2_1..Q2.7_1,
     pregPlan, Q2.2_3..Q2.7_3, Q2.2_2..Q2.7_2, Q2.2_5..Q2.7_5, currentSit,
     outcome = becomeControl,
-    data = preg3, headerFrame = annotations)
+    data = preg3,
+    headerFrame = annotations)
 
 avoidCont <- do.call(rbind, avoidC)
 becomeCont <- do.call(rbind, becomeC)
@@ -56,7 +59,7 @@ preg3$age5 <- preg3$age/5
 ## How much control would you say you have over avoiding a (partner’s)
 ## pregnancy?
 
-modelavoid <- preg3[, c("sex", "childnum", "age5", "educ", "race",
+modelavoid <- preg3[, c("sex", "childnum", "age5", "educ", "race2",
 "relationship", "ablepreg", "idealCrit", "Q2.2_1..Q2.7_1", "pregPlan",
 "Q2.2_3..Q2.7_3", "Q2.2_2..Q2.7_2", "Q2.2_5..Q2.7_5", "currentSit",
 "avoidControl")]

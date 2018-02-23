@@ -17,7 +17,7 @@ colintent <- cbind(intentbyfeel, total = margin.table(intentbyfeel, 1L))
 exclusionCriteria <- pregint$Q3.25..Q3.26 %in%
     c("you/partner is pregnant", "you/partner can't get pregnant") |
         pregint$Q1.9a..Q1.9c == "no" | pregint$Q1.9b..Q1.9d == "no" |
-        is.na(pregint$pregFeel)
+        is.na(pregint$pregFeel) | pregint$relationship == "other"
 
 # Emotions Related to Pregnancy -------------------------------------------
 
@@ -70,7 +70,7 @@ preg2$ablepreg <- ifelse(preg2$Q1.9a..Q1.9c == "no" |
 ## Load annotations data.frame
 source("R/annotations.R")
 
-tres <- .comparisonTable(sex, childnum, regionOrg, age, educ, race, hispanic,
+tres <- .comparisonTable(sex, childnum, regionOrg, age, educ, race2, hispanic,
     relationship, underPovLevel, ablepreg, idealCrit, Q2.2_1..Q2.7_1,
     pregPlan, Q2.2_3..Q2.7_3, Q2.2_2..Q2.7_2, Q2.2_5..Q2.7_5, Q2.12_1..Q2.13_1,
     Q3.12_1..Q3.13_1, currentSit,
