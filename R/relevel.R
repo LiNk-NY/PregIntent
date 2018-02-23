@@ -1,4 +1,6 @@
 # recoding and releveling -------------------------------------------------
+library(forcats)
+library(magrittr)
 
 ## Recode NA to not selected
 avoidPregs <- sort(grep("Q2\\.2.*\\.\\.*", names(pregint), value = TRUE))
@@ -16,6 +18,10 @@ pregint$idealCrit <- relevel(pregint$idealCrit, ref = "no")
 pregint$avoidPreg <- relevel(pregint$avoidPreg, ref = "No")
 pregint$becomeControl <- relevel(pregint$becomeControl, ref = "Low control")
 pregint$avoidControl <- relevel(pregint$avoidControl, ref = "Low control")
+
+pregint$race2 <- pregint$race %>%
+    fct_recode("other" = "American Indian or Alaska Native",
+        "other" = "Native Hawaiian or Other Pacific Islander")
 
 pregint$currentSit <- relevel(pregint$currentSit,
     "don't want you/partner to become pregnant soon")

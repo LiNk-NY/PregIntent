@@ -6,7 +6,7 @@ pregint <- read.csv("data/pregint.csv")
 source("R/relevel.R")
 
 tab2 <- .comparisonTable(age, childnum, sex, hispanic, educ, idealCrit,
-    avoidPreg, pregPlan, currentSit, race, incCat, relationship,
+    avoidPreg, pregPlan, currentSit, race2, incCat, relationship,
     outcome = avoidControl,
     headerRow = c("Age in years M (SD)", "No. of Children M (SD)", "Sex",
         "Hispanic", "Educational attainment", "Ideal Criteria",
