@@ -198,6 +198,9 @@ codebook <- mapply(function(x, y) {
 }, x = codebook, y = survq, SIMPLIFY = FALSE)
 
 
+# Save codebook object ----------------------------------------------------
+# save(codebook, file = "docs/codeObject.Rda")
+
 codebookSheet <- dplyr::bind_rows(codebook)
 codebookSheet <- cbind.data.frame(
     codebname = rep(names(codebook), lapply(codebook, nrow)),
@@ -230,6 +233,8 @@ codebookSheet[naLogic, "recodeName"] <-
 ## Fill in names that stay the same
 constantNames <- is.na(codebookSheet[["recodeName"]])
 codebookSheet[constantNames, "recodeName"] <- codebookSheet[constantNames, "dataname"]
+
+commentsheet <- readxl::read_excel("docs/recodeBook.xlsx", sheet = 2L)
 
 # Write codebook
 # readr::write_csv(codebookSheet, "docs/codebookCode.csv")
