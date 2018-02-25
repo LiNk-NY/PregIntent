@@ -138,7 +138,7 @@ simppov <- simpPov %>% unite(famch, famUnit, childUnder18)
 
 
 ## Get factor and order it
-pregint$incCat <- recodeFactors(pregint, codebook$Q1.14)[[1L]]
+pregint$incCat <- recodeFactors(pregint, codebook$Q1.14)
 levels(pregint$incCat) <- codebook$Q1.14$response
 pregint$incCat <- factor(pregint$incCat, ordered = TRUE)
 povData <- cbind.data.frame(famUn = pregint$Q1.12,
@@ -160,7 +160,7 @@ mavoid <- vector("character", 2099)[males]
 newFrame <- recodeFactors(pregint, codebook$Q2.2)[males, ]
 skip <- rowSums(!is.na(newFrame)) > 1
 nonSkips <- sapply(newFrame[!skip, ], as.character)[!is.na(newFrame[!skip, ])]
-finalSkips <- recodeFactors(pregint, codebook$Q2.5)[males, ][skip]
+finalSkips <- recodeFactors(pregint, codebook$Q2.5)[males][skip]
 mavoid[skip] <- as.character(finalSkips)
 mavoid[!skip] <- nonSkips
 
@@ -169,7 +169,7 @@ favoid <- vector("character", 2099)[females]
 newFrame <- recodeFactors(pregint, codebook$Q2.7)[females, ]
 skip <- rowSums(!is.na(newFrame)) > 1L
 nonSkips <- sapply(newFrame[!skip, ], as.character)[!is.na(newFrame[!skip, ])]
-finalSkips <- recodeFactors(pregint, codebook$Q2.10)[females, ][skip]
+finalSkips <- recodeFactors(pregint, codebook$Q2.10)[females][skip]
 favoid[skip] <- as.character(finalSkips)
 favoid[!skip] <- nonSkips
 
@@ -182,7 +182,7 @@ pregint$avoidPreg <- factor(avoidPreg == "can be avoided",
 pregPlan <- vector("character", 2099)
 newFrame <- recodeFactors(pregint, codebook$Q3.5)
 nonSkips <- rowSums(newFrame != "No")  == 1L
-finalSkips <- recodeFactors(pregint, codebook$Q122)[!nonSkips, ]
+finalSkips <- recodeFactors(pregint, codebook$Q122)[!nonSkips]
 pregPlan[!nonSkips] <- as.character(finalSkips)
 pregPlan[nonSkips] <- sapply(newFrame[nonSkips, ], as.character)[
     newFrame[nonSkips, ] != "No"]
@@ -197,9 +197,9 @@ pregint$pregPlan <- pregPlan
 
 becomeControl <- vector("character", 2099)
 becomeControl[males] <- as.character(recodeFactors(pregint,
-    codebook$Q3.12)[males, ])
+    codebook$Q3.12)[males])
 becomeControl[females] <- as.character(recodeFactors(pregint,
-    codebook$Q3.13)[females, ])
+    codebook$Q3.13)[females])
 
 becomeControl %<>%
     fct_collapse(`Low control` = c("no control", "a little control"),
@@ -211,9 +211,9 @@ pregint$becomeControl <- becomeControl
 
 avoidControl <- vector("character", 2099)
 avoidControl[males] <- as.character(recodeFactors(pregint,
-    codebook$Q2.12)[males, ])
+    codebook$Q2.12)[males])
 avoidControl[females] <- as.character(recodeFactors(pregint,
-    codebook$Q2.13)[females, ])
+    codebook$Q2.13)[females])
 
 avoidControl %<>%
     fct_collapse(`Low control` = c("no control", "a little control"),
@@ -221,8 +221,8 @@ avoidControl %<>%
 pregint$avoidControl <- avoidControl
 
 currentSit <- vector("character", 2099)
-currentSit[males] <- as.character(recodeFactors(pregint, codebook$Q3.25)[males, ])
-currentSit[females] <- as.character(recodeFactors(pregint, codebook$Q3.26)[females, ])
+currentSit[males] <- as.character(recodeFactors(pregint, codebook$Q3.25)[males])
+currentSit[females] <- as.character(recodeFactors(pregint, codebook$Q3.26)[females])
 
 pregint$currentSit <- currentSit
 
