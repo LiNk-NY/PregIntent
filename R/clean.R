@@ -32,9 +32,7 @@ commaincol <- vapply(pregint, function(col)
     any(grepl(",", col, fixed = TRUE)), logical(1L))
 
 pregint[] <- apply(pregint, 2L, function(col) {
-    if (any(grepl(",", col, fixed = TRUE)))
-        col <- gsub(",", "", col, fixed = TRUE)
-    col
+    gsub(",", "", col, fixed = TRUE)
 })
 
 ## Keep only desired variable
