@@ -168,7 +168,7 @@ codebook$Q1.9d[["corresponds"]] <- "Q1.9b"
 codebook$Q2.2[["corresponds"]] <- codebook[["Q2.7"]]$variable
 codebook$Q2.7[["corresponds"]] <- codebook[["Q2.2"]]$variable
 codebook$Q2.12[["corresponds"]] <- codebook[["Q2.13"]]$variable
-codebook$Q2.13[["corresponds"]] <- codebook[["Q3.12"]]$variable
+codebook$Q2.13[["corresponds"]] <- codebook[["Q2.12"]]$variable
 codebook$Q3.2[["corresponds"]] <- "Q3.3"
 codebook$Q3.3[["corresponds"]] <- "Q3.2"
 codebook$Q3.12[["corresponds"]] <- codebook[["Q3.13"]]$variable
@@ -184,6 +184,16 @@ codebook$Q3.33[["corresponds"]] <- codebook[["Q3.32"]]$variable
 codebook$Q3.34[["corresponds"]] <- "Q121"
 codebook$Q121[["corresponds"]] <- "Q3.34"
 
+codebook$Q1.9 <- data.frame(variable = "childnum", value = 0,
+    response = "# Numeric variable", subset = "none",
+    stringsAsFactors = FALSE)
+codebook$Q1.9[["corresponds"]] <- "Q1.9"
+
+codebook$ageGroup <- data.frame(variable = "ageGroup", value = 0,
+    response = "# Numeric variable", subset = "none",
+    stringsAsFactors = FALSE)
+codebook$ageGroup[["corresponds"]] <- "age"
+
 codebook <- lapply(codebook, function(x) readr::type_convert(x))
 
 cindx <- seq_along(codebook)
@@ -194,51 +204,12 @@ survq <- lapply(cindx, function(i, chunks) {
 }, chunks = codebook)
 
 codebook <- mapply(function(x, y) {
-    cbind.data.frame(x, question = y)
+    cbind.data.frame(x, question = y, stringsAsFactors = FALSE)
 }, x = codebook, y = survq, SIMPLIFY = FALSE)
-
 
 # Save codebook object ----------------------------------------------------
 # save(codebook, file = "docs/codeObject.Rda")
 
-codebookSheet <- dplyr::bind_rows(codebook)
-codebookSheet <- cbind.data.frame(
-    codebname = rep(names(codebook), lapply(codebook, nrow)),
-    codebookSheet, stringsAsFactors = FALSE)
-codebookSheet <- dplyr::rename(codebookSheet, dataname = variable)
-
-recodeBook <- readxl::read_excel("docs/recodeBook.xlsx")
-
-codebookSheet[["recodeName"]] <- unlist(recodeBook[
-    match(codebookSheet[["codebname"]], recodeBook[["qname"]]), "hname"])
-altCodes <- is.na(codebookSheet[["recodeName"]])
-codebookSheet[altCodes, "recodeName"] <- unlist(recodeBook[
-    match(codebookSheet[altCodes, "dataname"], recodeBook[["qname"]]), "hname"])
-
-dupNames <- readLines("docs/duplicateVariables.txt")
-
-dupsToCB <- unique(vapply(
-    strsplit(vapply(strsplit(dupNames, "\\.\\."), `[`, character(1L), 1L), "_"),
-    `[`, character(1L), 1L))
-
-codebookSheet <- codebookSheet[!codebookSheet[["codebname"]] %in% dupsToCB, ]
-
-naLogic <- is.na(codebookSheet[["recodeName"]]) &
-    !is.na(codebookSheet[["corresponds"]])
-
-codebookSheet[naLogic, "recodeName"] <-
-    paste0(codebookSheet[naLogic, "dataname"], "..",
-        codebookSheet[naLogic, "corresponds"])
-
-## Fill in names that stay the same
-constantNames <- is.na(codebookSheet[["recodeName"]])
-codebookSheet[constantNames, "recodeName"] <- codebookSheet[constantNames, "dataname"]
-
-commentsheet <- readxl::read_excel("docs/recodeBook.xlsx", sheet = 2L)
-
-# Write codebook
-# readr::write_csv(codebookSheet, "docs/codebookCode.csv")
-
 ## Clean variables except the needed one
 rm(list = ls()[!ls() %in% c("codebook", "pregint", "codebooktext",
-    "codebookSheet", "recodeFactors", "adjustVarVal")])
+    "recodeFactors", "adjustVarVal")])
