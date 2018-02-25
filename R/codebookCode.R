@@ -1,49 +1,49 @@
-## Create the codebookSheet
+## Create the codebookCode
 
 ## Use ALL codebook chunks to recode data
 # Create codebook sheet with variables ------------------------------------
 
-codebookSheet <- dplyr::bind_rows(codebook)
-codebookSheet <- cbind.data.frame(
+codebookCode <- dplyr::bind_rows(codebook)
+codebookCode <- cbind.data.frame(
     codebname = rep(names(codebook), lapply(codebook, nrow)),
-    codebookSheet, stringsAsFactors = FALSE)
-codebookSheet <- dplyr::rename(codebookSheet, dataname = variable)
+    codebookCode, stringsAsFactors = FALSE)
+codebookCode <- dplyr::rename(codebookCode, dataname = variable)
 
 recodeBook <- readxl::read_excel("docs/recodeBook.xlsx")
 
-codebookSheet[["recodeName"]] <- unlist(recodeBook[
-    match(codebookSheet[["codebname"]], recodeBook[["qname"]]), "hname"])
-altCodes <- is.na(codebookSheet[["recodeName"]])
-codebookSheet[altCodes, "recodeName"] <- unlist(recodeBook[
-    match(codebookSheet[altCodes, "dataname"], recodeBook[["qname"]]), "hname"])
+codebookCode[["recodeName"]] <- unlist(recodeBook[
+    match(codebookCode[["codebname"]], recodeBook[["qname"]]), "hname"])
+altCodes <- is.na(codebookCode[["recodeName"]])
+codebookCode[altCodes, "recodeName"] <- unlist(recodeBook[
+    match(codebookCode[altCodes, "dataname"], recodeBook[["qname"]]), "hname"])
 
 dupsToCB <- unique(vapply(
     strsplit(vapply(strsplit(dupNames, "\\.\\."), `[`, character(1L), 1L), "_"),
     `[`, character(1L), 1L))
 
-codebookSheet <- codebookSheet[!codebookSheet[["codebname"]] %in% dupsToCB, ]
+codebookCode <- codebookCode[!codebookCode[["codebname"]] %in% dupsToCB, ]
 
-naLogic <- is.na(codebookSheet[["recodeName"]]) &
-    !is.na(codebookSheet[["corresponds"]])
+naLogic <- is.na(codebookCode[["recodeName"]]) &
+    !is.na(codebookCode[["corresponds"]])
 
-codebookSheet[naLogic, "recodeName"] <-
-    paste0(codebookSheet[naLogic, "dataname"], "..",
-        codebookSheet[naLogic, "corresponds"])
+codebookCode[naLogic, "recodeName"] <-
+    paste0(codebookCode[naLogic, "dataname"], "..",
+        codebookCode[naLogic, "corresponds"])
 
 ## Fill in names that stay the same
-constantNames <- is.na(codebookSheet[["recodeName"]])
-codebookSheet[constantNames, "recodeName"] <- codebookSheet[constantNames, "dataname"]
+constantNames <- is.na(codebookCode[["recodeName"]])
+codebookCode[constantNames, "recodeName"] <- codebookCode[constantNames, "dataname"]
 
 commentsheet <- readxl::read_excel("docs/recodeBook.xlsx", sheet = 2L)
 
-commentvars <- intersect(codebookSheet[["recodeName"]],
+commentvars <- intersect(codebookCode[["recodeName"]],
     commentsheet[["variable"]])
 names(commentvars) <- commentvars
 
 
 nrowsDoc <-
     vapply(commentvars, function(covar)
-            sum(codebookSheet$recodeName %in% covar),
+            sum(codebookCode$recodeName %in% covar),
     integer(1L))
 
 commentBlocks <- lapply(commentvars, function(covar) {
@@ -57,15 +57,15 @@ commentBlocks <- lapply(commentvars, function(covar) {
 lapply(seq_along(commentBlocks), function(i, cblock) {
     varname <- commentvars[i]
     cblock <- commentBlocks[[i]]
-    idxvals <- which(codebookSheet[["recodeName"]] %in% varname)
+    idxvals <- which(codebookCode[["recodeName"]] %in% varname)
     for (i in seq_along(idxvals))
-        codebookSheet[idxvals[i], "comment"] <<- cblock[i]
+        codebookCode[idxvals[i], "comment"] <<- cblock[i]
 }, cblock = commentBlocks)
 
 source("R/dfmap.R")
 
-codebooksheet <- dplyr::left_join(codebookSheet, dfmap,
+codebooksheet <- dplyr::left_join(codebookCode, dfmap,
     by = c("recodeName", "response"))
 
 # Write codebook
-readr::write_csv(codebookSheet, "docs/codebookSheet.csv")
+readr::write_csv(codebookCode, "docs/codebookCode.csv")
