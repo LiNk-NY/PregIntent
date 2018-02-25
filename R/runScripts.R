@@ -36,5 +36,13 @@ pregint <- pregint[, !names(pregint) %in%
 
 pregData <- cbind.data.frame(pregint, recodedData)
 
+commasincol <- apply(pregData, 2L, function(col) {
+    any(grepl(",", col, fixed = TRUE))
+})
+
+pregData[] <- apply(pregData, 2L, function(col) {
+    gsub(",", "", col, fixed = TRUE)
+})
+
 ## Save Dataset
 write.csv(pregData, "data/pregint.csv", row.names = FALSE)

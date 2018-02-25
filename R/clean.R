@@ -34,6 +34,7 @@ commaincol <- vapply(pregint, function(col)
 pregint[] <- apply(pregint, 2L, function(col) {
     gsub(",", "", col, fixed = TRUE)
 })
+pregint <- readr::type_convert(pregint)
 
 ## Keep only desired variable
 rm(list = ls()[!ls() %in%
