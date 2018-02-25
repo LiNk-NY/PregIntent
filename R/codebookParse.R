@@ -184,12 +184,12 @@ codebook$Q3.33[["corresponds"]] <- codebook[["Q3.32"]]$variable
 codebook$Q3.34[["corresponds"]] <- "Q121"
 codebook$Q121[["corresponds"]] <- "Q3.34"
 
-codebook$Q1.9 <- data.frame(variable = "childnum", value = 0,
+codebook$Q1.9 <- data.frame(variable = "childnum", value = 999,
     response = "# Numeric variable", subset = "none",
     stringsAsFactors = FALSE)
 codebook$Q1.9[["corresponds"]] <- "Q1.9"
 
-codebook$ageGroup <- data.frame(variable = "ageGroup", value = 0,
+codebook$ageGroup <- data.frame(variable = "ageGroup", value = 999,
     response = "# Numeric variable", subset = "none",
     stringsAsFactors = FALSE)
 codebook$ageGroup[["corresponds"]] <- "age"
