@@ -27,6 +27,16 @@ pregint <- pregint[, !names(pregint) %in% varsToRM]
 # Take only GC = 1 responses
 pregint <- pregint[pregint$gc == 1L, ]
 
+## Remove commas from comments
+commaincol <- vapply(pregint, function(col)
+    any(grepl(",", col, fixed = TRUE)), logical(1L))
+
+pregint[] <- apply(pregint, 2L, function(col) {
+    if (any(grepl(",", col, fixed = TRUE)))
+        col <- gsub(",", "", col, fixed = TRUE)
+    col
+})
+
 ## Keep only desired variable
 rm(list = ls()[!ls() %in%
     c("pregint", "codebooktext", "recodeFactors",
