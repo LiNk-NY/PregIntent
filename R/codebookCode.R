@@ -68,5 +68,4 @@ codebooksheet <- dplyr::left_join(codebookSheet, dfmap,
     by = c("recodeName", "response"))
 
 # Write codebook
-readr::write_csv(codebookSheet, "docs/codebookCode.csv")
-
+readr::write_csv(codebookSheet, "docs/codebookSheet.csv")
