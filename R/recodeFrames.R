@@ -1,4 +1,4 @@
-rbind.data.frame(
+mapframe <- rbind.data.frame(
 data.frame(
     recodename = rep("pregPlan", 6),
     category = c("can be planned in advance",
@@ -21,5 +21,27 @@ data.frame(
     category = c("no control", "a little control",
         "complete control", "a lot of control"),
     value = c(rep("Low control", 2), rep("High control", 2)),
-    stringsAsFactors = FALSE)
+    stringsAsFactors = FALSE),
+
+data.frame(recodename = rep("regionOrg", 53),
+category = c("Alabama", "Alaska", "Arizona", "Arkansas", "California",
+    "Colorado", "Connecticut", "Delaware", "District of Columbia",
+    "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana",
+    "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland",
+    "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri",
+    "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey",
+    "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio",
+    "Oklahoma", "Oregon", "Pennsylvania", "Puerto Rico", "Rhode Island",
+    "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah",
+    "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin",
+    "Wyoming", "I do not reside in the United States"),
+value = c("South",  "West", "West", "South", "West", "West", "North East",
+    "South", "South", "South", "South", "West", "West", "MidWest", "MidWest",
+    "MidWest", "MidWest", "South", "South", "North East", "South",
+    "North East", "MidWest", "MidWest", "South", "MidWest", "West",
+    "MidWest", "West", "North East", "North East", "West", "North East",
+    "South", "MidWest", "MidWest", "South", "West", "North East",
+    NA, "North East", "South", "MidWest", "South", "South", "West",
+    "North East", "South", "West", "South", "MidWest", "West", NA),
+stringsAsFactors = FALSE)
 )
