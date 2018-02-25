@@ -13,8 +13,8 @@ codebooktext <- cbind(item = names(namesVect), question = namesVect)
 
 # Read actual dataset with cleaned column names
 pregint <- suppressWarnings(
-    read_excel("data/surveyresults_2099.xlsx", skip = 2,
-    col_names = names(namesVect))
+    as.data.frame(read_excel("data/surveyresults_2099.xlsx", skip = 2,
+    col_names = names(namesVect)), stringsAsFactors = FALSE)
 )
 
 # Create vector of variables to remove
@@ -22,7 +22,7 @@ varsToRM <- c("ResponseSet", "Name", "ExternalDataReference", "EmailAddress",
     "IPAddress", "Status", "opp", "RISN", "V")
 
 # Remove a few variables that have none or one response value
-pregint <- pregint[, -which(names(pregint) %in% varsToRM)]
+pregint <- pregint[, !names(pregint) %in% varsToRM]
 
 # Take only GC = 1 responses
 pregint <- pregint[pregint$gc == 1L, ]
