@@ -92,6 +92,8 @@ Q3.5 <- lapply(YesNoResponse["Q3.5"], function(x) {
 Q3.5 <- adjustVarVal(Q3.5, "Q3.5")
 Q3.5$Q3.5[["subset"]] <- "none"
 
+codebook <- c(codebook, Q122, Q3.5)
+
 ## Adjust for inconsistent names
 codebook$Q3.17a$variable <- paste0(gsub("a", "", codebook$Q3.17a$variable),
     "_", codebook$Q3.17a$value)
@@ -101,8 +103,6 @@ codebook$Q3.17a$value <- rep(1L, length(codebook$Q3.17a$value))
 codebook <- adjustVarVal(codebook, c("Q1.7", "Q1.8", "Q2.2", "Q2.7",
     "Q3.32", "Q3.33", "Q3.4", "Q3.17", "Q3.18", "Q3.27", "Q3.28", "Q3.29",
     "Q3.30"))
-
-codebook <- c(codebook, Q122, Q3.5)
 
 ## PregFeel recode
 codebook$Q3.2[4, "response"] <- "don't want me/partner pregnant"
@@ -207,8 +207,11 @@ codebook <- mapply(function(x, y) {
     cbind.data.frame(x, question = y, stringsAsFactors = FALSE)
 }, x = codebook, y = survq, SIMPLIFY = FALSE)
 
+codebook$Q1.9$question <- "How many biological children do you have?"
+codebook$ageGroup$question <- "What is your age?"
+
 # Save codebook object ----------------------------------------------------
-# save(codebook, file = "docs/codeObject.Rda")
+save(codebook, file = "docs/codeObject.Rda")
 
 ## Clean variables except the needed one
 rm(list = ls()[!ls() %in% c("codebook", "pregint", "codebooktext",

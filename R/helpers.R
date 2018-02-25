@@ -37,7 +37,10 @@ recodeFactors <-
                     to = recodeFrame[["response"]][i]))
         })
     }
-    target
+    if (length(target) == 1L)
+        target[[1L]]
+    else
+        target
 }
 
 adjustVarVal <- function(codingList, variables) {

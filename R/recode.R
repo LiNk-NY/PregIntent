@@ -3,10 +3,11 @@ library(plyr)
 library(dplyr)
 library(tidyr)
 library(maps)
-data("state.fips")
 library(Hmisc)
 library(magrittr)
 library(forcats)
+
+data("state.fips")
 
 # Sex
 pregint$sex <- recodeFactors(pregint, codebook$Q1.2)
