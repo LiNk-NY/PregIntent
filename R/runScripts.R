@@ -20,7 +20,10 @@ dataList <- lapply(codebook, function(recodeChunk) {
     recodeFactors(pregint, recodeChunk)
 })
 
-recodedData <- dplyr::bind_cols(dataList)
+dfs <- vapply(dataList, is.data.frame, logical(1L))
+datafs <- dplyr::bind_cols(dataList[dfs])
+
+recodedData <- as.data.frame(dplyr::bind_cols(dataList[!dfs], datafs))
 doubles <- grepl("\\.\\.", names(recodedData))
 dupped <- duplicated(lapply(strsplit(names(recodedData)[doubles], "\\.\\."), sort))
 dupNames <- names(recodedData)[doubles][dupped]
