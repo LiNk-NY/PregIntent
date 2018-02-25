@@ -1,17 +1,6 @@
 ## Create the codebookSheet
 
 ## Use ALL codebook chunks to recode data
-dataList <- lapply(codebook, function(recodeChunk) {
-    recodeFactors(pregint, recodeChunk)
-})
-
-recodedData <- dplyr::bind_cols(dataList)
-doubles <- grepl("\\.\\.", names(recodedData))
-dupped <- duplicated(lapply(strsplit(names(recodedData)[doubles], "\\.\\."), sort))
-dupNames <- names(recodedData)[doubles][dupped]
-
-recodedData <- recodedData[, !(names(recodedData) %in% dupNames)]
-
 # Create codebook sheet with variables ------------------------------------
 
 codebookSheet <- dplyr::bind_rows(codebook)
@@ -46,9 +35,38 @@ constantNames <- is.na(codebookSheet[["recodeName"]])
 codebookSheet[constantNames, "recodeName"] <- codebookSheet[constantNames, "dataname"]
 
 commentsheet <- readxl::read_excel("docs/recodeBook.xlsx", sheet = 2L)
-# codebookSheet[na.omit(match(commentsheet$variable, codebookSheet$recodeName)), "comment"] <-
-#     commentsheet$description[na.omit(unique(match(codebookSheet$recodeName, commentsheet$variable)))]
+
+commentvars <- intersect(codebookSheet[["recodeName"]],
+    commentsheet[["variable"]])
+names(commentvars) <- commentvars
+
+
+nrowsDoc <-
+    vapply(commentvars, function(covar)
+            sum(codebookSheet$recodeName %in% covar),
+    integer(1L))
+
+commentBlocks <- lapply(commentvars, function(covar) {
+    chunk <- unlist(commentsheet[commentsheet$variable == covar, "comment"])
+    chunkrows <- nrowsDoc[covar]
+    chunkvals <- .wrapItem("", chunk, chunkrows)
+    chunkvals[chunkvals == ""] <- NA_character_
+    chunkvals
+})
+
+lapply(seq_along(commentBlocks), function(i, cblock) {
+    varname <- commentvars[i]
+    cblock <- commentBlocks[[i]]
+    idxvals <- which(codebookSheet[["recodeName"]] %in% varname)
+    for (i in seq_along(idxvals))
+        codebookSheet[idxvals[i], "comment"] <<- cblock[i]
+}, cblock = commentBlocks)
+
+source("R/dfmap.R")
+
+codebooksheet <- dplyr::left_join(codebookSheet, dfmap,
+    by = c("recodeName", "response"))
 
 # Write codebook
-# readr::write_csv(codebookSheet, "docs/codebookCode.csv")
+readr::write_csv(codebookSheet, "docs/codebookCode.csv")
 
