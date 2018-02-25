@@ -34,6 +34,10 @@ codebookCode[naLogic, "recodeName"] <-
 constantNames <- is.na(codebookCode[["recodeName"]])
 codebookCode[constantNames, "recodeName"] <- codebookCode[constantNames, "dataname"]
 
+codebookCode[] <- apply(codebookCode, 2L, function(col) {
+    gsub(",", "", col, fixed = TRUE)
+})
+
 commentsheet <- readxl::read_excel("docs/recodeBook.xlsx", sheet = 2L)
 
 commentvars <- intersect(codebookCode[["recodeName"]],
@@ -64,7 +68,7 @@ lapply(seq_along(commentBlocks), function(i, cblock) {
 
 source("R/dfmap.R")
 
-codebooksheet <- dplyr::left_join(codebookCode, dfmap,
+codebookCode <- dplyr::left_join(codebookCode, dfmap,
     by = c("recodeName", "response"))
 
 # Write codebook
