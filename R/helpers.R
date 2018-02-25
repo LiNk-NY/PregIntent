@@ -74,10 +74,11 @@ cleanBlock <- function(block) {
     optim
 }
 
-.wrapItem <- function(block, descript) {
+.wrapItem <- function(block, descript, numrows = NULL) {
     descript <- unlist(descript)
     descript <- gsub("[ ]{2,}", "", descript)
-    numrows <- nrow(block)
+    if (is.null(numrows))
+        numrows <- nrow(block)
     if (!length(descript))
         return(rep("", times = numrows))
     lsnip <- nchar(descript)
