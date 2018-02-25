@@ -8,44 +8,30 @@ library(Hmisc)
 library(magrittr)
 library(forcats)
 
-## Use ALL codebook chunks to recode data
-dataList <- lapply(codebook, function(recodeChunk) {
-    recodeFactors(pregint, recodeChunk)
-})
-
-recodedData <- dplyr::bind_cols(dataList)
-doubles <- grepl("\\.\\.", names(recodedData))
-dupped <- duplicated(lapply(strsplit(names(recodedData)[doubles], "\\.\\."), sort))
-dupNames <- names(recodedData)[doubles][dupped]
-
-# writeLines(dupNames, con = file("docs/duplicateVariables.txt"))
-
-recodedData <- recodedData[, !(names(recodedData) %in% dupNames)]
-
 # Sex
-sex <- recodeFactors(pregint, codebook$Q1.2)
-males <- sex == "male"
-females <- sex == "female"
+pregint$sex <- recodeFactors(pregint, codebook$Q1.2)
+males <- pregint$sex == "male"
+females <- pregint$sex == "female"
 
 ## Outcome
-pregFeel <- vector("character", 2099)
+pregint$pregFeel <- vector("character", 2099)
 ## "Ultimately, how would you feel about being pregnant right now?"
-pregFeel[females] <- recodeFactors(pregint, codebook$Q3.34)[females]
-pregFeel[males] <- recodeFactors(pregint, codebook$Q121)[males]
-table(pregFeel)
-data.frame(AnsPreg = sum(table(pregFeel)), N = 2099,
-    Perc = round((sum(table(pregFeel))/2099)*100, 2))
+pregint$pregFeel[females] <- recodeFactors(pregint, codebook$Q3.34)[females]
+pregint$pregFeel[males] <- recodeFactors(pregint, codebook$Q121)[males]
+table(pregint$pregFeel)
+data.frame(AnsPreg = sum(table(pregint$pregFeel)), N = 2099,
+    Perc = round((sum(table(pregint$pregFeel))/2099)*100, 2))
 
 ## Ideal criteria
-idealCrit <- vector("character", 2099)
+pregint$idealCrit <- vector("character", 2099)
 
-idealCrit[females] <- recodeFactors(pregint, codebook$Q3.3)[females]
-idealCrit[males] <- recodeFactors(pregint, codebook$Q3.2)[males]
+pregint$idealCrit[females] <- recodeFactors(pregint, codebook$Q3.3)[females]
+pregint$idealCrit[males] <- recodeFactors(pregint, codebook$Q3.2)[males]
 
 ## Number of children
-childnum <- gsub("NO", "0", pregint$Q1.9, ignore.case = TRUE)
-childnum[childnum %in% c("mm", "na")] <- NA
-childnum <- as.integer(childnum)
+pregint$childnum <- gsub("NO", "0", pregint$Q1.9, ignore.case = TRUE)
+pregint$childnum[pregint$childnum %in% c("mm", "na")] <- NA
+pregint$childnum <- as.integer(pregint$childnum)
 
 ## Reference dataset for regions
 regionMap <- state.fips[!duplicated(state.fips$fips), c("fips", "region", "polyname")]
@@ -57,12 +43,13 @@ regionMap <- rbind(regionMap, data.frame(fips = c(2, 15), region = "West",
     state = c("alaska", "hawaii")))
 
 ## State of residence (all should reside in US)
-stateOrg <- recodeFactors(pregint, codebook$Q110)
+pregint$stateOrg <- recodeFactors(pregint, codebook$Q110)
 
 ## Region of residence
-regionOrg <-
-    regionMap$region[match(tolower(as.character(stateOrg[[1L]])),
+pregint$regionOrg <-
+    regionMap$region[match(tolower(as.character(pregint$stateOrg[[1L]])),
         regionMap$state)]
+
 ## check proper merge
 ## head(cbind(stateOrg, regionOrg))
 
@@ -82,9 +69,10 @@ race[!multiSelect] <- apply(raceDF[!multiSelect, ], 1L,  function(row) {
 
 ## More than 1 gets coded as OTHER
 race[multiSelect] <- "other"
+pregint$race <- race
 
 ## Hispanic
-hispanic <- recodeFactors(pregint, codebook$Q1.6)
+pregint$hispanic <- recodeFactors(pregint, codebook$Q1.6)
 
 ## Hispanic origin
 hispoDF <- recodeFactors(pregint, codebook$Q1.7)
@@ -100,6 +88,7 @@ hispOrg[!multiSelect] <- apply(hispoDF[!multiSelect, ], 1L, function(row) {
         na.omit(row)
 })
 hispOrg[multiSelect] <- "other"
+pregint$hispOrg <- hispOrg
 
 ## Check to see if all who said "Yes" Hispanic answered origin question
 ## equal number of responses in both variables after subsetting by "yes"
@@ -108,17 +97,17 @@ hispOrg[multiSelect] <- "other"
 #     function(row) all(is.na(row))))
 
 ## Age
-age <- pregint$Q112
+pregint$age <- pregint$Q112
 
 ## ageGroup
-ageGroup <- Hmisc::cut2(age, cuts = c(25, 30, 35, 40))
-levels(ageGroup) <- c("21-24", "25-29", "30-34", "35-39", "40-44")
+pregint$ageGroup <- Hmisc::cut2(pregint$age, cuts = c(25, 30, 35, 40))
+levels(pregint$ageGroup) <- c("21-24", "25-29", "30-34", "35-39", "40-44")
 
 ## Modify labels to recode using function
-educ <- recodeFactors(pregint, codebook$Q1.10)
+pregint$educ <- recodeFactors(pregint, codebook$Q1.10)
 
 ## Relationshp recode
-relationship <- recodeFactors(pregint, codebook$Q1.11)
+pregint$relationship <- recodeFactors(pregint, codebook$Q1.11)
 
 ## Derived variable for income – based on Poverty Threshold for 2016
 ## https://www.census.gov/data/tables/time-series/demo/income-poverty/historical-poverty-thresholds.html
@@ -148,17 +137,17 @@ simppov <- simpPov %>% unite(famch, famUnit, childUnder18)
 
 
 ## Get factor and order it
-incCat <- recodeFactors(pregint, codebook$Q1.14)[[1L]]
-levels(incCat) <- codebook$Q1.14$response
-incCat <- factor(incCat, ordered = TRUE)
+pregint$incCat <- recodeFactors(pregint, codebook$Q1.14)[[1L]]
+levels(pregint$incCat) <- codebook$Q1.14$response
+pregint$incCat <- factor(pregint$incCat, ordered = TRUE)
 povData <- cbind.data.frame(famUn = pregint$Q1.12,
-    childUn18 = pregint$Q1.13, incCat)
+    childUn18 = pregint$Q1.13, incCat = pregint$incCat)
 povData <- povData %>% unite(famch, famUn, childUn18)
 
 povertyComp <- cbind.data.frame(povFromTable =
     simppov[match(povData$famch, simppov$famch), "incGroup"],
     povFromData = povData$incCat)
-underPovLevel <-
+pregint$underPovLevel <-
     factor(povertyComp[["povFromData"]] <= povertyComp[["povFromTable"]],
         levels = c(TRUE, FALSE), labels = c("Yes", "No"))
 
@@ -186,7 +175,7 @@ favoid[!skip] <- nonSkips
 avoidPreg[males] <- mavoid
 avoidPreg[females] <- favoid
 
-avoidPreg <- factor(avoidPreg == "can be avoided",
+pregint$avoidPreg <- factor(avoidPreg == "can be avoided",
     levels = c(TRUE, FALSE), labels = c("Yes", "No"))
 
 pregPlan <- vector("character", 2099)
@@ -203,6 +192,7 @@ pregPlan[pregPlan %in% c("'just happens'",
   "can be left to 'fate' or a higher power like God",
   "is a natural process that happens when it’s meant to be")] <- "No"
 pregPlan[pregPlan %in% "other"] <- NA_character_
+pregint$pregPlan <- pregPlan
 
 becomeControl <- vector("character", 2099)
 becomeControl[males] <- as.character(recodeFactors(pregint,
@@ -213,6 +203,7 @@ becomeControl[females] <- as.character(recodeFactors(pregint,
 becomeControl %<>%
     fct_collapse(`Low control` = c("no control", "a little control"),
         `High control` = c("complete control", "a lot of control"))
+pregint$becomeControl <- becomeControl
 
 ## Select all that apply question but not indicated in actual question
 # recodeFactors(pregint, codebook$Q3.17a)
@@ -226,14 +217,15 @@ avoidControl[females] <- as.character(recodeFactors(pregint,
 avoidControl %<>%
     fct_collapse(`Low control` = c("no control", "a little control"),
         `High control` = c("complete control", "a lot of control"))
+pregint$avoidControl <- avoidControl
 
 currentSit <- vector("character", 2099)
 currentSit[males] <- as.character(recodeFactors(pregint, codebook$Q3.25)[males, ])
 currentSit[females] <- as.character(recodeFactors(pregint, codebook$Q3.26)[females, ])
 
-# removal of extra obj ----------------------------------------------------
+pregint$currentSit <- currentSit
 
-rm(povFrame, simppov, simpPov, povertyComp, povData, povThresh,
-   state.fips, females, males, regionMap, raceDF, newFrame, skip,
-   nonSkips, finalSkips, mavoid, favoid, dataList, doubles, dupped,
-   dupNames, multiSelect, hispoDF)
+## Keep only desired variable
+rm(list = ls()[!ls() %in%
+    c("pregint", "codebooktext", "recodeFactors", "codebook",
+      "adjustVarVal", "cleanBlock", "addQText")])
