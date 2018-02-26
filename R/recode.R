@@ -18,8 +18,8 @@ females <- pregint$sex == "female"
 ## "Ultimately, how would you feel about being pregnant right now?"
 pregint$pregFeel <- unlist(recodeFactors(pregint, codebook$Q3.34), use.names = FALSE)
 
-data.frame(AnsPreg = sum(table(pregFeel)), N = 2099,
-    Perc = round((sum(table(pregFeel))/2099)*100, 2))
+data.frame(AnsPreg = sum(table(pregint$pregFeel)), N = 2099,
+    Perc = round((sum(table(pregint$pregFeel))/2099)*100, 2))
 
 ## Ideal criteria
 idealCrit <- unlist(recodeFactors(pregint, codebook$Q3.3), use.names = FALSE)
@@ -134,7 +134,8 @@ simppov <- simpPov %>% unite(famch, famUnit, childUnder18)
 
 
 ## Get factor and order it
-pregint$incCat <- recodeFactors(pregint, codebook$Q1.14)
+pregint$incCat <-
+    unlist(recodeFactors(pregint, codebook$Q1.14), use.names = FALSE)
 levels(pregint$incCat) <- codebook$Q1.14$response
 pregint$incCat <- factor(pregint$incCat, ordered = TRUE)
 povData <- cbind.data.frame(famUn = pregint$Q1.12,
@@ -156,7 +157,7 @@ mavoid <- vector("character", 2099)[males]
 newFrame <- recodeFactors(pregint, codebook$Q2.2)[males, ]
 skip <- rowSums(!is.na(newFrame)) > 1
 nonSkips <- sapply(newFrame[!skip, ], as.character)[!is.na(newFrame[!skip, ])]
-finalSkips <- recodeFactors(pregint, codebook$Q2.5)[males][skip]
+finalSkips <- recodeFactors(pregint, codebook$Q2.5)[males, ][skip]
 mavoid[skip] <- as.character(finalSkips)
 mavoid[!skip] <- nonSkips
 
@@ -165,7 +166,7 @@ favoid <- vector("character", 2099)[females]
 newFrame <- recodeFactors(pregint, codebook$Q2.7)[females, ]
 skip <- rowSums(!is.na(newFrame)) > 1L
 nonSkips <- sapply(newFrame[!skip, ], as.character)[!is.na(newFrame[!skip, ])]
-finalSkips <- recodeFactors(pregint, codebook$Q2.10)[females][skip]
+finalSkips <- recodeFactors(pregint, codebook$Q2.10)[females, ][skip]
 favoid[skip] <- as.character(finalSkips)
 favoid[!skip] <- nonSkips
 
@@ -178,7 +179,7 @@ pregint$avoidPreg <- factor(avoidPreg == "can be avoided",
 pregPlan <- vector("character", 2099)
 newFrame <- recodeFactors(pregint, codebook$Q3.5)
 nonSkips <- rowSums(newFrame != "No")  == 1L
-finalSkips <- recodeFactors(pregint, codebook$Q122)[!nonSkips]
+finalSkips <- recodeFactors(pregint, codebook$Q122)[!nonSkips, ]
 pregPlan[!nonSkips] <- as.character(finalSkips)
 pregPlan[nonSkips] <- sapply(newFrame[nonSkips, ], as.character)[
     newFrame[nonSkips, ] != "No"]
