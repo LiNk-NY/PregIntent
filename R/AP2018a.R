@@ -47,7 +47,10 @@ rest <- lapply(emos, function(varname) {
 
 feeltab <- do.call(rbind, rest)
 
-write.csv(feeltab, "results/feeltab.csv")
+if (!dir.exists("results/AP2018a"))
+    dir.create("results/AP2018a", recursive = TRUE)
+
+write.csv(feeltab, "results/AP2018a/feeltab.csv")
 
 # Modeling Feelings about Pregnancy ---------------------------------------
 
@@ -80,7 +83,7 @@ tres <- .comparisonTable(sex, childnum, regionOrg, age, educ, race2, hispanic,
 tablefeels <- do.call(rbind, tres)
 rownames(tablefeels) <- simpleCap(rownames(tablefeels))
 
-write.csv(tablefeels, file = "results/emotionspreg.csv")
+write.csv(tablefeels, file = "results/AP2018a/emotionspreg.csv")
 
 # Multivariable Logistic Regression ---------------------------------------
 
@@ -103,4 +106,4 @@ fit0 <- glm(pregFeel ~ ., data = modelfr, family = "binomial")
 )
 
 pfeel
-write.csv(pfeel, "results/mvpfeel.csv")
+write.csv(pfeel, "results/AP2018a/mvpfeel.csv")
