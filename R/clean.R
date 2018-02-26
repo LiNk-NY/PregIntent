@@ -35,7 +35,10 @@ pregint[] <- apply(pregint, 2L, function(col) {
     gsub(",", "", col, fixed = TRUE)
 })
 
-pregint <- type.convert(pregint)
+pregint <- readr::type_convert(pregint)
+
+pregint$Q3.17_7 <- as.integer(pregint$Q3.17_7)
+pregint$Q3.27_8 <- as.integer(pregint$Q3.27_8)
 
 ## Keep only desired variable
 rm(list = ls()[!ls() %in%

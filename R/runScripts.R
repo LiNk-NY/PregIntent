@@ -28,7 +28,7 @@ dupNames <- names(recodedData)[doubles][dupped]
 recodedData <- recodedData[,
     !(names(recodedData) %in% c(dupNames, "childnum", "ageGroup"))]
 
-recodedData <- type.convert(recodedData)
+recodedData <- readr::type_convert(recodedData)
 
 recodes <- names(recodedData) %in% names(pregint)
 names(recodedData)[recodes] <- paste0(names(recodedData)[recodes], "_R")
