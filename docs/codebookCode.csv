@@ -4,11 +4,6 @@ Q1.9a,Q1.9a,  2,no,male,Q1.9c,physically possible for you yourself to biological
 Q1.9b,Q1.9b,  1,yes,male,Q1.9d,If you have a partner as far as you,Q1.9b..Q1.9d,NA,NA
 Q1.9b,Q1.9b,  2,no,male,Q1.9d,know is it physically possible for her,Q1.9b..Q1.9d,NA,NA
 Q1.9b,Q1.9b,  3,don't have partner,male,Q1.9d,to have a baby in the future?,Q1.9b..Q1.9d,NA,NA
-Q1.9c,Q1.9c,  1,yes,female,Q1.9a,Some women are not physically able to have children. As far as you know,Q1.9c..Q1.9a,NA,NA
-Q1.9c,Q1.9c,  2,no,female,Q1.9a,is it physically possible for you yourself to have a baby in the future?,Q1.9c..Q1.9a,NA,NA
-Q1.9d,Q1.9d,  1,yes,female,Q1.9b,If you have a partner as far as you,Q1.9d..Q1.9b,NA,NA
-Q1.9d,Q1.9d,  2,no,female,Q1.9b,know is it physically possible for him,Q1.9d..Q1.9b,NA,NA
-Q1.9d,Q1.9d,  3,don't have partner,female,Q1.9b,to father a baby in the future?,Q1.9d..Q1.9b,NA,NA
 Q2.2,Q2.2_1,  1,can be avoided,male,Q2.7_1,When thinking about trying to avoid a,avoidPreg,combine variables based on skip pattern,NA
 Q2.2,Q2.2_2,  1,sometimes ‘just happens’ anyway,male,Q2.7_2,partner* becoming pregnant would you,avoidPreg,(Q2.2 & Q2.5 for males or Q2.7 & Q2.10,NA
 Q2.2,Q2.2_3,  1,is something determined by fate or a higher power like God,male,Q2.7_3,say that pregnancy (SATA) *The term,avoidPreg,for females),NA
@@ -28,32 +23,17 @@ Q2.12,Q2.12_1,  1,no control,male,Q2.13_1,How much control would you say you hav
 Q2.12,Q2.12_1,  2,a little control,male,Q2.13_1,over avoiding a partner’s pregnancy?,avoidControl,HighControl = complete control or a lot,Low control
 Q2.12,Q2.12_1,  3,a lot of control,male,Q2.13_1,,avoidControl,of control,High control
 Q2.12,Q2.12_1,  4,complete control,male,Q2.13_1,,avoidControl,NA,High control
-Q2.13,Q2.13_1,  1,no control,female,Q2.12_1,How much control would you say you have,Q2.13_1..Q2.12_1,NA,NA
-Q2.13,Q2.13_1,  2,a little control,female,Q2.12_1,over avoiding a pregnancy?,Q2.13_1..Q2.12_1,NA,NA
-Q2.13,Q2.13_1,  3,a lot of control,female,Q2.12_1,,Q2.13_1..Q2.12_1,NA,NA
-Q2.13,Q2.13_1,  4,complete control,female,Q2.12_1,,Q2.13_1..Q2.12_1,NA,NA
 Q3.2,Q3.2,  1,yes,male,Q3.3,Before a partner becomes pregnant do,idealCrit,NA,NA
 Q3.2,Q3.2,  2,no,male,Q3.3,you think there are ideal criteria that,idealCrit,NA,NA
 Q3.2,Q3.2,  4,don't know,male,Q3.3,should be fulfilled first (things like,idealCrit,NA,NA
 Q3.2,Q3.2,  5,don't want me/partner pregnant,male,Q3.3,finishing school etc.)?,idealCrit,NA,NA
-Q3.3,Q3.3,  1,yes,female,Q3.2,Before becoming pregnant do you think,Q3.3..Q3.2,NA,NA
-Q3.3,Q3.3,  2,no,female,Q3.2,there are ideal criteria that should be,Q3.3..Q3.2,NA,NA
-Q3.3,Q3.3,  4,don't know,female,Q3.2,fulfilled first (things like finishing,Q3.3..Q3.2,NA,NA
-Q3.3,Q3.3,  5,don't want me/partner pregnant,female,Q3.2,school etc.)?,Q3.3..Q3.2,NA,NA
 Q3.12,Q3.12_1,  1,no control,male,Q3.13_1,If you wanted a partner to become,becomeControl,LowControl = no control or a little;,Low control
 Q3.12,Q3.12_1,  2,a little control,male,Q3.13_1,pregnant how much control would you,becomeControl,HighControl = complete control or a lot,Low control
 Q3.12,Q3.12_1,  3,a lot of control,male,Q3.13_1,say you have over her becoming,becomeControl,of control,High control
 Q3.12,Q3.12_1,  4,complete control,male,Q3.13_1,pregnant?,becomeControl,NA,High control
-Q3.13,Q3.13_1,  1,no control,female,Q3.12_1,If you wanted to become pregnant how,Q3.13_1..Q3.12_1,NA,NA
-Q3.13,Q3.13_1,  2,a little control,female,Q3.12_1,much control would you say you have,Q3.13_1..Q3.12_1,NA,NA
-Q3.13,Q3.13_1,  3,a lot of control,female,Q3.12_1,over becoming pregnant?,Q3.13_1..Q3.12_1,NA,NA
-Q3.13,Q3.13_1,  4,complete control,female,Q3.12_1,,Q3.13_1..Q3.12_1,NA,NA
 Q3.15,Q3.15,  1,yes,male,Q3.16,As far as you know have you ever,Q3.15..Q3.16,NA,NA
 Q3.15,Q3.15,  2,no,male,Q3.16,gotten someone pregnant?,Q3.15..Q3.16,NA,NA
 Q3.15,Q3.15,  7,don't know,male,Q3.16,,Q3.15..Q3.16,NA,NA
-Q3.16,Q3.16,  1,yes,female,Q3.15,Have you ever been pregnant?,Q3.16..Q3.15,NA,NA
-Q3.16,Q3.16,  2,no,female,Q3.15,,Q3.16..Q3.15,NA,NA
-Q3.16,Q3.16,  7,don't know,female,Q3.15,,Q3.16..Q3.15,NA,NA
 Q3.17,Q3.17_1,  1,was planned in advance,none,NA,Thinking back to the first time a,Q3.17_1,NA,NA
 Q3.17,Q3.17_2,  1,was planned to happen after my ideal criteria were fulfilled,none,NA,partner of yours became pregnant would,Q3.17_2,NA,NA
 Q3.17,Q3.17_3,  1,was planned in discussion with my partner,none,NA,you say that the pregnancy (SATA),Q3.17_3,NA,NA
@@ -82,10 +62,6 @@ Q3.19,Q3.19,  4,yes,male,Q3.20,Had you fulfilled some or all of your,Q3.19..Q3.2
 Q3.19,Q3.19,  5,no,male,Q3.20,ideal criteria before your partner,Q3.19..Q3.20,NA,NA
 Q3.19,Q3.19,  6,didn’t have ideal criteria,male,Q3.20,became pregnant for the first time?,Q3.19..Q3.20,NA,NA
 Q3.19,Q3.19,  7,don’t know,male,Q3.20,,Q3.19..Q3.20,NA,NA
-Q3.20,Q3.20,  4,yes,female,Q3.19,Had you fulfilled some or all of your,Q3.20..Q3.19,NA,NA
-Q3.20,Q3.20,  5,no,female,Q3.19,ideal criteria before you became,Q3.20..Q3.19,NA,NA
-Q3.20,Q3.20,  7,didn't have ideal criteria,female,Q3.19,pregnant for the first time?,Q3.20..Q3.19,NA,NA
-Q3.20,Q3.20,  6,don't know,female,Q3.19,,Q3.20..Q3.19,NA,NA
 Q3.23,Q3.23_x1,  1,finish high school,none,NA,What were your ideal criteria that you,Q3.23_x1,NA,NA
 Q3.23,Q3.23_x2,  1,finish college,none,NA,fulfilled? (select all that apply),Q3.23_x2,NA,NA
 Q3.23,Q3.23_x3,  1,start a career,none,NA,,Q3.23_x3,NA,NA
@@ -105,12 +81,6 @@ Q3.25,Q3.25,  3,don't want you/partner to become pregnant soon,male,Q3.26,(selec
 Q3.25,Q3.25,  5,aren't trying but would feel okay if you/partner became pregnant,male,Q3.26,,currentSit,NA,NA
 Q3.25,Q3.25,  7,you/partner can't get pregnant,male,Q3.26,,currentSit,NA,NA
 Q3.25,Q3.25,  4,other,male,Q3.26,,currentSit,NA,NA
-Q3.26,Q3.26,  1,you/partner is pregnant,female,Q3.25,When thinking about your,Q3.26..Q3.25,NA,NA
-Q3.26,Q3.26,  2,would like you/partner to become pregnant soon,female,Q3.25,current situation would you say that,Q3.26..Q3.25,NA,NA
-Q3.26,Q3.26,  3,don't want you/partner to become pregnant soon,female,Q3.25,you... (select all that apply),Q3.26..Q3.25,NA,NA
-Q3.26,Q3.26,  5,aren't trying but would feel okay if you/partner became pregnant,female,Q3.25,,Q3.26..Q3.25,NA,NA
-Q3.26,Q3.26,  7,you/partner can't get pregnant,female,Q3.25,,Q3.26..Q3.25,NA,NA
-Q3.26,Q3.26,  4,other,female,Q3.25,,Q3.26..Q3.25,NA,NA
 Q3.27,Q3.27_4,  1,tracking ovulation and/or timing of sexual activity to try to become pregnant,none,NA,You said that you would like your,Q3.27_4,NA,NA
 Q3.27,Q3.27_5,  1,just letting it happen,none,NA,partner or anyone you have sex with,Q3.27_5,NA,NA
 Q3.27,Q3.27_3,  1,leaving it up to fate or a higher power like God,none,NA,to become pregnant soon. Are you...,Q3.27_3,NA,NA
@@ -149,8 +119,6 @@ Q3.32,Q3.32_17,  1,Angry,male,Q3.33_17,,Q3.32_17..Q3.33_17,NA,NA
 Q3.32,Q3.32_10,  1,Other,male,Q3.33_10,,Q3.32_10..Q3.33_10,NA,NA
 Q3.34,Q3.34,  1,Positive,female,Q121,Ultimately how would you feel about,pregFeel,NA,NA
 Q3.34,Q3.34,  2,Negative,female,Q121,being pregnant right now?,pregFeel,NA,NA
-Q121,Q121,  1,Positive,male,Q3.34,Ultimately how would you feel about a partner or,Q121..Q3.34,NA,NA
-Q121,Q121,  2,Negative,male,Q3.34,anyone you had sex with being pregnant right now?,Q121..Q3.34,NA,NA
 Q1.2,Q1.2,  1,male,none,NA,Which biological sex do you identify,sex,NA,NA
 Q1.2,Q1.2,  2,female,none,NA,with?,sex,NA,NA
 Q1.2,Q1.2,  3,other,none,NA,,sex,NA,NA
