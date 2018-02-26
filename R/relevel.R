@@ -28,7 +28,8 @@ pregint$currentSit <- relevel(pregint$currentSit,
 
 pregint$race <- relevel(pregint$race, ref = "White")
 pregint$relationship <- relevel(pregint$relationship, ref = "single")
-pregint$incCat <- relevel(pregint$incCat, ref = "less than $20,000")
+pregint$incCat <- relevel(pregint$incCat, ref = "less than $20000")
+
 pregint$Q2.12_1..Q2.13_1 <- relevel(pregint$Q2.12_1..Q2.13_1, ref = "no control")
 pregint$Q3.12_1..Q3.13_1 <- relevel(pregint$Q3.12_1..Q3.13_1, ref = "no control")
 pregint$educ <- relevel(pregint$educ, ref = "HS diploma/GED")
