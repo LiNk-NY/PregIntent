@@ -20,6 +20,8 @@ exclusionCriteria <- pregint$Q3.25..Q3.26 %in%
 
 subdata <- pregint[!exclusionCriteria, ]
 
+if (!dir.exists("results/poster"))
+    dir.create("results/poster", recursive = TRUE)
 # Table 1 -----------------------------------------------------------------
 
 tab1 <- .comparisonTable(age, childnum, sex, hispanic, educ, idealCrit,
@@ -35,7 +37,7 @@ tab1 <- do.call(rbind, tab1)
 
 rownames(tab1) <- simpleCap(rownames(tab1))
 
-write.csv(tab1, file = "results/table1.csv")
+write.csv(tab1, file = "results/poster/table1.csv")
 
 
 # Table 2 -----------------------------------------------------------------
@@ -54,7 +56,7 @@ tab2 <- do.call(rbind, tab2)
 
 rownames(tab2) <- simpleCap(rownames(tab2))
 
-write.csv(tab2, "results/table2.csv")
+write.csv(tab2, "results/poster/table2.csv")
 
 # Regression --------------------------------------------------------------
 
@@ -76,7 +78,7 @@ fit1 <- glm(pregFeel ~ ., data = modeldf1, family = "binomial")
 )
 
 posneg
-write.csv(posneg, "results/regFeel.csv")
+write.csv(posneg, "results/poster/regFeel.csv")
 
 # Models using full data --------------------------------------------------
 
@@ -110,7 +112,7 @@ fit3 <- glm(becomeControl ~ ., data = modeldf3, family = "binomial")
 )
 
 avoid
-write.csv(avoid, "results/regAvoid.csv")
+write.csv(avoid, "results/poster/regAvoid.csv")
 
 become
-write.csv(become, "results/becomeReg.csv")
+write.csv(become, "results/poster/becomeReg.csv")
