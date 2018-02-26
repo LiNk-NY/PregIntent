@@ -32,7 +32,8 @@ codebookCode[naLogic, "recodeName"] <-
 
 ## Fill in names that stay the same
 constantNames <- is.na(codebookCode[["recodeName"]])
-codebookCode[constantNames, "recodeName"] <- codebookCode[constantNames, "dataname"]
+codebookCode[constantNames, "recodeName"] <-
+    paste0(codebookCode[constantNames, "dataname"], "_R")
 
 codebookCode[] <- apply(codebookCode, 2L, function(col) {
     gsub(",", "", col, fixed = TRUE)

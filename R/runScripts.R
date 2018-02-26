@@ -13,9 +13,6 @@ stopifnot(all(file.exists(filePaths)))
 ## Source all scripts
 invisible(lapply(filePaths, source))
 
-## remove variables (if not already removed)
-## rm(filesToSource, filePaths)
-
 dataList <- lapply(codebook, function(recodeChunk) {
     recodeFactors(pregint, recodeChunk)
 })
@@ -28,11 +25,13 @@ doubles <- grepl("\\.\\.", names(recodedData))
 dupped <- duplicated(lapply(strsplit(names(recodedData)[doubles], "\\.\\."), sort))
 dupNames <- names(recodedData)[doubles][dupped]
 
-recodedData <- recodedData[, !(names(recodedData) %in% dupNames)]
+recodedData <- recodedData[,
+    !(names(recodedData) %in% c(dupNames, "childnum", "ageGroup"))]
+
 recodedData <- type.convert(recodedData)
 
-pregint <- pregint[, !names(pregint) %in%
-    intersect(names(recodedData), names(pregint))]
+recodes <- names(recodedData) %in% names(pregint)
+names(recodedData)[recodes] <- paste0(names(recodedData)[recodes], "_R")
 
 pregData <- cbind.data.frame(pregint, recodedData)
 
