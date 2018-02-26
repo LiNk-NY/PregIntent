@@ -22,7 +22,7 @@ data.frame(AnsPreg = sum(table(pregint$pregFeel)), N = 2099,
     Perc = round((sum(table(pregint$pregFeel))/2099)*100, 2))
 
 ## Ideal criteria
-idealCrit <- unlist(recodeFactors(pregint, codebook$Q3.3), use.names = FALSE)
+pregint$idealCrit <- unlist(recodeFactors(pregint, codebook$Q3.3), use.names = FALSE)
 
 ## Number of children
 childnum <- gsub("NO", "0", pregint$Q1.9, ignore.case = TRUE)
@@ -39,11 +39,12 @@ regionMap <- rbind(regionMap, data.frame(fips = c(2, 15), region = "West",
     state = c("alaska", "hawaii")))
 
 ## State of residence (all should reside in US)
-pregint$stateOrg <- recodeFactors(pregint, codebook$Q110)
+pregint$stateOrg <-
+    unlist(recodeFactors(pregint, codebook$Q110), use.names = FALSE)
 
 ## Region of residence
 pregint$regionOrg <-
-    regionMap$region[match(tolower(as.character(pregint$stateOrg[[1L]])),
+    regionMap$region[match(tolower(as.character(pregint$stateOrg)),
         regionMap$state)]
 
 ## check proper merge
@@ -101,10 +102,12 @@ pregint$ageGroup <- Hmisc::cut2(pregint$age, cuts = c(25, 30, 35, 40))
 levels(pregint$ageGroup) <- c("21-24", "25-29", "30-34", "35-39", "40-44")
 
 ## Modify labels to recode using function
-pregint$educ <- recodeFactors(pregint, codebook$Q1.10)
+pregint$educ <-
+    unlist(recodeFactors(pregint, codebook$Q1.10), use.names = FALSE)
 
 ## Relationshp recode
-pregint$relationship <- recodeFactors(pregint, codebook$Q1.11)
+pregint$relationship <-
+    unlist(recodeFactors(pregint, codebook$Q1.11), use.names = FALSE)
 
 ## Derived variable for income – based on Poverty Threshold for 2016
 ## https://www.census.gov/data/tables/time-series/demo/income-poverty/historical-poverty-thresholds.html
