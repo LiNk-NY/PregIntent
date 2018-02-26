@@ -37,12 +37,12 @@ tab1 <- do.call(rbind, tab1)
 
 rownames(tab1) <- simpleCap(rownames(tab1))
 
-write.csv(tab1, file = "results/poster/table1.csv")
+write.csv(tab1, file = "results/poster/table1_pregFeel.csv")
 
 
 # Table 2 -----------------------------------------------------------------
 
-tab2 <- .comparisonTable(age, childnum, sex, hispanic, educ, idealCrit,
+tab2_avoid <- .comparisonTable(age, childnum, sex, hispanic, educ, idealCrit,
     avoidPreg, pregPlan, currentSit, race2, incCat, relationship,
     outcome = avoidControl,
     headerRow = c("Age in years M (SD)", "No. of Children M (SD)", "Sex",
@@ -51,12 +51,24 @@ tab2 <- .comparisonTable(age, childnum, sex, hispanic, educ, idealCrit,
         "Race", "Income category", "Relationship status"),
     data = subdata)
 
+tab2_become <- .comparisonTable(age, childnum, sex, hispanic, educ, idealCrit,
+    avoidPreg, pregPlan, currentSit, race2, incCat, relationship,
+    outcome = becomeControl,
+    headerRow = c("Age in years M (SD)", "No. of Children M (SD)", "Sex",
+        "Hispanic", "Educational attainment", "Ideal Criteria",
+        "Avoid Pregnancy", "Pregnancy can be planned", "Current situation",
+        "Race", "Income category", "Relationship status"),
+    data = subdata)
+
 ## AVOID CONTROL // BECOME CONTROL
-tab2 <- do.call(rbind, tab2)
+tab2_avoid <- do.call(rbind, tab2_avoid)
+tab2_become <- do.call(rbind, tab2_become)
+
+tab2 <- cbind(tab2_avoid, tab2_become)
 
 rownames(tab2) <- simpleCap(rownames(tab2))
 
-write.csv(tab2, "results/poster/table2.csv")
+write.csv(tab2, "results/poster/table2_avoidbecome.csv")
 
 # Regression --------------------------------------------------------------
 
