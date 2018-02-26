@@ -9,16 +9,16 @@ Q2.2,Q2.2_2,  1,sometimes ‘just happens’ anyway,male,Q2.7_2,partner* becomin
 Q2.2,Q2.2_3,  1,is something determined by fate or a higher power like God,male,Q2.7_3,say that pregnancy (SATA) *The term,avoidPreg,for females),NA
 Q2.2,Q2.2_5,  1,is a natural process that happens when it's meant to,male,Q2.7_5,“partner” in this survey refers to,avoidPreg,NA,NA
 Q2.2,Q2.2_4,  1,other,male,Q2.7_4,anyone you have sex with,avoidPreg,NA,NA
-Q2.5,Q2.5,  1,can be avoided,none,NA,Since you selected more than one,Q2.5,NA,NA
-Q2.5,Q2.5,  2,sometimes ‘just happens’ anyway,none,NA,response please select from the list,Q2.5,NA,NA
-Q2.5,Q2.5,  3,is something determined by fate or a higher power like God,none,NA,below the one you feel most strongly,Q2.5,NA,NA
-Q2.5,Q2.5,  4,is a natural process that happens when it's meant to,none,NA,about.,Q2.5,NA,NA
-Q2.5,Q2.5,  5,other,none,NA,,Q2.5,NA,NA
-Q2.10,Q2.10,  1,can be avoided,none,NA,Since you selected more than one response,Q2.10,NA,NA
-Q2.10,Q2.10,  2,sometimes ‘just happens’ anyway,none,NA,please select from the list below,Q2.10,NA,NA
-Q2.10,Q2.10,  3,is something determined by fate or a higher power like God,none,NA,the one you feel most strongly about. When,Q2.10,NA,NA
-Q2.10,Q2.10,  4,is a natural process that happens when it's meant to,none,NA,thinking about trying to avoid becoming,Q2.10,NA,NA
-Q2.10,Q2.10,  5,other,none,NA,pregnant would you say that pregnancy,Q2.10,NA,NA
+Q2.5,Q2.5,  1,can be avoided,none,NA,Since you selected more than one,Q2.5_R,NA,NA
+Q2.5,Q2.5,  2,sometimes ‘just happens’ anyway,none,NA,response please select from the list,Q2.5_R,NA,NA
+Q2.5,Q2.5,  3,is something determined by fate or a higher power like God,none,NA,below the one you feel most strongly,Q2.5_R,NA,NA
+Q2.5,Q2.5,  4,is a natural process that happens when it's meant to,none,NA,about.,Q2.5_R,NA,NA
+Q2.5,Q2.5,  5,other,none,NA,,Q2.5_R,NA,NA
+Q2.10,Q2.10,  1,can be avoided,none,NA,Since you selected more than one response,Q2.10_R,NA,NA
+Q2.10,Q2.10,  2,sometimes ‘just happens’ anyway,none,NA,please select from the list below,Q2.10_R,NA,NA
+Q2.10,Q2.10,  3,is something determined by fate or a higher power like God,none,NA,the one you feel most strongly about. When,Q2.10_R,NA,NA
+Q2.10,Q2.10,  4,is a natural process that happens when it's meant to,none,NA,thinking about trying to avoid becoming,Q2.10_R,NA,NA
+Q2.10,Q2.10,  5,other,none,NA,pregnant would you say that pregnancy,Q2.10_R,NA,NA
 Q2.12,Q2.12_1,  1,no control,male,Q2.13_1,How much control would you say you have,avoidControl,LowControl = no control or a little;,Low control
 Q2.12,Q2.12_1,  2,a little control,male,Q2.13_1,over avoiding a partner’s pregnancy?,avoidControl,HighControl = complete control or a lot,Low control
 Q2.12,Q2.12_1,  3,a lot of control,male,Q2.13_1,,avoidControl,of control,High control
@@ -34,77 +34,77 @@ Q3.12,Q3.12_1,  4,complete control,male,Q3.13_1,pregnant?,becomeControl,NA,High 
 Q3.15,Q3.15,  1,yes,male,Q3.16,As far as you know have you ever,Q3.15..Q3.16,NA,NA
 Q3.15,Q3.15,  2,no,male,Q3.16,gotten someone pregnant?,Q3.15..Q3.16,NA,NA
 Q3.15,Q3.15,  7,don't know,male,Q3.16,,Q3.15..Q3.16,NA,NA
-Q3.17,Q3.17_1,  1,was planned in advance,none,NA,Thinking back to the first time a,Q3.17_1,NA,NA
-Q3.17,Q3.17_2,  1,was planned to happen after my ideal criteria were fulfilled,none,NA,partner of yours became pregnant would,Q3.17_2,NA,NA
-Q3.17,Q3.17_3,  1,was planned in discussion with my partner,none,NA,you say that the pregnancy (SATA),Q3.17_3,NA,NA
-Q3.17,Q3.17_4,  1,was not planned,none,NA,,Q3.17_4,NA,NA
-Q3.17,Q3.17_5,  1,was left to 'fate' or a higher power like God,none,NA,,Q3.17_5,NA,NA
-Q3.17,Q3.17_6,  1,'just happened',none,NA,,Q3.17_6,NA,NA
-Q3.17,Q3.17_8,  1,happened naturally because it was meant to be,none,NA,,Q3.17_8,NA,NA
-Q3.17,Q3.17_7,  1,other,none,NA,,Q3.17_7,NA,NA
-Q3.17a,Q3.17a_1,  1,No control,none,NA,How much control would you say you had,Q3.17a_1,NA,NA
-Q3.17a,Q3.17a_1,  2,A little control,none,NA,over your partner's pregnancy?,Q3.17a_1,NA,NA
-Q3.17a,Q3.17a_1,  3,A lot of control,none,NA,,Q3.17a_1,NA,NA
-Q3.17a,Q3.17a_1,  4,Complete control,none,NA,,Q3.17a_1,NA,NA
-Q3.18,Q3.18_1,  1,was planned in advance,none,NA,Thinking back to the first time you,Q3.18_1,NA,NA
-Q3.18,Q3.18_2,  1,was planned to happen after my ideal criteria were fulfilled,none,NA,became pregnant would you say that the,Q3.18_2,NA,NA
-Q3.18,Q3.18_3,  1,was planned in discussion with my partner,none,NA,pregnancy (SATA),Q3.18_3,NA,NA
-Q3.18,Q3.18_4,  1,was not planned,none,NA,,Q3.18_4,NA,NA
-Q3.18,Q3.18_5,  1,was left to 'fate' or a higher power like God,none,NA,,Q3.18_5,NA,NA
-Q3.18,Q3.18_6,  1,'just happened',none,NA,,Q3.18_6,NA,NA
-Q3.18,Q3.18_8,  1,happened naturally because it was meant to be,none,NA,,Q3.18_8,NA,NA
-Q3.18,Q3.18_7,  1,other,none,NA,,Q3.18_7,NA,NA
-Q3.18a,Q3.18a_1,  1,No control,none,NA,How much control would you say you had,Q3.18a_1,NA,NA
-Q3.18a,Q3.18a_1,  2,A little control,none,NA,over that pregnancy?,Q3.18a_1,NA,NA
-Q3.18a,Q3.18a_1,  3,A lot of control,none,NA,,Q3.18a_1,NA,NA
-Q3.18a,Q3.18a_1,  4,Complete control,none,NA,,Q3.18a_1,NA,NA
+Q3.17,Q3.17_1,  1,was planned in advance,none,NA,Thinking back to the first time a,Q3.17_1_R,NA,NA
+Q3.17,Q3.17_2,  1,was planned to happen after my ideal criteria were fulfilled,none,NA,partner of yours became pregnant would,Q3.17_2_R,NA,NA
+Q3.17,Q3.17_3,  1,was planned in discussion with my partner,none,NA,you say that the pregnancy (SATA),Q3.17_3_R,NA,NA
+Q3.17,Q3.17_4,  1,was not planned,none,NA,,Q3.17_4_R,NA,NA
+Q3.17,Q3.17_5,  1,was left to 'fate' or a higher power like God,none,NA,,Q3.17_5_R,NA,NA
+Q3.17,Q3.17_6,  1,'just happened',none,NA,,Q3.17_6_R,NA,NA
+Q3.17,Q3.17_8,  1,happened naturally because it was meant to be,none,NA,,Q3.17_8_R,NA,NA
+Q3.17,Q3.17_7,  1,other,none,NA,,Q3.17_7_R,NA,NA
+Q3.17a,Q3.17a_1,  1,No control,none,NA,How much control would you say you had,Q3.17a_1_R,NA,NA
+Q3.17a,Q3.17a_1,  2,A little control,none,NA,over your partner's pregnancy?,Q3.17a_1_R,NA,NA
+Q3.17a,Q3.17a_1,  3,A lot of control,none,NA,,Q3.17a_1_R,NA,NA
+Q3.17a,Q3.17a_1,  4,Complete control,none,NA,,Q3.17a_1_R,NA,NA
+Q3.18,Q3.18_1,  1,was planned in advance,none,NA,Thinking back to the first time you,Q3.18_1_R,NA,NA
+Q3.18,Q3.18_2,  1,was planned to happen after my ideal criteria were fulfilled,none,NA,became pregnant would you say that the,Q3.18_2_R,NA,NA
+Q3.18,Q3.18_3,  1,was planned in discussion with my partner,none,NA,pregnancy (SATA),Q3.18_3_R,NA,NA
+Q3.18,Q3.18_4,  1,was not planned,none,NA,,Q3.18_4_R,NA,NA
+Q3.18,Q3.18_5,  1,was left to 'fate' or a higher power like God,none,NA,,Q3.18_5_R,NA,NA
+Q3.18,Q3.18_6,  1,'just happened',none,NA,,Q3.18_6_R,NA,NA
+Q3.18,Q3.18_8,  1,happened naturally because it was meant to be,none,NA,,Q3.18_8_R,NA,NA
+Q3.18,Q3.18_7,  1,other,none,NA,,Q3.18_7_R,NA,NA
+Q3.18a,Q3.18a_1,  1,No control,none,NA,How much control would you say you had,Q3.18a_1_R,NA,NA
+Q3.18a,Q3.18a_1,  2,A little control,none,NA,over that pregnancy?,Q3.18a_1_R,NA,NA
+Q3.18a,Q3.18a_1,  3,A lot of control,none,NA,,Q3.18a_1_R,NA,NA
+Q3.18a,Q3.18a_1,  4,Complete control,none,NA,,Q3.18a_1_R,NA,NA
 Q3.19,Q3.19,  4,yes,male,Q3.20,Had you fulfilled some or all of your,Q3.19..Q3.20,NA,NA
 Q3.19,Q3.19,  5,no,male,Q3.20,ideal criteria before your partner,Q3.19..Q3.20,NA,NA
 Q3.19,Q3.19,  6,didn’t have ideal criteria,male,Q3.20,became pregnant for the first time?,Q3.19..Q3.20,NA,NA
 Q3.19,Q3.19,  7,don’t know,male,Q3.20,,Q3.19..Q3.20,NA,NA
-Q3.23,Q3.23_x1,  1,finish high school,none,NA,What were your ideal criteria that you,Q3.23_x1,NA,NA
-Q3.23,Q3.23_x2,  1,finish college,none,NA,fulfilled? (select all that apply),Q3.23_x2,NA,NA
-Q3.23,Q3.23_x3,  1,start a career,none,NA,,Q3.23_x3,NA,NA
-Q3.23,Q3.23_x4,  1,gain financial stability,none,NA,,Q3.23_x4,NA,NA
-Q3.23,Q3.23_x5,  1,have a place of one’s own to live,none,NA,,Q3.23_x5,NA,NA
-Q3.23,Q3.23_x6,  1,buy a house,none,NA,,Q3.23_x6,NA,NA
-Q3.23,Q3.23_x7,  1,be in a relationship,none,NA,,Q3.23_x7,NA,NA
-Q3.23,Q3.23_x8,  1,be married,none,NA,,Q3.23_x8,NA,NA
-Q3.23,Q3.23_x9,  1,be emotionally ready,none,NA,,Q3.23_x9,NA,NA
-Q3.23,Q3.23_x10,  1,other,none,NA,,Q3.23_x10,NA,NA
-Q3.24,Q3.24,  2,not applicable - I didn't have any ideal criteria,none,NA,What kinds of things prevented you from,Q3.24,NA,NA
-Q3.24,Q3.24,  5,not applicable- I fulfilled all of my ideal criteria,none,NA,fulfilling all of your ideal criteria,Q3.24,NA,NA
-Q3.24,Q3.24,  4,I was not able to fulfill all of my ideal criteria because...,none,NA,before becoming pregnant?,Q3.24,NA,NA
+Q3.23,Q3.23_x1,  1,finish high school,none,NA,What were your ideal criteria that you,Q3.23_x1_R,NA,NA
+Q3.23,Q3.23_x2,  1,finish college,none,NA,fulfilled? (select all that apply),Q3.23_x2_R,NA,NA
+Q3.23,Q3.23_x3,  1,start a career,none,NA,,Q3.23_x3_R,NA,NA
+Q3.23,Q3.23_x4,  1,gain financial stability,none,NA,,Q3.23_x4_R,NA,NA
+Q3.23,Q3.23_x5,  1,have a place of one’s own to live,none,NA,,Q3.23_x5_R,NA,NA
+Q3.23,Q3.23_x6,  1,buy a house,none,NA,,Q3.23_x6_R,NA,NA
+Q3.23,Q3.23_x7,  1,be in a relationship,none,NA,,Q3.23_x7_R,NA,NA
+Q3.23,Q3.23_x8,  1,be married,none,NA,,Q3.23_x8_R,NA,NA
+Q3.23,Q3.23_x9,  1,be emotionally ready,none,NA,,Q3.23_x9_R,NA,NA
+Q3.23,Q3.23_x10,  1,other,none,NA,,Q3.23_x10_R,NA,NA
+Q3.24,Q3.24,  2,not applicable - I didn't have any ideal criteria,none,NA,What kinds of things prevented you from,Q3.24_R,NA,NA
+Q3.24,Q3.24,  5,not applicable- I fulfilled all of my ideal criteria,none,NA,fulfilling all of your ideal criteria,Q3.24_R,NA,NA
+Q3.24,Q3.24,  4,I was not able to fulfill all of my ideal criteria because...,none,NA,before becoming pregnant?,Q3.24_R,NA,NA
 Q3.25,Q3.25,  1,you/partner is pregnant,male,Q3.26,When thinking about your,currentSit,NA,NA
 Q3.25,Q3.25,  2,would like you/partner to become pregnant soon,male,Q3.26,current situation would you say that,currentSit,NA,NA
 Q3.25,Q3.25,  3,don't want you/partner to become pregnant soon,male,Q3.26,(select all that apply),currentSit,NA,NA
 Q3.25,Q3.25,  5,aren't trying but would feel okay if you/partner became pregnant,male,Q3.26,,currentSit,NA,NA
 Q3.25,Q3.25,  7,you/partner can't get pregnant,male,Q3.26,,currentSit,NA,NA
 Q3.25,Q3.25,  4,other,male,Q3.26,,currentSit,NA,NA
-Q3.27,Q3.27_4,  1,tracking ovulation and/or timing of sexual activity to try to become pregnant,none,NA,You said that you would like your,Q3.27_4,NA,NA
-Q3.27,Q3.27_5,  1,just letting it happen,none,NA,partner or anyone you have sex with,Q3.27_5,NA,NA
-Q3.27,Q3.27_3,  1,leaving it up to fate or a higher power like God,none,NA,to become pregnant soon. Are you...,Q3.27_3,NA,NA
-Q3.27,Q3.27_9,  1,leaving it up to nature,none,NA,(select all that apply),Q3.27_9,NA,NA
-Q3.27,Q3.27_2,  1,in the process of using assisted reproductive technology such as in vitro fertilization,none,NA,,Q3.27_2,NA,NA
-Q3.27,Q3.27_8,  1,other,none,NA,,Q3.27_8,NA,NA
-Q3.28,Q3.28_4,  1,tracking ovulation and/or timing of sexual activity to try to become pregnant,none,NA,You said that you would like to become,Q3.28_4,NA,NA
-Q3.28,Q3.28_5,  1,just letting it happen,none,NA,pregnant soon. Are you... (select all,Q3.28_5,NA,NA
-Q3.28,Q3.28_3,  1,leaving it up to fate or a higher power like God,none,NA,that apply),Q3.28_3,NA,NA
-Q3.28,Q3.28_9,  1,leaving it up to nature,none,NA,,Q3.28_9,NA,NA
-Q3.28,Q3.28_2,  1,in the process of using assisted reproductive technology such as in vitro fertilization,none,NA,,Q3.28_2,NA,NA
-Q3.28,Q3.28_8,  1,other,none,NA,,Q3.28_8,NA,NA
-Q3.29,Q3.29_5,  1,just letting it happen,none,NA,You said you aren’t trying to become,Q3.29_5,NA,NA
-Q3.29,Q3.29_3,  1,leaving it up to fate or a higher power like God,none,NA,pregnant but would feel okay if your,Q3.29_3,NA,NA
-Q3.29,Q3.29_9,  1,leaving it up to nature,none,NA,partner or anyone you have sex with,Q3.29_9,NA,NA
-Q3.29,Q3.29_2,  1,using some form of birth control or contraception every time you have sex,none,NA,became pregnant. Are you (select all,Q3.29_2,NA,NA
-Q3.29,Q3.29_4,  1,using some form of birth control or contraception some of the time when you have sex,none,NA,that apply),Q3.29_4,NA,NA
-Q3.29,Q3.29_8,  1,other,none,NA,,Q3.29_8,NA,NA
-Q3.30,Q3.30_5,  1,just letting it happen,none,NA,You said you aren’t trying to become,Q3.30_5,NA,NA
-Q3.30,Q3.30_3,  1,leaving it up to fate or a higher power like God,none,NA,pregnant but would feel okay if you,Q3.30_3,NA,NA
-Q3.30,Q3.30_9,  1,leaving it up to nature,none,NA,became pregnant. Are you (select all,Q3.30_9,NA,NA
-Q3.30,Q3.30_2,  1,using some form of birth control or contraception every time you have sex,none,NA,that apply),Q3.30_2,NA,NA
-Q3.30,Q3.30_4,  1,using some form of birth control or contraception some of the time when you have sex,none,NA,,Q3.30_4,NA,NA
-Q3.30,Q3.30_8,  1,other,none,NA,,Q3.30_8,NA,NA
+Q3.27,Q3.27_4,  1,tracking ovulation and/or timing of sexual activity to try to become pregnant,none,NA,You said that you would like your,Q3.27_4_R,NA,NA
+Q3.27,Q3.27_5,  1,just letting it happen,none,NA,partner or anyone you have sex with,Q3.27_5_R,NA,NA
+Q3.27,Q3.27_3,  1,leaving it up to fate or a higher power like God,none,NA,to become pregnant soon. Are you...,Q3.27_3_R,NA,NA
+Q3.27,Q3.27_9,  1,leaving it up to nature,none,NA,(select all that apply),Q3.27_9_R,NA,NA
+Q3.27,Q3.27_2,  1,in the process of using assisted reproductive technology such as in vitro fertilization,none,NA,,Q3.27_2_R,NA,NA
+Q3.27,Q3.27_8,  1,other,none,NA,,Q3.27_8_R,NA,NA
+Q3.28,Q3.28_4,  1,tracking ovulation and/or timing of sexual activity to try to become pregnant,none,NA,You said that you would like to become,Q3.28_4_R,NA,NA
+Q3.28,Q3.28_5,  1,just letting it happen,none,NA,pregnant soon. Are you... (select all,Q3.28_5_R,NA,NA
+Q3.28,Q3.28_3,  1,leaving it up to fate or a higher power like God,none,NA,that apply),Q3.28_3_R,NA,NA
+Q3.28,Q3.28_9,  1,leaving it up to nature,none,NA,,Q3.28_9_R,NA,NA
+Q3.28,Q3.28_2,  1,in the process of using assisted reproductive technology such as in vitro fertilization,none,NA,,Q3.28_2_R,NA,NA
+Q3.28,Q3.28_8,  1,other,none,NA,,Q3.28_8_R,NA,NA
+Q3.29,Q3.29_5,  1,just letting it happen,none,NA,You said you aren’t trying to become,Q3.29_5_R,NA,NA
+Q3.29,Q3.29_3,  1,leaving it up to fate or a higher power like God,none,NA,pregnant but would feel okay if your,Q3.29_3_R,NA,NA
+Q3.29,Q3.29_9,  1,leaving it up to nature,none,NA,partner or anyone you have sex with,Q3.29_9_R,NA,NA
+Q3.29,Q3.29_2,  1,using some form of birth control or contraception every time you have sex,none,NA,became pregnant. Are you (select all,Q3.29_2_R,NA,NA
+Q3.29,Q3.29_4,  1,using some form of birth control or contraception some of the time when you have sex,none,NA,that apply),Q3.29_4_R,NA,NA
+Q3.29,Q3.29_8,  1,other,none,NA,,Q3.29_8_R,NA,NA
+Q3.30,Q3.30_5,  1,just letting it happen,none,NA,You said you aren’t trying to become,Q3.30_5_R,NA,NA
+Q3.30,Q3.30_3,  1,leaving it up to fate or a higher power like God,none,NA,pregnant but would feel okay if you,Q3.30_3_R,NA,NA
+Q3.30,Q3.30_9,  1,leaving it up to nature,none,NA,became pregnant. Are you (select all,Q3.30_9_R,NA,NA
+Q3.30,Q3.30_2,  1,using some form of birth control or contraception every time you have sex,none,NA,that apply),Q3.30_2_R,NA,NA
+Q3.30,Q3.30_4,  1,using some form of birth control or contraception some of the time when you have sex,none,NA,,Q3.30_4_R,NA,NA
+Q3.30,Q3.30_8,  1,other,none,NA,,Q3.30_8_R,NA,NA
 Q3.32,Q3.32_1,  1,Anxious,male,Q3.33_1,If you found out your partner or,Q3.32_1..Q3.33_1,NA,NA
 Q3.32,Q3.32_2,  1,Excited,male,Q3.33_2,someone you had sex with was pregnant,Q3.32_2..Q3.33_2,NA,NA
 Q3.32,Q3.32_3,  1,Frustrated,male,Q3.33_3,right now how would you feel? SATA.,Q3.32_3..Q3.33_3,NA,NA
@@ -175,10 +175,10 @@ Q110,Q110, 50,West Virginia,none,NA,,stateOrg,NA,NA
 Q110,Q110, 51,Wisconsin,none,NA,,stateOrg,NA,NA
 Q110,Q110, 52,Wyoming,none,NA,,stateOrg,NA,NA
 Q110,Q110, 53,I do not reside in the United States,none,NA,,stateOrg,NA,NA
-Q114,Q114,  1,heterosexual or straight,none,NA,Do you consider yourself to be,Q114,NA,NA
-Q114,Q114,  2,gay or lesbian,none,NA,,Q114,NA,NA
-Q114,Q114,  3,bisexual,none,NA,,Q114,NA,NA
-Q114,Q114,  4,other,none,NA,,Q114,NA,NA
+Q114,Q114,  1,heterosexual or straight,none,NA,Do you consider yourself to be,Q114_R,NA,NA
+Q114,Q114,  2,gay or lesbian,none,NA,,Q114_R,NA,NA
+Q114,Q114,  3,bisexual,none,NA,,Q114_R,NA,NA
+Q114,Q114,  4,other,none,NA,,Q114_R,NA,NA
 Q1.6,Q1.6,  1,yes,none,NA,Are you of Hispanic Latino or Spanish,hispanic,NA,NA
 Q1.6,Q1.6,  2,no,none,NA,origin?,hispanic,NA,NA
 Q1.7,Q1.7_1,  1,Mexican Mexican American,none,NA,What is your Hispanic Latino or,hispOrg,NA,NA
@@ -210,24 +210,24 @@ Q1.14,Q1.14,  3,$40000-$59999,none,NA,household (over the age of 15) in the,incC
 Q1.14,Q1.14,  4,$60000-$79999,none,NA,last year? (Include income from all,incCat,NA,NA
 Q1.14,Q1.14,  5,$80000-$99999,none,NA,sources such as wages salaries and,incCat,NA,NA
 Q1.14,Q1.14,  6,$100000 or more,none,NA,Social Security or retirement benefits),incCat,NA,NA
-Q3.4,Q3.4_1,  1,finish high school,none,NA,Looking at this list please check,Q3.4_1,NA,NA
-Q3.4,Q3.4_2,  1,finish college,none,NA,which of these you think should be,Q3.4_2,NA,NA
-Q3.4,Q3.4_3,  1,start a career,none,NA,fulfilled before becoming pregnant.,Q3.4_3,NA,NA
-Q3.4,Q3.4_4,  1,gain financial stability,none,NA,(SATA),Q3.4_4,NA,NA
-Q3.4,Q3.4_5,  1,have a place of one’s own to live,none,NA,,Q3.4_5,NA,NA
-Q3.4,Q3.4_10,  1,buy a house,none,NA,,Q3.4_10,NA,NA
-Q3.4,Q3.4_6,  1,be in a relationship,none,NA,,Q3.4_6,NA,NA
-Q3.4,Q3.4_7,  1,be married,none,NA,,Q3.4_7,NA,NA
-Q3.4,Q3.4_15,  1,be emotionally ready,none,NA,,Q3.4_15,NA,NA
-Q3.4,Q3.4_8,  1,other,none,NA,,Q3.4_8,NA,NA
-Q3.4,Q3.4_9,  1,none,none,NA,,Q3.4_9,NA,NA
-Q122,Q122,  1,can be planned in advance,none,NA,Since you selected more than one,Q122,NA,NA
-Q122,Q122,  2,can be planned to happen after one's ideal criteria are fulfilled,none,NA,response please select from the list,Q122,NA,NA
-Q122,Q122,  3,can be planned in discussion with your partner,none,NA,below the one you feel most strongly,Q122,NA,NA
-Q122,Q122,  4,can be left to 'fate' or a higher power like God,none,NA,about.  When thinking about pregnancy,Q122,NA,NA
-Q122,Q122,  5,'just happens',none,NA,would you say that it,Q122,NA,NA
-Q122,Q122,  6,is a natural process that happens when it’s meant to be,none,NA,,Q122,NA,NA
-Q122,Q122,  7,other,none,NA,,Q122,NA,NA
+Q3.4,Q3.4_1,  1,finish high school,none,NA,Looking at this list please check,Q3.4_1_R,NA,NA
+Q3.4,Q3.4_2,  1,finish college,none,NA,which of these you think should be,Q3.4_2_R,NA,NA
+Q3.4,Q3.4_3,  1,start a career,none,NA,fulfilled before becoming pregnant.,Q3.4_3_R,NA,NA
+Q3.4,Q3.4_4,  1,gain financial stability,none,NA,(SATA),Q3.4_4_R,NA,NA
+Q3.4,Q3.4_5,  1,have a place of one’s own to live,none,NA,,Q3.4_5_R,NA,NA
+Q3.4,Q3.4_10,  1,buy a house,none,NA,,Q3.4_10_R,NA,NA
+Q3.4,Q3.4_6,  1,be in a relationship,none,NA,,Q3.4_6_R,NA,NA
+Q3.4,Q3.4_7,  1,be married,none,NA,,Q3.4_7_R,NA,NA
+Q3.4,Q3.4_15,  1,be emotionally ready,none,NA,,Q3.4_15_R,NA,NA
+Q3.4,Q3.4_8,  1,other,none,NA,,Q3.4_8_R,NA,NA
+Q3.4,Q3.4_9,  1,none,none,NA,,Q3.4_9_R,NA,NA
+Q122,Q122,  1,can be planned in advance,none,NA,Since you selected more than one,Q122_R,NA,NA
+Q122,Q122,  2,can be planned to happen after one's ideal criteria are fulfilled,none,NA,response please select from the list,Q122_R,NA,NA
+Q122,Q122,  3,can be planned in discussion with your partner,none,NA,below the one you feel most strongly,Q122_R,NA,NA
+Q122,Q122,  4,can be left to 'fate' or a higher power like God,none,NA,about.  When thinking about pregnancy,Q122_R,NA,NA
+Q122,Q122,  5,'just happens',none,NA,would you say that it,Q122_R,NA,NA
+Q122,Q122,  6,is a natural process that happens when it’s meant to be,none,NA,,Q122_R,NA,NA
+Q122,Q122,  7,other,none,NA,,Q122_R,NA,NA
 Q3.5,Q3.5_1,  1,can be planned in advance,none,NA,When thinking about pregnancy would you,pregPlan,combine variables based on skip pattern,Yes
 Q3.5,Q3.5_2,  1,can be planned to happen after one's ideal criteria are fulfilled,none,NA,say that it (SATA) Note: Please respond,pregPlan,(Q3.5 & Q122) – can be planned in,Yes
 Q3.5,Q3.5_3,  1,can be planned in discussion with your partner,none,NA,Yes or No below to each question A-G. If,pregPlan,adv/in discussion w partner/to happen,Yes
