@@ -47,8 +47,11 @@ becomeCont <- do.call(rbind, becomeC)
 rownames(avoidCont) <- simpleCap(rownames(avoidCont))
 rownames(becomeCont) <- simpleCap(rownames(becomeCont))
 
-write.csv(avoidCont, file = "results/avoidControl.csv")
-write.csv(becomeCont, file = "results/becomeControl.csv")
+if (!dir.exists("results/AP2018b"))
+    dir.create("results/AP2018b", recursive = TRUE)
+
+write.csv(avoidCont, file = "results/AP2018b/avoidControl.csv")
+write.csv(becomeCont, file = "results/AP2018b/becomeControl.csv")
 
 # Multivariable Logistic Regression ---------------------------------------
 
@@ -75,7 +78,7 @@ fitA <- glm(avoidControl ~ ., data = modelavoid, family = "binomial")
         rename(OR = "estimate", variable = "term")
 )
 
-write.csv(pavoid, "results/regressAvoid.csv")
+write.csv(pavoid, "results/AP2018b/regressAvoid.csv")
 
 
 # Control over becoming pregnant ------------------------------------------
@@ -97,4 +100,4 @@ fitB <- glm(becomeControl ~ ., data = modelbecome, family = "binomial")
         rename(OR = "estimate", variable = "term")
 )
 
-write.csv(pbecome, "results/regressBecome.csv")
+write.csv(pbecome, "results/AP2018b/regressBecome.csv")
