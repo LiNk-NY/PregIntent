@@ -10,29 +10,24 @@ library(forcats)
 data("state.fips")
 
 # Sex
-pregint$sex <- recodeFactors(pregint, codebook$Q1.2)
+pregint$sex <- unlist(recodeFactors(pregint, codebook$Q1.2), use.names = FALSE)
 males <- pregint$sex == "male"
 females <- pregint$sex == "female"
 
 ## Outcome
-pregint$pregFeel <- vector("character", 2099)
 ## "Ultimately, how would you feel about being pregnant right now?"
-pregint$pregFeel[females] <- recodeFactors(pregint, codebook$Q3.34)[females]
-pregint$pregFeel[males] <- recodeFactors(pregint, codebook$Q121)[males]
-table(pregint$pregFeel)
-data.frame(AnsPreg = sum(table(pregint$pregFeel)), N = 2099,
-    Perc = round((sum(table(pregint$pregFeel))/2099)*100, 2))
+pregint$pregFeel <- unlist(recodeFactors(pregint, codebook$Q3.34), use.names = FALSE)
+
+data.frame(AnsPreg = sum(table(pregFeel)), N = 2099,
+    Perc = round((sum(table(pregFeel))/2099)*100, 2))
 
 ## Ideal criteria
-pregint$idealCrit <- vector("character", 2099)
-
-pregint$idealCrit[females] <- recodeFactors(pregint, codebook$Q3.3)[females]
-pregint$idealCrit[males] <- recodeFactors(pregint, codebook$Q3.2)[males]
+idealCrit <- unlist(recodeFactors(pregint, codebook$Q3.3), use.names = FALSE)
 
 ## Number of children
-pregint$childnum <- gsub("NO", "0", pregint$Q1.9, ignore.case = TRUE)
-pregint$childnum[pregint$childnum %in% c("mm", "na")] <- NA
-pregint$childnum <- as.integer(pregint$childnum)
+childnum <- gsub("NO", "0", pregint$Q1.9, ignore.case = TRUE)
+childnum[childnum %in% c("mm", "na")] <- NA
+pregint$childnum <- as.integer(childnum)
 
 ## Reference dataset for regions
 regionMap <- state.fips[!duplicated(state.fips$fips), c("fips", "region", "polyname")]
@@ -70,10 +65,11 @@ race[!multiSelect] <- apply(raceDF[!multiSelect, ], 1L,  function(row) {
 
 ## More than 1 gets coded as OTHER
 race[multiSelect] <- "other"
+
 pregint$race <- race
 
 ## Hispanic
-pregint$hispanic <- recodeFactors(pregint, codebook$Q1.6)
+pregint$hispanic <- unlist(recodeFactors(pregint, codebook$Q1.6), use.names = FALSE)
 
 ## Hispanic origin
 hispoDF <- recodeFactors(pregint, codebook$Q1.7)
@@ -195,11 +191,8 @@ pregPlan[pregPlan %in% c("'just happens'",
 pregPlan[pregPlan %in% "other"] <- NA_character_
 pregint$pregPlan <- pregPlan
 
-becomeControl <- vector("character", 2099)
-becomeControl[males] <- as.character(recodeFactors(pregint,
-    codebook$Q3.12)[males])
-becomeControl[females] <- as.character(recodeFactors(pregint,
-    codebook$Q3.13)[females])
+becomeControl <-
+    unlist(recodeFactors(pregint, codebook$Q3.12), use.names = FALSE)
 
 becomeControl %<>%
     fct_collapse(`Low control` = c("no control", "a little control"),
@@ -209,22 +202,16 @@ pregint$becomeControl <- becomeControl
 ## Select all that apply question but not indicated in actual question
 # recodeFactors(pregint, codebook$Q3.17a)
 
-avoidControl <- vector("character", 2099)
-avoidControl[males] <- as.character(recodeFactors(pregint,
-    codebook$Q2.12)[males])
-avoidControl[females] <- as.character(recodeFactors(pregint,
-    codebook$Q2.13)[females])
+avoidControl <-
+    unlist(recodeFactors(pregint, codebook$Q2.12), use.names = FALSE)
 
 avoidControl %<>%
     fct_collapse(`Low control` = c("no control", "a little control"),
         `High control` = c("complete control", "a lot of control"))
 pregint$avoidControl <- avoidControl
 
-currentSit <- vector("character", 2099)
-currentSit[males] <- as.character(recodeFactors(pregint, codebook$Q3.25)[males])
-currentSit[females] <- as.character(recodeFactors(pregint, codebook$Q3.26)[females])
-
-pregint$currentSit <- currentSit
+pregint$currentSit <-
+    unlist(recodeFactors(pregint, codebook$Q3.25), use.names = FALSE)
 
 ## Keep only desired variable
 rm(list = ls()[!ls() %in%
