@@ -19,6 +19,7 @@ exclusionCriteria <- pregint$Q3.25..Q3.26 %in%
         is.na(pregint$pregFeel)
 
 subdata <- pregint[!exclusionCriteria, ]
+subdata$currentSit <- droplevels(subdata$currentSit)
 
 if (!dir.exists("results/poster"))
     dir.create("results/poster", recursive = TRUE)
@@ -33,7 +34,13 @@ tab1 <- .comparisonTable(age, childnum, sex, hispanic, educ, idealCrit,
         "Race", "Income category", "Relationship status"),
     data = subdata)
 
+headrow <- matrix(
+    c("", paste0("n = ", as.vector(table(subdata$pregFeel))), ""),
+    nrow = 1L,
+    dimnames = list("Characteristic",
+        c("n (%)", "Negative", "Positive", "p.value")))
 tab1 <- do.call(rbind, tab1)
+tab1 <- rbind(headrow, tab1)
 
 rownames(tab1) <- simpleCap(rownames(tab1))
 

@@ -34,6 +34,16 @@ avoidC <- .comparisonTable(sex, childnum, regionOrg, age, educ, race2,
     data = preg3,
     headerFrame = annotations)
 
+avoidCont <- do.call(rbind, avoidC)
+headrow1 <- matrix(
+    c("", paste0("n = ", as.vector(table(preg3$avoidControl))), ""),
+    nrow = 1L,
+    dimnames = list("Characteristic",
+        c("n (%)", "Low control", "High control", "p.value")))
+avoidCont <- rbind(headrow1, avoidCont)
+rownames(avoidCont) <- simpleCap(rownames(avoidCont))
+
+
 becomeC <- .comparisonTable(sex, childnum, regionOrg, age, educ, race2,
     hispanic, relationship, underPovLevel, ablepreg, idealCrit, Q2.2_1..Q2.7_1,
     pregPlan, Q2.2_3..Q2.7_3, Q2.2_2..Q2.7_2, Q2.2_5..Q2.7_5, currentSit,
@@ -41,17 +51,20 @@ becomeC <- .comparisonTable(sex, childnum, regionOrg, age, educ, race2,
     data = preg3,
     headerFrame = annotations)
 
-avoidCont <- do.call(rbind, avoidC)
 becomeCont <- do.call(rbind, becomeC)
-
-rownames(avoidCont) <- simpleCap(rownames(avoidCont))
+headrow2 <- matrix(
+    c("", paste0("n = ", as.vector(table(preg3$becomeControl))), ""),
+    nrow = 1L,
+    dimnames = list("Characteristic",
+        c("n (%)", "Low control", "High control", "p.value")))
+becomeCont <- rbind(headrow2, becomeCont)
 rownames(becomeCont) <- simpleCap(rownames(becomeCont))
 
 if (!dir.exists("results/AP2018b"))
     dir.create("results/AP2018b", recursive = TRUE)
 
-write.csv(avoidCont, file = "results/AP2018b/avoidControl.csv")
-write.csv(becomeCont, file = "results/AP2018b/becomeControl.csv")
+avoidbecome <- cbind(avoidCont, becomeCont)
+write.csv(avoidbecome, file = "results/AP2018b/avoidbecomeControl.csv")
 
 # Multivariable Logistic Regression ---------------------------------------
 

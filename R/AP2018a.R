@@ -47,6 +47,14 @@ rest <- lapply(emos, function(varname) {
 
 feeltab <- do.call(rbind, rest)
 
+headrow <- matrix(
+    c("", paste0("n = ", as.vector(table(preg1$pregFeel))), ""),
+    nrow = 1L,
+    dimnames = list("Characteristic",
+        c("n (%)", "Negative", "Positive", "p.value")))
+
+feeltab <- rbind(headrow, feeltab)
+
 if (!dir.exists("results/AP2018a"))
     dir.create("results/AP2018a", recursive = TRUE)
 
@@ -81,6 +89,15 @@ tres <- .comparisonTable(sex, childnum, regionOrg, age, educ, race2, hispanic,
     data = preg2, headerFrame = annotations)
 
 tablefeels <- do.call(rbind, tres)
+
+headrow <- matrix(
+    c("", paste0("n = ", as.vector(table(preg2$pregFeel))), ""),
+    nrow = 1L,
+    dimnames = list("Characteristic",
+        c("n (%)", "Negative", "Positive", "p.value")))
+
+tablefeels <- rbind(headrow, tablefeels)
+
 rownames(tablefeels) <- simpleCap(rownames(tablefeels))
 
 write.csv(tablefeels, file = "results/AP2018a/emotionspreg.csv")
