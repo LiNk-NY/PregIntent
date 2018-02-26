@@ -34,7 +34,6 @@ library(readxl)
 ```{r}
 pregint <- read.csv("../data/pregint.csv")
 codebookCode <- read_csv("../docs/codebookCode.csv")
-recodebook <- read_excel("../docs/recodeBook.xlsx")
 vardesctab <- read.table("../data/surveyvariables.txt", header = TRUE)
 ```
 
@@ -68,6 +67,7 @@ pregintDESC <- pregintDESC[, !vapply(pregintDESC, function(x)
 
 ```{r}
 source("../R/table-helpers.R")
+source("../R/helpers.R")
 ```
 
 ## Summary
@@ -86,6 +86,7 @@ descres <- lapply(idxVec, function(i, dataset) {
 }, dataset = pregintDESC)
 
 resTables <- lapply(idxVec, function(i, listset) {
+    # print(i)
     x <- listset[[i]]
     varname <- alldatnames[[i]]
     rex <- cbind(rownames(x), x)
@@ -100,11 +101,12 @@ resTables <- lapply(idxVec, function(i, listset) {
 ```
 
 ```{r}
-file.remove("../docs/descriptives.csv")
+if (file.exists("../results/descriptives.csv"))
+    file.remove("../results/descriptives.csv")
 invisible(suppressMessages({
     lapply(idxVec,  function(i, listset) {
         write.table(rbind(listset[[i]], rep("", ncol(listset[[i]]))),
-            file = "../docs/descriptives.csv",
+            file = "../results/descriptives.csv",
             append = TRUE, sep = ",", row.names = FALSE)
     }, listset = resTables)
 }))
