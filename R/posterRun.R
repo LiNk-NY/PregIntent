@@ -38,7 +38,7 @@ headrow <- matrix(
     c("", paste0("n = ", as.vector(table(subdata$pregFeel))), ""),
     nrow = 1L,
     dimnames = list("Characteristic",
-        c("n (%)", "Negative", "Positive", "p.value")))
+        c("n (%)", names(table(subdata$pregFeel)), "p.value")))
 tab1 <- do.call(rbind, tab1)
 tab1 <- rbind(headrow, tab1)
 
@@ -68,8 +68,19 @@ tab2_become <- .comparisonTable(age, childnum, sex, hispanic, educ, idealCrit,
     data = subdata)
 
 ## AVOID CONTROL // BECOME CONTROL
-tab2_avoid <- do.call(rbind, tab2_avoid)
-tab2_become <- do.call(rbind, tab2_become)
+headrow1 <- matrix(
+    c("", paste0("n = ", as.vector(table(subdata$avoidControl))), ""),
+    nrow = 1L,
+    dimnames = list("Characteristic",
+        c("n (%)", names(table(subdata$avoidControl)), "p.value")))
+tab2_avoid <- rbind(headrow1, do.call(rbind, tab2_avoid))
+
+headrow2 <- matrix(
+    c("", paste0("n = ", as.vector(table(subdata$becomeControl))), ""),
+    nrow = 1L,
+    dimnames = list("Characteristic",
+        c("n (%)", names(table(subdata$becomeControl)), "p.value")))
+tab2_become <- rbind(headrow2, do.call(rbind, tab2_become))
 
 tab2 <- cbind(tab2_avoid, tab2_become)
 
