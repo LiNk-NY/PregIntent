@@ -105,7 +105,7 @@
 }
 
 .comparisonTable <- function(..., outcome, data, headerRow = NULL,
-    headerFrame = NULL, outcomeOrder = c(0, 1), deparse.level = 2, digits = 2)
+    headerFrame = NULL, includerHeader = TRUE, deparse.level = 2, digits = 2)
 {
     listvars <- as.list(substitute(list(...)))[-1L]
     nams <- vapply(listvars, function(x) {
@@ -126,8 +126,6 @@
     }
     if (!is.factor(outcome))
         outcome <- as.factor(outcome)
-    levels(outcome) <-
-        rownames(contrasts(outcome)[outcomeOrder+1L, , drop = FALSE])
     ## code from table()
     lengthArgs <- seq_along(args)
 
@@ -139,8 +137,18 @@
     else
         names(lengthArgs) <- names(args) <- nams
 
+    outlevels <- rownames(contrasts(outcome))
+    headrow <- if (includerHeader) {
+        list(matrix(
+            c("", paste0("n = ", table(outcome)[outlevels]), ""), nrow = 1L,
+            dimnames = list("Characteristic", c("n (%)", outlevels, "p.value"))
+        ))
+    } else {
+            NULL
+    }
+
     numeric <- vapply(args, is.numeric, logical(1L))
-    lapply(lengthArgs, function(i, x, compVar) {
+    results <- lapply(lengthArgs, function(i, x, compVar) {
         vari <- x[[i]]
         if (is.data.frame(vari))
             vari <- vari[[1L]]
@@ -166,6 +174,7 @@
                 p.value))
         }
     }, compVar = outcome, x = args)
+    c(headrow, results)
 }
 
 ## Fix caps in categories
