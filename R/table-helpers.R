@@ -114,8 +114,8 @@
         gsub("\\w+\\$", "", deparse(x, nlines = 1L)[1L]))
         }, character(1L))
 
+    outname <- rev(as.character(substitute(outcome)))[1L]
     if (!missing(data)) {
-        outname <- as.character(substitute(outcome))
         args <- as.list(data[, nams])
         if (length(outname) == 1L)
             outcome <- data[, outname]
@@ -141,7 +141,8 @@
     headrow <- if (includerHeader) {
         list(matrix(
             c("", paste0("n = ", table(outcome)[outlevels]), ""), nrow = 1L,
-            dimnames = list("Characteristic", c("n (%)", outlevels, "p.value"))
+            dimnames = list("Characteristic", c("n (%)",
+                paste(outname, outlevels, sep = "-"), "p.value"))
         ))
     } else {
             NULL
