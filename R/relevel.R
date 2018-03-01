@@ -14,6 +14,7 @@ pregint[, avoidPregs] <- lapply(avoidPregs, function(varname) {
 })
 
 ## Relevel variables
+pregint$pregFeel <- relevel(pregint$pregFeel, ref = "Positive")
 pregint$idealCrit <- relevel(pregint$idealCrit, ref = "no")
 pregint$avoidPreg <- relevel(pregint$avoidPreg, ref = "No")
 pregint$becomeControl <- relevel(pregint$becomeControl, ref = "Low control")
