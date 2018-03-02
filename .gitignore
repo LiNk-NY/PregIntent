@@ -14,12 +14,16 @@
 *.xlsx
 *.docx
 *.csv
+*.txt
+*.[Rr][Dd][Aa]
 
 # Plots
 *.pdf
 
 # Report files
 vignettes/rsconnect/*
+results/
+*.html
 
 # Send these files
 !recodeBook.xlsx
