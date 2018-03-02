@@ -91,9 +91,10 @@ write.csv(tablefeels, file = "results/AP2018a/emotionspreg.csv")
 preg2$age5 <- preg2$age/5
 
 modelfr <- preg2[, c("sex", "childnum", "regionOrg", "age5", "hispanic",
-"relationship", "ablepreg", "idealCrit", "Q2.2_1..Q2.7_1", "pregPlan",
-"Q2.2_3..Q2.7_3", "Q2.2_5..Q2.7_5", "Q2.12_1..Q2.13_1",  "currentSit",
-"pregFeel")]
+    "relationship", "ablepreg", "idealCrit", "Q2.2_1..Q2.7_1", "pregPlan",
+    "Q2.2_3..Q2.7_3", "Q2.2_5..Q2.7_5", "Q2.12_1..Q2.13_1", "Q3.12_1..Q3.13_1",
+    "currentSit",
+    "pregFeel")]
 
 fit0 <- glm(pregFeel ~ ., data = modelfr, family = "binomial")
 
@@ -108,3 +109,7 @@ fit0 <- glm(pregFeel ~ ., data = modelfr, family = "binomial")
 
 pfeel
 write.csv(pfeel, "results/AP2018a/mvpfeel.csv")
+
+sink(file = "results/AP2018a/mvpfeel.txt")
+pfeel
+sink()

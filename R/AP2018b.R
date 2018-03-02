@@ -66,8 +66,8 @@ preg3$age5 <- preg3$age/5
 ## pregnancy?
 
 modelavoid <- preg3[, c("sex", "childnum", "age5", "educ", "race2",
-"relationship", "ablepreg", "idealCrit", "Q2.2_1..Q2.7_1", "pregPlan",
-"Q2.2_3..Q2.7_3", "Q2.2_2..Q2.7_2", "Q2.2_5..Q2.7_5", "currentSit",
+"relationship", "underPovLevel", "ablepreg", "idealCrit", "Q2.2_1..Q2.7_1",
+"pregPlan", "Q2.2_3..Q2.7_3", "Q2.2_2..Q2.7_2", "Q2.2_5..Q2.7_5", "currentSit",
 "avoidControl")]
 
 fitA <- glm(avoidControl ~ ., data = modelavoid, family = "binomial")
@@ -82,7 +82,9 @@ fitA <- glm(avoidControl ~ ., data = modelavoid, family = "binomial")
 )
 
 write.csv(pavoid, "results/AP2018b/regressAvoid.csv")
-
+sink(file = "results/AP2018b/regressAvoid.txt")
+pavoid
+sink()
 
 # Control over becoming pregnant ------------------------------------------
 ## If you wanted (a partner) to become pregnant, how much control would you say
