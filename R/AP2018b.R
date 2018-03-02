@@ -106,3 +106,7 @@ fitB <- glm(becomeControl ~ ., data = modelbecome, family = "binomial")
 )
 
 write.csv(pbecome, "results/AP2018b/regressBecome.csv")
+
+sink("results/AP2018b/regressBecome.txt")
+pbecome
+sink()
