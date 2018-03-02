@@ -34,13 +34,7 @@ tab1 <- .comparisonTable(age, childnum, sex, hispanic, educ, idealCrit,
         "Race", "Income category", "Relationship status"),
     data = subdata)
 
-headrow <- matrix(
-    c("", paste0("n = ", as.vector(table(subdata$pregFeel))), ""),
-    nrow = 1L,
-    dimnames = list("Characteristic",
-        c("n (%)", names(table(subdata$pregFeel)), "p.value")))
 tab1 <- do.call(rbind, tab1)
-tab1 <- rbind(headrow, tab1)
 
 rownames(tab1) <- simpleCap(rownames(tab1))
 
@@ -68,19 +62,9 @@ tab2_become <- .comparisonTable(age, childnum, sex, hispanic, educ, idealCrit,
     data = subdata)
 
 ## AVOID CONTROL // BECOME CONTROL
-headrow1 <- matrix(
-    c("", paste0("n = ", as.vector(table(subdata$avoidControl))), ""),
-    nrow = 1L,
-    dimnames = list("Characteristic",
-        c("n (%)", names(table(subdata$avoidControl)), "p.value")))
-tab2_avoid <- rbind(headrow1, do.call(rbind, tab2_avoid))
+tab2_avoid <- do.call(rbind, tab2_avoid)
 
-headrow2 <- matrix(
-    c("", paste0("n = ", as.vector(table(subdata$becomeControl))), ""),
-    nrow = 1L,
-    dimnames = list("Characteristic",
-        c("n (%)", names(table(subdata$becomeControl)), "p.value")))
-tab2_become <- rbind(headrow2, do.call(rbind, tab2_become))
+tab2_become <- do.call(rbind, tab2_become)
 
 tab2 <- cbind(tab2_avoid, tab2_become)
 
@@ -110,11 +94,16 @@ fit1 <- glm(pregFeel ~ ., data = modeldf1, family = "binomial")
 posneg
 write.csv(posneg, "results/poster/regFeel.csv")
 
+sink(file = "results/poster/regFeel.txt")
+posneg
+sink()
+
 # Models using full data --------------------------------------------------
 
 ## Models
-modeldf2 <- subdata[, c("age", "childnum", "sex", "educ", "idealCrit",
-    "avoidPreg", "pregPlan", "avoidControl")]
+modeldf2 <- subdata[, c("childnum", "sex", "educ", "idealCrit",
+    "avoidPreg", "pregPlan", "currentSit", "race2", "incCat", "relationship",
+    "avoidControl")]
 
 fit2 <- glm(avoidControl ~ ., data = modeldf2, family = "binomial")
 
@@ -127,8 +116,8 @@ fit2 <- glm(avoidControl ~ ., data = modeldf2, family = "binomial")
         rename(OR = "estimate", variable = "term")
 )
 
-modeldf3 <- subdata[, c("childnum", "sex", "hispanic", "idealCrit",
-    "avoidPreg", "pregPlan", "becomeControl")]
+modeldf3 <- subdata[, c("childnum", "sex", "educ", "idealCrit",
+    "pregPlan", "currentSit", "becomeControl")]
 
 fit3 <- glm(becomeControl ~ ., data = modeldf3, family = "binomial")
 
@@ -144,5 +133,13 @@ fit3 <- glm(becomeControl ~ ., data = modeldf3, family = "binomial")
 avoid
 write.csv(avoid, "results/poster/regAvoid.csv")
 
+sink(file = "results/poster/regAvoid.txt")
+avoid
+sink()
+
 become
 write.csv(become, "results/poster/becomeReg.csv")
+
+sink(file = "results/poster/becomeReg.txt")
+become
+sink()
