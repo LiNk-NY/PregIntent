@@ -14,6 +14,11 @@ intentbyfeel <- table(pregint$Q3.25..Q3.26, pregint$pregFeel, useNA = "always")
 colintent <- cbind(intentbyfeel, total = margin.table(intentbyfeel, 1L))
 (intentbyfeeltotal <- rbind(colintent, total = margin.table(colintent, 2L)))
 
+## Exclusions
+## 1. you/partner is pregnant / you/partner can't get pregnant
+## 2. "no" to physically possible to have a baby
+## 3. any missing values in pregFeel
+## 4. those with an "other" relationship status
 exclusionCriteria <- pregint$Q3.25..Q3.26 %in%
     c("you/partner is pregnant", "you/partner can't get pregnant") |
         pregint$Q1.9a..Q1.9c == "no" | pregint$Q1.9b..Q1.9d == "no" |
@@ -54,16 +59,21 @@ write.csv(feeltab, "results/AP2018a/feeltab.csv")
 
 # Modeling Feelings about Pregnancy ---------------------------------------
 
-## Exclusions
+## Exclusions (OLD)
 ## 1. you/partner is pregnant / you/partner can't get pregnant
 ## 2. don't (ever) want me / partner pregnant
-exclu2 <- pregint$Q3.25..Q3.26 %in%
-    c("you/partner is pregnant", "you/partner can't get pregnant") |
-    pregint$idealCrit == "don't want me/partner pregnant"
+# exclu2 <- pregint$Q3.25..Q3.26 %in%
+#     c("you/partner is pregnant", "you/partner can't get pregnant") |
+#     pregint$idealCrit == "don't want me/partner pregnant"
+
+## Exclusions
+## 1. you/partner is pregnant
+exclu2 <- pregint$Q3.25..Q3.26 == "you/partner is pregnant"
 
 preg2 <- pregint[!exclu2, ]
 preg2$idealCrit <- droplevels(preg2$idealCrit)
 preg2$currentSit <- droplevels(preg2$currentSit)
+preg2$Q3.25..Q3.26 <- droplevels(preg2$Q3.25..Q3.26)
 
 ## Able to get pregnant
 preg2$ablepreg <- ifelse(preg2$Q1.9a..Q1.9c == "no" |

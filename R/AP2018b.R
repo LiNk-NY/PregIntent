@@ -8,10 +8,14 @@ pregint <- read.csv("data/pregint.csv")
 source("R/table-helpers.R")
 source("R/relevel.R")
 
-## Exclude those who are/partner is pregnant Q3.25 & 3.26 (should be n=1,755)
-exclu3 <- pregint$Q3.25..Q3.26 %in%
-    c("you/partner is pregnant", "you/partner can't get pregnant") |
-        is.na(pregint$pregFeel) | pregint$relationship == "other"
+## Exclude (OLD)
+# exclu3 <- pregint$Q3.25..Q3.26 %in%
+#     c("you/partner is pregnant", "you/partner can't get pregnant") |
+#         is.na(pregint$pregFeel) | pregint$relationship == "other"
+
+## Exclude
+## 1. you/partner is pregnant Q3.25 & 3.26 (should be n=1,755)
+exclu3 <- pregint$Q3.25..Q3.26 == "you/partner is pregnant"
 
 preg3 <- pregint[!exclu3, ]
 
