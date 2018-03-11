@@ -14,6 +14,10 @@ intentbyfeel <- table(pregint$Q3.25..Q3.26, pregint$pregFeel, useNA = "always")
 colintent <- cbind(intentbyfeel, total = margin.table(intentbyfeel, 1L))
 (intentbyfeeltotal <- rbind(colintent, total = margin.table(colintent, 2L)))
 
+# Main exclusion of those with "other" status
+pregint <- pregint[pregint$relationship != "other", ]
+pregint$relationship <- droplevels(pregint$relationship)
+
 ## Exclusions
 ## 1. you/partner is pregnant / you/partner can't get pregnant
 ## 2. "no" to physically possible to have a baby
@@ -22,7 +26,7 @@ colintent <- cbind(intentbyfeel, total = margin.table(intentbyfeel, 1L))
 exclusionCriteria <- pregint$Q3.25..Q3.26 %in%
     c("you/partner is pregnant", "you/partner can't get pregnant") |
         pregint$Q1.9a..Q1.9c == "no" | pregint$Q1.9b..Q1.9d == "no" |
-        is.na(pregint$pregFeel) | pregint$relationship == "other"
+        is.na(pregint$pregFeel)
 
 # Emotions Related to Pregnancy -------------------------------------------
 
@@ -68,6 +72,7 @@ write.csv(feeltab, "results/AP2018a/feeltab.csv")
 
 ## Exclusions
 ## 1. you/partner is pregnant
+## 2. those with an "other" relationship status
 exclu2 <- pregint$Q3.25..Q3.26 == "you/partner is pregnant"
 
 preg2 <- pregint[!exclu2, ]
