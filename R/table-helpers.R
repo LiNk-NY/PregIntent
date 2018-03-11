@@ -140,7 +140,8 @@
     outlevels <- rownames(contrasts(outcome))
     headrow <- if (includerHeader) {
         list(matrix(
-            c("", paste0("n = ", table(outcome)[outlevels]), ""), nrow = 1L,
+            c(paste0("N = ", dim(data)[[1]]),
+            paste0("n = ", table(outcome)[outlevels]), ""), nrow = 1L,
             dimnames = list("Characteristic", c("n (%)",
                 paste(outname, outlevels, sep = "-"), "p.value"))
         ))
