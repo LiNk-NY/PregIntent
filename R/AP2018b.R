@@ -8,6 +8,10 @@ pregint <- read.csv("data/pregint.csv")
 source("R/table-helpers.R")
 source("R/relevel.R")
 
+# Main exclusion of those with "other" status
+pregint <- pregint[pregint$relationship != "other", ]
+pregint$relationship <- droplevels(pregint$relationship)
+
 ## Exclude (OLD)
 # exclu3 <- pregint$Q3.25..Q3.26 %in%
 #     c("you/partner is pregnant", "you/partner can't get pregnant") |
