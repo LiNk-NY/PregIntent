@@ -65,8 +65,8 @@ preg2$relationship <- droplevels(pregint$relationship)
 
 ## 2. you/partner is pregnant
 ## 3. any missing values in pregFeel
-exclu2 <- pregint$Q3.25..Q3.26 == "you/partner is pregnant" |
-    is.na(pregint$pregFeel)
+exclu2 <- preg2$Q3.25..Q3.26 == "you/partner is pregnant" |
+    is.na(preg2$pregFeel)
 
 preg2 <- preg2[!exclu2, ]
 preg2$idealCrit <- droplevels(preg2$idealCrit)
