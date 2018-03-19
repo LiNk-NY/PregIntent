@@ -14,16 +14,11 @@ intentbyfeel <- table(pregint$Q3.25..Q3.26, pregint$pregFeel, useNA = "always")
 colintent <- cbind(intentbyfeel, total = margin.table(intentbyfeel, 1L))
 (intentbyfeeltotal <- rbind(colintent, total = margin.table(colintent, 2L)))
 
-# Main exclusion of those with "other" status
-pregint <- pregint[pregint$relationship != "other", ]
-pregint$relationship <- droplevels(pregint$relationship)
-
 ## Exclusions
 ## 1. you/partner is pregnant / you/partner can't get pregnant
 ## 2. "no" to physically possible to have a baby
 ## 3. any missing values in pregFeel
-## 4. those with an "other" relationship status
-exclusionCriteria <- pregint$Q3.25..Q3.26 %in%
+exclu1 <- pregint$Q3.25..Q3.26 %in%
     c("you/partner is pregnant", "you/partner can't get pregnant") |
         pregint$Q1.9a..Q1.9c == "no" | pregint$Q1.9b..Q1.9d == "no" |
         is.na(pregint$pregFeel)
@@ -33,7 +28,7 @@ exclusionCriteria <- pregint$Q3.25..Q3.26 %in%
 # pregnant partner
 table(pregint$Q3.25..Q3.26)
 
-preg1 <- pregint[!exclusionCriteria, ]
+preg1 <- pregint[!exclu1, ]
 
 emos <- c("Q3.32_1..Q3.33_1", "Q3.32_2..Q3.33_2", "Q3.32_3..Q3.33_3",
     "Q3.32_4..Q3.33_4", "Q3.32_5..Q3.33_5", "Q3.32_11..Q3.33_11",
@@ -63,19 +58,17 @@ write.csv(feeltab, "results/AP2018a/feeltab.csv")
 
 # Modeling Feelings about Pregnancy ---------------------------------------
 
-## Exclusions (OLD)
-## 1. you/partner is pregnant / you/partner can't get pregnant
-## 2. don't (ever) want me / partner pregnant
-# exclu2 <- pregint$Q3.25..Q3.26 %in%
-#     c("you/partner is pregnant", "you/partner can't get pregnant") |
-#     pregint$idealCrit == "don't want me/partner pregnant"
-
 ## Exclusions
-## 1. you/partner is pregnant
-## 2. those with an "other" relationship status
-exclu2 <- pregint$Q3.25..Q3.26 == "you/partner is pregnant"
+## 1. those with an "other" relationship status
+preg2 <- pregint[pregint$relationship != "other", ]
+preg2$relationship <- droplevels(pregint$relationship)
 
-preg2 <- pregint[!exclu2, ]
+## 2. you/partner is pregnant
+## 3. any missing values in pregFeel
+exclu2 <- pregint$Q3.25..Q3.26 == "you/partner is pregnant" |
+    is.na(pregint$pregFeel)
+
+preg2 <- preg2[!exclu2, ]
 preg2$idealCrit <- droplevels(preg2$idealCrit)
 preg2$currentSit <- droplevels(preg2$currentSit)
 preg2$Q3.25..Q3.26 <- droplevels(preg2$Q3.25..Q3.26)
@@ -103,9 +96,7 @@ write.csv(tablefeels, file = "results/AP2018a/emotionspreg.csv")
 
 # Multivariable Logistic Regression ---------------------------------------
 
-preg2$age5 <- preg2$age/5
-
-modelfr <- preg2[, c("sex", "childnum", "regionOrg", "age5", "hispanic",
+modelfr <- preg2[, c("sex", "childnum", "regionOrg", "age", "hispanic",
     "relationship", "ablepreg", "idealCrit", "Q2.2_1..Q2.7_1", "pregPlan",
     "Q2.2_3..Q2.7_3", "Q2.2_5..Q2.7_5", "Q2.12_1..Q2.13_1", "Q3.12_1..Q3.13_1",
     "currentSit",
