@@ -49,6 +49,16 @@ rest <- lapply(emos, function(varname) {
         .chitestPval(actvar, preg1$pregFeel))
 })
 
+outlevels <- rownames(contrasts(preg1$pregFeel))
+headerRow <-
+        list(matrix(
+            c(paste0("N = ", dim(preg1)[[1]]),
+            paste0("n = ", table(preg1$pregFeel)[outlevels]), ""), nrow = 1L,
+            dimnames = list("Condition", c("n (%)",
+                paste("pregFeel", outlevels, sep = "-"), "p.value"))
+        ))
+rest <- c(headerRow, rest)
+
 feeltab <- do.call(rbind, rest)
 
 if (!dir.exists("results/AP2018a"))
