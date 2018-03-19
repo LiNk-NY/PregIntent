@@ -8,17 +8,12 @@ pregint <- read.csv("data/pregint.csv")
 source("R/table-helpers.R")
 source("R/relevel.R")
 
-# Main exclusion of those with "other" status
-pregint <- pregint[pregint$relationship != "other", ]
-pregint$relationship <- droplevels(pregint$relationship)
+## Exclusions
+## 1. those with an "other" relationship status
+preg3 <- pregint[pregint$relationship != "other", ]
+preg3$relationship <- droplevels(preg3$relationship)
 
-## Exclude (OLD)
-# exclu3 <- pregint$Q3.25..Q3.26 %in%
-#     c("you/partner is pregnant", "you/partner can't get pregnant") |
-#         is.na(pregint$pregFeel) | pregint$relationship == "other"
-
-## Exclude
-## 1. you/partner is pregnant Q3.25 & 3.26 (should be n=1,755)
+## 2. you/partner is pregnant
 exclu3 <- pregint$Q3.25..Q3.26 == "you/partner is pregnant"
 
 preg3 <- pregint[!exclu3, ]
@@ -66,14 +61,11 @@ write.csv(avoidbecome, file = "results/AP2018b/avoidbecomeControl.csv")
 
 # Multivariable Logistic Regression ---------------------------------------
 
-preg3$age5 <- preg3$age/5
-
-
 # Control over avoiding pregnancy -----------------------------------------
 ## How much control would you say you have over avoiding a (partner’s)
 ## pregnancy?
 
-modelavoid <- preg3[, c("sex", "childnum", "age5", "educ", "race2",
+modelavoid <- preg3[, c("sex", "childnum", "age", "educ", "race2",
 "relationship", "underPovLevel", "ablepreg", "idealCrit", "Q2.2_1..Q2.7_1",
 "pregPlan", "Q2.2_3..Q2.7_3", "Q2.2_2..Q2.7_2", "Q2.2_5..Q2.7_5", "currentSit",
 "avoidControl")]
