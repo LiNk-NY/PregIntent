@@ -115,7 +115,3 @@ fit0 <- glm(pregFeel ~ ., data = modelfr, family = "binomial")
 
 pfeel
 write.csv(pfeel, "results/AP2018a/mvpfeel.csv")
-
-sink(file = "results/AP2018a/mvpfeel.txt")
-pfeel
-sink()
