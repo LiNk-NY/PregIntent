@@ -14,9 +14,9 @@ preg3 <- pregint[pregint$relationship != "other", ]
 preg3$relationship <- droplevels(preg3$relationship)
 
 ## 2. you/partner is pregnant
-exclu3 <- pregint$Q3.25..Q3.26 == "you/partner is pregnant"
+exclu3 <- preg3$Q3.25..Q3.26 == "you/partner is pregnant"
 
-preg3 <- pregint[!exclu3, ]
+preg3 <- preg3[!exclu3, ]
 
 ## drop levels after exclusion
 preg3$currentSit <- droplevels(preg3$currentSit)
