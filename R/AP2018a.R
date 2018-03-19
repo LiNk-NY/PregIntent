@@ -61,7 +61,7 @@ write.csv(feeltab, "results/AP2018a/feeltab.csv")
 ## Exclusions
 ## 1. those with an "other" relationship status
 preg2 <- pregint[pregint$relationship != "other", ]
-preg2$relationship <- droplevels(pregint$relationship)
+preg2$relationship <- droplevels(preg2$relationship)
 
 ## 2. you/partner is pregnant
 ## 3. any missing values in pregFeel
