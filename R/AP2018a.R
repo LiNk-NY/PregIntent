@@ -125,5 +125,4 @@ fit0 <- glm(pregFeel ~ ., data = modelfr, family = "binomial")
         rename(OR = "estimate", variable = "term")
 )
 
-pfeel
 write.csv(pfeel, "results/AP2018a/mvpfeel.csv")

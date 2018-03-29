@@ -43,8 +43,9 @@ rownames(avoidCont) <- simpleCap(rownames(avoidCont))
 
 
 becomeC <- .comparisonTable(sex, childnum, regionOrg, age, educ, race2,
-    hispanic, relationship, underPovLevel, ablepreg, idealCrit, Q2.2_1..Q2.7_1,
-    pregPlan, Q2.2_3..Q2.7_3, Q2.2_2..Q2.7_2, Q2.2_5..Q2.7_5, currentSit,
+    hispanic, relationship, underPovLevel, ablepreg, idealCrit,
+    Q2.2_1..Q2.7_1, pregPlan, Q2.2_3..Q2.7_3, Q2.2_2..Q2.7_2, Q2.2_5..Q2.7_5,
+    currentSit,
     outcome = becomeControl,
     data = preg3,
     headerFrame = annotations)
